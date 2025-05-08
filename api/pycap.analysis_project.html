@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API reference &mdash; HiCap Analysis  documentation</title>
+  <title>Analysis_Project &mdash; HiCap Analysis  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -24,9 +24,7 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Release History" href="../release-history.html" />
-    <link rel="prev" title="Usage" href="../usage.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,19 +52,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> More details on how to use the package</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#analytical-solutions">Analytical Solutions</a><ul class="simple">
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#static-functions">Static functions</a><ul class="simple">
-</ul>
-</li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html"> Modules</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Release history</span></p>
 <ul>
@@ -91,9 +78,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">API reference</li>
+      <li class="breadcrumb-item active">Analysis_Project</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/api/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api/pycap.analysis_project.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -125,32 +112,37 @@
     text-align: unset;
 }
 </style>
-<section id="api-reference">
-<h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
-<section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-</div>
-</section>
-<section id="analytical-solutions">
-<h2>Analytical Solutions<a class="headerlink" href="#analytical-solutions" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-</div>
-</section>
-<section id="static-functions">
-<h2>Static functions<a class="headerlink" href="#static-functions" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-</div>
-</section>
+<section id="analysis-project">
+<h1>Analysis_Project<a class="headerlink" href="#analysis-project" title="Permalink to this heading"></a></h1>
+<p>Class for analysis, this the main class which makes objects to define the analysis.</p>
+<span class="target" id="module-pycap.analysis_project"></span><dl class="py class">
+<dt class="sig sig-object py" id="pycap.analysis_project.Project">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycap.analysis_project.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ymlfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>[summary]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycap.analysis_project.Project.aggregate_results">
+<span class="sig-name descname"><span class="pre">aggregate_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project.aggregate_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project.aggregate_results" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycap.analysis_project.Project.report_responses">
+<span class="sig-name descname"><span class="pre">report_responses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project.report_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project.report_responses" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycap.analysis_project.Project.write_responses_csv">
+<span class="sig-name descname"><span class="pre">write_responses_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project.write_responses_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project.write_responses_csv" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../release-history.html" class="btn btn-neutral float-right" title="Release History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

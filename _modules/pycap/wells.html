@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycap.wells &mdash; HiCap Analysis  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> HiCap Analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../philosophy.html">Philosophy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html"> More details on how to use the package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html"> Modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release history</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../release-history.html"> Release History</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to HiCap_Analysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HiCap Analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pycap.wells</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pycap.wells</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.core</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sps</span>
+<span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">integrate</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gammaln</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pycap</span>
+
+<div class="viewcode-block" id="WellResponse"><a class="viewcode-back" href="../../api/pycap.wells.html#pycap.wells.WellResponse">[docs]</a><span class="k">class</span> <span class="nc">WellResponse</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Class to facilitate depletion or drawdown calculations</span>
+
+<span class="sd">    Objects from this class will have the required information needed to</span>
+<span class="sd">    call any of the analysis methods in the package.  The intent is that</span>
+<span class="sd">    users will not have to access analytical solutions directly, but </span>
+<span class="sd">    can set up a WellResponse object.  The generation of WellResponse</span>
+<span class="sd">    objects is generally done through an AnalysisProject object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">response_type</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">stream_apportionment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                    <span class="n">dd_method</span><span class="o">=</span><span class="s1">&#39;Theis&#39;</span><span class="p">,</span> <span class="n">depl_method</span><span class="o">=</span> <span class="s1">&#39;Glover&#39;</span><span class="p">,</span> <span class="n">theis_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span>
+                    <span class="n">depl_pump_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">99999</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Class to calculate a single response for a single pumping well.</span>
+
+<span class="sd">        *refactor for kwargs?*</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name: string </span>
+<span class="sd">            pumping well name</span>
+<span class="sd">        response_type: string</span>
+<span class="sd">            reserved for future implementation</span>
+<span class="sd">        T: float</span>
+<span class="sd">            Aquifer Transmissivity</span>
+<span class="sd">        S: float</span>
+<span class="sd">            Aquifer Storage</span>
+<span class="sd">        dist: float</span>
+<span class="sd">            Distance between well and response</span>
+<span class="sd">        Q: pandas series</span>
+<span class="sd">            Pumping rate changes and times</span>
+<span class="sd">        stream_apportionment: string</span>
+<span class="sd">                ([type], optional): [description]. Defaults to None.</span>
+<span class="sd">        dd_method: string</span>
+<span class="sd">            [description]. Defaults to &#39;Theis&#39;.</span>
+<span class="sd">        depl_method:string </span>
+<span class="sd">            (str, optional): [description]. Defaults to &#39;Glover&#39;.</span>
+<span class="sd">        theis_time: integer</span>
+<span class="sd">            (int, optional): [description]. Defaults to -9999.</span>
+<span class="sd">        depl_pump_time: integer</span>
+<span class="sd">            (int, optional): [description]. Defaults to -99999.</span>
+<span class="sd">        streambed_conductance: float</span>
+<span class="sd">            Streambed conductance for the Hunt99 depletion method. Defaults to None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="c1"># name of response (stream, or drawdown response (e.g. assessed well, lake, spring)) evaluated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_type</span> <span class="o">=</span> <span class="n">response_type</span> <span class="c1"># might use this later to sort out which response to return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T_gpd_ft</span> <span class="o">=</span> <span class="n">T</span><span class="o">*</span><span class="mf">7.48</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dd_method</span><span class="o">=</span><span class="n">dd_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">=</span><span class="n">depl_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theis_time</span> <span class="o">=</span> <span class="n">theis_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depl_pump_time</span> <span class="o">=</span> <span class="n">depl_pump_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span> <span class="o">=</span> <span class="n">stream_apportionment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
+        
+    <span class="k">def</span> <span class="nf">_calc_drawdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;calculate drawdown at requested distance and time using solution given as attribute to the object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dd_f</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DD_METHODS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dd_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+        <span class="c1"># start with zero drawdown</span>
+        <span class="n">dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
+        <span class="n">deltaQ</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">_calc_deltaQ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="c1"># initialize with pumping at the first time being positive</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">cQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)))</span>       
+        <span class="n">extra_args</span><span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dd</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">=</span> <span class="n">dd_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">cQ</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">deltaQ</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">deltaQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">cQ</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">deltaQ</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+                <span class="n">idx</span><span class="o">-=</span><span class="mi">2</span>
+                <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span><span class="o">-</span><span class="n">idx</span><span class="p">))</span>
+                <span class="c1"># note that by setting Q negative from the diff calculations, we always add</span>
+                <span class="c1"># below for the image wells</span>
+                <span class="n">dd</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">dd_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">cQ</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dd</span>
+        
+    <span class="k">def</span> <span class="nf">_calc_depletion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;calculate streamflow depletion at time using solution given as attribute to the object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">depl_f</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DEPL_METHODS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+        <span class="c1"># start with zero depletion</span>
+        <span class="n">depl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
+        
+        <span class="n">deltaQ</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">_calc_deltaQ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+        <span class="c1"># initialize with pumping at the first time being positive</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">cQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;walton&#39;</span><span class="p">:</span>
+            <span class="c1"># Walton method (only) needs these goofy units of gpd/dt for T</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T_gpd_ft</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;hunt99&#39;</span><span class="p">:</span>
+            <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;streambed&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">depl</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">=</span> <span class="n">depl_f</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">cQ</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">deltaQ</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">deltaQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">cQ</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">deltaQ</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+                <span class="n">idx</span><span class="o">-=</span><span class="mi">2</span>
+                <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span><span class="o">-</span><span class="n">idx</span><span class="p">))</span>
+                <span class="c1"># note that by setting Q negative from the diff calculations, we always add</span>
+                <span class="c1"># below for the image wells</span>
+                <span class="n">depl</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">depl_f</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">cQ</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">depl</span>
+
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">drawdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_drawdown</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">depletion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_depletion</span><span class="p">()</span>     </div>
+
+<div class="viewcode-block" id="Well"><a class="viewcode-back" href="../../api/pycap.wells.html#pycap.wells.Well">[docs]</a><span class="k">class</span> <span class="nc">Well</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Object to evaluate a pending (or existing, or a couple other possibilities) well with all relevant impacts.</span>
+<span class="sd">        Preprocessing makes unit conversions and calculates distances as needed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">well_status</span><span class="o">=</span><span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">=-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">S</span><span class="o">=-</span><span class="mi">99999</span><span class="p">,</span> <span class="n">Q</span><span class="o">=-</span><span class="mi">99999</span><span class="p">,</span> <span class="n">depletion_years</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">theis_dd_days</span><span class="o">=-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">depl_pump_time</span><span class="o">=-</span><span class="mi">9999</span><span class="p">,</span>
+        <span class="n">stream_dist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drawdown_dist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">stream_apportionment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depl_method</span><span class="o">=</span><span class="s1">&#39;walton&#39;</span><span class="p">,</span> <span class="n">streambed_conductance</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        T: float</span>
+<span class="sd">            Aquifer Transmissivity</span>
+<span class="sd">        S: float</span>
+<span class="sd">            Aquifer Storage</span>
+<span class="sd">        Q: pandas series</span>
+<span class="sd">            Pumping rate changes and times</span>
+<span class="sd">        depletion_years: int</span>
+<span class="sd">            [description]. Defaults to 4.</span>
+<span class="sd">        theis_dd_days: int</span>
+<span class="sd">            [description]. Defaults to -9999.</span>
+<span class="sd">        depl_pump_time: int </span>
+<span class="sd">            [description]. Defaults to -9999.</span>
+<span class="sd">        stream_dist: float</span>
+<span class="sd">            [description]. Defaults to None.</span>
+<span class="sd">        drawdown_dist: dloat</span>
+<span class="sd">            [description]. Defaults to None.</span>
+<span class="sd">        stream_apportionment: type</span>
+<span class="sd">            [description]. Defaults to None.</span>
+<span class="sd">        depl_method: string</span>
+<span class="sd">            description]. Defaults to walton</span>
+<span class="sd">        streambed_conductance: dict</span>
+<span class="sd">            dictionary of streambed conductances. Defaults to None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># placeholders for values returned with @property decorators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_depletion</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="n">depl_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span> <span class="o">=</span> <span class="n">stream_dist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_dist</span> <span class="o">=</span> <span class="n">drawdown_dist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depletion_years</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">depletion_years</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theis_dd_days</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">theis_dd_days</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depl_pump_time</span> <span class="o">=</span> <span class="n">depl_pump_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span><span class="o">=</span><span class="n">stream_apportionment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># dict of WellResponse objects for this well with streams</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_responses</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># dict of WellResponse objects for this well with drawdown responses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">well_status</span> <span class="o">=</span> <span class="n">well_status</span> <span class="c1"># this is for the well object - later used for aggregation and must be</span>
+                <span class="c1"># {&#39;existing&#39;, &#39;active&#39;, &#39;pending&#39;, &#39;new_approved&#39;, &#39;inactive&#39; }</span>
+        <span class="c1"># make sure stream names consistent between dist and apportionment</span>
+        <span class="k">if</span> <span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stream_apportionment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">streambed_conductance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream_response_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_response_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drawdown_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        
+        <span class="c1"># now make all the WellResponse objects</span>
+        <span class="c1"># first for streams</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cs</span><span class="p">,</span> <span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">cdist</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">streambed_conductance_current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">streambed_conductance_current</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span><span class="p">[</span><span class="n">cs</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">WellResponse</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> 
+                                    <span class="n">dist</span><span class="o">=</span><span class="n">cdist</span><span class="p">,</span> <span class="n">depl_pump_time</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depl_pump_time</span><span class="p">,</span> 
+                                    <span class="n">Q</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">stream_apportionment</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span><span class="p">[</span><span class="n">cname</span><span class="p">],</span> 
+                                    <span class="n">depl_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="p">,</span> 
+                                    <span class="n">streambed_conductance</span><span class="o">=</span><span class="n">streambed_conductance_current</span><span class="p">)</span>
+
+        <span class="c1"># next for drawdown responses</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cw</span><span class="p">,</span> <span class="p">(</span><span class="n">cname</span><span class="p">,</span><span class="n">cdist</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drawdown_dist</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_responses</span><span class="p">[</span><span class="n">cw</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">WellResponse</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="s1">&#39;well&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> 
+                                    <span class="n">dist</span><span class="o">=</span><span class="n">cdist</span><span class="p">,</span> <span class="n">theis_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">,</span> 
+                                    <span class="n">Q</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">dd_method</span><span class="o">=</span><span class="s1">&#39;theis&#39;</span><span class="p">)</span>      
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">drawdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">cw</span><span class="p">,</span> <span class="n">cwob</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_responses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span><span class="p">[</span><span class="n">cwob</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cwob</span><span class="o">.</span><span class="n">drawdown</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">depletion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="p">,</span> <span class="n">cwob</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span><span class="p">[</span><span class="n">cwob</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cwob</span><span class="o">.</span><span class="n">depletion</span>
+           
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_depletion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">cwob</span><span class="o">.</span><span class="n">name</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cwob</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span> 
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">cwob</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
+        
+
+    
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+      <span class="lastupdated">Last updated on May 08, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

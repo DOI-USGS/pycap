@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pycap.analysis_project &mdash; HiCap Analysis  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> HiCap Analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../philosophy.html">Philosophy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html"> More details on how to use the package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html"> Modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release history</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../release-history.html"> Release History</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to HiCap_Analysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HiCap Analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pycap.analysis_project</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pycap.analysis_project</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pycap.wells</span> <span class="kn">import</span> <span class="n">Well</span><span class="p">,</span> <span class="n">WellResponse</span>
+<span class="kn">from</span> <span class="nn">pycap.utilities</span> <span class="kn">import</span> <span class="n">Q2ts</span>
+<span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">GPM2CFD</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">yaml</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">radians</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">asin</span><span class="p">,</span> <span class="n">sqrt</span>
+
+<span class="c1"># def _loc_to_dist(loc0, loc1):</span>
+<span class="c1">#     &#39;&#39;&#39;</span>
+<span class="c1">#     Euclidean distance between two 2-d points assuming expressed in consistent units</span>
+<span class="c1">#     &#39;&#39;&#39;</span>
+<span class="c1">#     dist = np.sqrt((loc0[0]-loc1[0])**2 +(loc0[1]-loc1[1])**2)</span>
+<span class="c1">#     return dist</span>
+
+
+<span class="k">def</span> <span class="nf">_loc_to_dist</span><span class="p">(</span><span class="n">loc0</span><span class="p">,</span> <span class="n">loc1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Distance between two points in lat/long using Haversine Formula assuming lat/long in decimal degrees, returned in feet</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#convert decimal degrees to radians</span>
+    <span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">radians</span><span class="p">,</span> <span class="p">[</span><span class="n">loc0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">loc0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">loc1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">loc1</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="c1">#haversine</span>
+    <span class="n">dlon</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lon2</span> <span class="o">-</span> <span class="n">lon1</span><span class="p">)</span>
+    <span class="n">dlat</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lat2</span> <span class="o">-</span> <span class="n">lat1</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlat</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlon</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">asin</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mi">3956</span><span class="o">*</span><span class="mi">5280</span> <span class="c1"># radius of the earth in feet</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">r</span>
+    <span class="k">return</span> <span class="n">dist</span>
+
+<span class="k">def</span> <span class="nf">_print_to_screen_and_file</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ofp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        s ([type]): [description]</span>
+<span class="sd">        ofp ([type]): [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># some helper functions for printing out results</span>
+<span class="k">def</span> <span class="nf">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cw_dd</span><span class="p">,</span> <span class="n">cw_max_depl</span><span class="p">,</span> <span class="n">theis_dd_days</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;             **Drawdown**</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;Response&quot;</span><span class="si">:</span><span class="s1">30s</span><span class="si">}{</span><span class="s2">&quot;Drawdown(ft)&quot;</span><span class="si">:</span><span class="s1">30s</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ck</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dd</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="n">dd</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">theis_dd_days</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dd</span> <span class="o">=</span> <span class="n">v</span>
+            
+        <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ck</span><span class="si">:</span><span class="s1">30s</span><span class="si">}{</span><span class="n">dd</span><span class="si">:</span><span class="s1">&lt;30.4f</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;          **Maximum Depletion**</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;Response&quot;</span><span class="si">:</span><span class="s1">30s</span><span class="si">}{</span><span class="s2">&quot;Depletion(cfs)&quot;</span><span class="si">:</span><span class="s1">30s</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ck</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_depl</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ck</span><span class="si">:</span><span class="s1">30s</span><span class="si">}{</span><span class="n">v</span><span class="si">:</span><span class="s1">&lt;30.4f</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_print_single_well_header</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">wname</span><span class="p">,</span> <span class="n">wstatus</span><span class="p">):</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Well Name: </span><span class="si">{</span><span class="n">wname</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Well status: </span><span class="si">{</span><span class="n">wstatus</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_print_combined_well_results</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cw_dat</span><span class="p">):</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">total_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Total Drawdown (ft):   </span><span class="si">{total_dd:&lt;16.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ymlfile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;[summary]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;existing&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;new_approved&#39;</span><span class="p">,</span> <span class="s1">&#39;inactive&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wells</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># dictionary to hold well objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dd_days&#39;</span><span class="p">,</span><span class="s1">&#39;depletion_years&#39;</span><span class="p">,</span><span class="s1">&#39;pumping_days&#39;</span><span class="p">]</span> <span class="c1"># allowable project default parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposed_well_categories</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;pending&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_well_categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;existing&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">,</span>  <span class="s1">&#39;new_approved&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="s1">&#39;Walton&#39;</span> <span class="c1"># default, can specify in the yml file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dd_responses</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stream_responses</span> <span class="o">=</span> <span class="kc">None</span>
+
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span> <span class="o">=</span> <span class="n">ymlfile</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ymlfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">ifp</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">ifp</span><span class="p">)</span>
+        <span class="c1"># make a home for the report file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;output&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outpath</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outpath</span><span class="p">)</span>
+
+        <span class="c1"># parse project_properties block</span>
+        <span class="k">if</span> <span class="s1">&#39;project_properties&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_project_properties</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;project_properties&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="s1">&#39;Configuration YAML file must have a &quot;project_properties&quot; block&#39;</span><span class="p">)</span>
+
+        <span class="c1"># get the keys for all the remaining blocks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wellkeys</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;well&#39;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ddkeys</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;dd_resp&#39;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streamkeys</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">)]</span>
+
+        <span class="c1"># look for a timeseries file in the project_properties block to determine how to </span>
+        <span class="c1"># handle pumping </span>
+        <span class="k">if</span> <span class="s1">&#39;pumping_timeseries_file&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;project_properties&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tsfile</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;project_properties&#39;</span><span class="p">][</span><span class="s1">&#39;pumping_timeseries_file&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tsfile</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;sequential_day&#39;</span><span class="p">)</span>
+            <span class="c1"># first test, if there is a time series file that all well keys are columns</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">i</span>  <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span><span class="o">.</span><span class="n">columns</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wellkeys</span><span class="p">])</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;not all well names are represented in the time series file&#39;</span><span class="p">)</span> 
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># parse stream responses blocks</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">streamkeys</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_responses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">streamkeys</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no stream responses supplied for evaluation &#39;</span><span class="p">)</span>
+
+        <span class="c1"># parse drawdown responses blocks</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ddkeys</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_responses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ddkeys</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no drawdown responses supplied for evaluation &#39;</span><span class="p">)</span>
+
+        <span class="c1"># parse well blocks</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wellkeys</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_wells</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="s1">&#39;No wells were defined in the input file. Goodbye&#39;</span><span class="p">)</span>
+
+        <span class="c1">#TODO: verify that stream apportionment and stream response are same keys for a well</span>
+        <span class="c1">#TODO: verify that all responses called out in wells exist in yaml file</span>
+
+        <span class="c1"># create well objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_well_objects</span><span class="p">()</span>
+
+        <span class="c1"># report out on yaml input to screen and logfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_report_yaml_input</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_parse_project_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to parse all the project properties from the YAML file block</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pp ([dict]): project properties block read from YML]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;depl_method&#39;</span> <span class="ow">in</span> <span class="n">pp</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s1">&#39;depl_method&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s1">&#39;S&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">[</span><span class="s1">&#39;default_dd_days&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s1">&#39;default_dd_days&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">[</span><span class="s1">&#39;default_depletion_years&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="s1">&#39;default_depletion_years&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">[</span><span class="s1">&#39;default_pumping_days&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s1">&#39;default_pumping_days&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="s1">&#39;Formatting problem with &quot;project_properties&quot; block&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;populate information about the responses to pull from in calculations</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            keys ([type]): [description]</span>
+<span class="sd">            d ([dict]): yml file data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;dd&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__dd_responses</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">cr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dd_responses</span>    
+        <span class="k">elif</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__stream_responses</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">cr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stream_responses</span>
+        <span class="c1"># populate the appropriate dictionary on self with location and name</span>
+        <span class="c1"># information of response</span>
+        <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="n">cr</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">&#39;streambed_conductance&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">cr</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="s1">&#39;streambed_conductance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;streambed_conductance&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_parse_wells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">Q_ts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;populate information about wells assigning apportionment values and</span>
+<span class="sd">            the lists of proposed and existing wells</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d (dict): yml file data</span>
+<span class="sd">            ts (bool): flag as to whether a timeseries dataframe was read in</span>
+<span class="sd">            Q_ts (pandas DataFrame): pumping data table for all the wells</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__well_data</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wellkeys</span><span class="p">:</span>
+            <span class="c1"># populate dictionary using well name as key with all well data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__well_data</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span>
+            
+            
+            <span class="c1"># make sure if ts is supplied that Q is not supplied for each well</span>
+            <span class="k">if</span> <span class="n">ts</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;Q&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;pumping_days&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">raise</span><span class="p">(</span><span class="s1">&#39;ERROR:</span><span class="se">\n</span><span class="s1">time series file was supplied AND Q of pumping_days was supplied for at</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+                        <span class="s1">&#39;one well. User can only supply pumping rates in one or the other</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+                        <span class="s1">&#39;Please try again....&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># populate categories of wells</span>
+            <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_well_categories</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_well_categories</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="c1"># also, parse out stream apportionment for existing and proposed wells</span>
+            <span class="n">streamappkeys</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;apportion&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">streamappkeys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment_dict</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">cak</span> <span class="ow">in</span> <span class="n">streamappkeys</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment_dict</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="n">cak</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="n">cak</span><span class="p">][</span><span class="s1">&#39;apportionment&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_create_well_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Prepare to populate a Well object for each well, using the attributes of each well and response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">cw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__well_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="c1"># update defaults as appropriate</span>
+            <span class="k">for</span> <span class="n">currdef</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">currdef</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">cw</span><span class="p">[</span><span class="n">currdef</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;default_</span><span class="si">{</span><span class="n">currdef</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+            <span class="c1"># calculate all necessary distances</span>
+            <span class="c1"># first streams</span>
+            <span class="n">stream_dist</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="s1">&#39;stream_response&#39;</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>   
+                <span class="n">stream_dist</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">streambed_conductance</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">streambed_cond_calc</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">c_resp</span> <span class="ow">in</span> <span class="n">cw</span><span class="p">[</span><span class="s1">&#39;stream_response&#39;</span><span class="p">]:</span>
+                    <span class="n">streamx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+                    <span class="n">streamy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> 
+                    <span class="n">stream_dist</span><span class="p">[</span><span class="n">c_resp</span><span class="p">]</span> <span class="o">=</span> <span class="n">_loc_to_dist</span><span class="p">([</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]],</span> <span class="p">[</span><span class="n">streamx</span><span class="p">,</span> <span class="n">streamy</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="s1">&#39;streambed_conductance&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">streambed_conductance</span><span class="p">[</span><span class="n">c_resp</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">][</span><span class="s1">&#39;streambed_conductance&#39;</span><span class="p">]</span>
+                        <span class="n">streambed_cond_calc</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">streambed_cond_calc</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">streambed_conductance</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># next, drawdowns</span>
+            <span class="n">dd_dist</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="s1">&#39;dd_response&#39;</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>   
+                <span class="n">dd_dist</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">streambed_cond_calc</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="k">for</span> <span class="n">c_resp</span> <span class="ow">in</span> <span class="n">cw</span><span class="p">[</span><span class="s1">&#39;dd_response&#39;</span><span class="p">]:</span>
+                    <span class="n">ddx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__dd_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+                    <span class="n">ddy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__dd_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> 
+                    <span class="n">dd_dist</span><span class="p">[</span><span class="n">c_resp</span><span class="p">]</span> <span class="o">=</span> <span class="n">_loc_to_dist</span><span class="p">([</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]],</span> <span class="p">[</span><span class="n">ddx</span><span class="p">,</span> <span class="n">ddy</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="s1">&#39;streambed_conductance&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__dd_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">streambed_conductance</span><span class="p">[</span><span class="n">c_resp</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__dd_responses</span><span class="p">[</span><span class="n">c_resp</span><span class="p">][</span><span class="s1">&#39;streambed_conductance&#39;</span><span class="p">]</span>
+                        <span class="n">streambed_cond_calc</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">streambed_cond_calc</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">streambed_conductance</span> <span class="o">=</span> <span class="kc">None</span>      
+            <span class="k">if</span> <span class="n">ck</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">stream_app_d</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment_dict</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stream_app_d</span> <span class="o">=</span> <span class="kc">None</span>
+            
+            <span class="c1"># sort out the time series for wells and convert to CFD</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">*</span> <span class="n">GPM2CFD</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Q</span> <span class="o">=</span> <span class="n">Q2ts</span><span class="p">(</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;pumping_days&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;depletion_years&#39;</span><span class="p">]),</span> <span class="n">cw</span><span class="p">[</span><span class="s1">&#39;Q&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">Well</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="n">Q</span><span class="p">,</span> 
+                    <span class="n">theis_dd_days</span><span class="o">=</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;dd_days&#39;</span><span class="p">],</span> <span class="n">depletion_years</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">cw</span><span class="p">[</span><span class="s1">&#39;depletion_years&#39;</span><span class="p">]),</span>
+                    <span class="n">stream_dist</span><span class="o">=</span><span class="n">stream_dist</span><span class="p">,</span> <span class="n">drawdown_dist</span><span class="o">=</span><span class="n">dd_dist</span><span class="p">,</span>
+                    <span class="n">stream_apportionment</span><span class="o">=</span><span class="n">stream_app_d</span><span class="p">,</span> <span class="n">depl_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="p">,</span>
+                    <span class="n">streambed_conductance</span><span class="o">=</span><span class="n">streambed_conductance</span>
+            <span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_report_yaml_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;summarize broad details of the YAML file read in</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">,</span><span class="s1">&#39;.yml.import_report&#39;</span><span class="p">)</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="n">logfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.yaml&#39;</span><span class="p">,</span><span class="s1">&#39;.yml.import_report&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ofp</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Writing report to </span><span class="si">{</span><span class="n">logfile</span><span class="si">}</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+            <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Successfully parsed </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="si">}</span><span class="s1"> (high five!)&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+            <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">25</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+            <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;Summary follows:&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+            <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">WELLS:&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+            <span class="c1"># print well summary</span>
+            <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_categories</span><span class="p">:</span>
+                <span class="n">cw</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__well_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">ck</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cw</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cw</span><span class="p">)</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">ck</span><span class="si">}</span><span class="s1"> wells:&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+                    <span class="p">[</span><span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cw</span><span class="p">]</span>
+            <span class="c1"># stream response summary</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">STREAM RESPONSES:&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+                <span class="p">[</span><span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">ck</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ofp</span><span class="p">)</span> <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;No Stream Responses in the yml file&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+
+            <span class="c1"># drawdown response summary</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__dd_responses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;DRAWDOWN RESPONSES:&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+                <span class="p">[</span><span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">ck</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ofp</span><span class="p">)</span> <span class="k">for</span> <span class="n">ck</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__dd_responses</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_print_to_screen_and_file</span><span class="p">(</span><span class="s1">&#39;No Drawdown Responses in the yml file&#39;</span><span class="p">,</span><span class="n">ofp</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Project.report_responses"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project.report_responses">[docs]</a>    <span class="k">def</span> <span class="nf">report_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># make a report file - named from the YML name</span>
+        <span class="n">ymlbase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="n">ymlbase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">,</span><span class="s1">&#39;.report.txt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">report_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outpath</span>  <span class="o">/</span> <span class="n">outfile</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">report_filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ofp</span><span class="p">:</span>
+            <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HiCap well analysis report, configured from: </span><span class="si">{</span><span class="n">ymlbase</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Report on each well</span>
+            <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">INDIVIDUAL PROPOSED WELL REPORTS</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;  there were no proposed wells in the configuration file!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">cex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="p">:</span>
+                    <span class="n">_print_single_well_header</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__well_data</span><span class="p">[</span><span class="n">cex</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>
+                    <span class="n">cw_dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cex</span><span class="p">]</span>
+                    <span class="n">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">drawdown</span><span class="p">,</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">max_depletion</span><span class="p">,</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">)</span>
+                <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">INDIVIDUAL EXISTING WELL REPORTS</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;  there were no existing wells in the configuration file!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">cex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="p">:</span>
+                    <span class="n">_print_single_well_header</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__well_data</span><span class="p">[</span><span class="n">cex</span><span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>
+                    <span class="n">cw_dat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cex</span><span class="p">]</span>
+                    <span class="n">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">drawdown</span><span class="p">,</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">max_depletion</span><span class="p">,</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">)</span>
+                <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">aggregate_results</span><span class="p">()</span>
+
+            <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">COMBINED PROPOSED WELL REPORTS</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;  there were no proposed wells in the configuration file!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="p">)</span>
+                    
+            <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">COMBINED EXISTING WELL REPORTS</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;  there were no existing wells in the configuration file!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="p">)</span>
+                    
+            <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">TOTAL COMBINED WELL REPORTS</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;#&#39;</span><span class="o">*</span><span class="mi">50</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="p">)</span></div>
+            
+
+<div class="viewcode-block" id="Project.aggregate_results"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project.aggregate_results">[docs]</a>    <span class="k">def</span> <span class="nf">aggregate_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># make a master dataframe for all the results</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">times</span><span class="p">)</span>
+        
+        <span class="c1"># make dictionaries to contain the drawdown results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># make dictionaries to contain the max_depletion results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># make dictionaries to contain the sum_depletion results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_sum_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_sum_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_sum_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># make dictionaries to contain the sum of depletion for each base stream name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_base_stream_sum_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_base_stream_sum_depletion</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_base_stream_sum_depletion</span> <span class="o">=</span> <span class="p">{}</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_streams</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        
+        <span class="c1"># first existing wells</span>
+        <span class="k">for</span> <span class="n">cwell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="p">:</span>
+            <span class="n">cw_dd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">drawdown</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dd</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+            <span class="c1"># first sum up depletion time series per well to later get max of sum by location</span>
+            <span class="n">cw_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">depletion</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">v</span><span class="p">)),</span> 
+                    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="n">ck</span><span class="p">})</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+                <span class="c1"># also parse to base stream name</span>
+                <span class="n">base_key</span> <span class="o">=</span> <span class="n">ck</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">base_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_streams</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_streams</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">base_key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">base_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_base_stream_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_base_stream_sum_depletion</span><span class="p">[</span><span class="n">base_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_base_stream_sum_depletion</span><span class="p">[</span><span class="n">base_key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+            
+            <span class="c1"># then oldskool max per location            </span>
+            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">max_depletion</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+                
+
+
+        <span class="c1"># next proposed wells</span>
+        <span class="k">for</span> <span class="n">cwell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="p">:</span>
+            <span class="n">cw_dd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">drawdown</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dd</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+            <span class="c1"># first sum up depletion time series per well to later get max of sum by location</span>
+            <span class="n">cw_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">depletion</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">v</span><span class="p">)),</span> 
+                    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="n">ck</span><span class="p">})</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+            <span class="c1"># also parse to base stream name</span>
+                <span class="n">base_key</span> <span class="o">=</span> <span class="n">ck</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">base_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_base_stream_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_base_stream_sum_depletion</span><span class="p">[</span><span class="n">base_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_base_stream_sum_depletion</span><span class="p">[</span><span class="n">base_key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+            <span class="c1"># then oldskool max per location            </span>
+            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">max_depletion</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+
+        <span class="c1"># finally calculate the totals</span>
+        <span class="k">for</span> <span class="n">cwell</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="p">:</span>
+            <span class="n">cw_dd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">drawdown</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dd</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+            <span class="c1"># first sum up depletion time series per well to later get max of sum by location</span>
+            <span class="n">cw_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">depletion</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
+                <span class="c1"># also parse to base stream name</span>
+                <span class="n">base_key</span> <span class="o">=</span> <span class="n">ck</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">base_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_base_stream_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_base_stream_sum_depletion</span><span class="p">[</span><span class="n">base_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_base_stream_sum_depletion</span><span class="p">[</span><span class="n">base_key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>                    
+            <span class="c1"># then oldskool max per location            </span>
+            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">max_depletion</span>
+            <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="Project.write_responses_csv"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project.write_responses_csv">[docs]</a>    <span class="k">def</span> <span class="nf">write_responses_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># create a dataframe to hold the aggregated results</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">:dd (ft)&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span> <span class="o">+</span> \
+                        <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">:depl (cfs)&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="n">col_base</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:dd (ft)&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:depl (cfs)&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+ 
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: proposed&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: existing&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="p">[</span><span class="s1">&#39;total_proposed&#39;</span><span class="p">,</span> <span class="s1">&#39;total_existing&#39;</span><span class="p">,</span><span class="s1">&#39;total_combined&#39;</span><span class="p">]</span>
+        <span class="n">row_base</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;: existing&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;: proposed&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]</span>
+        <span class="n">agg_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">row_base</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">col_base</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__stream_responses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># now make a special case dataframe for aggregated results by base stream name</span>
+            <span class="n">agg_base_stream_df</span>  <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">row_base</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">base_streams</span><span class="p">)</span>
+            <span class="c1"># all_depl_ts =pd.DataFrame(index=</span>
+            <span class="c1">#     self.wells[list(self.wells.keys())[0]].Q.index)</span>
+
+            <span class="c1"># fill in the dataframe</span>
+            <span class="c1"># individual wells</span>
+            <span class="k">for</span> <span class="n">cn</span><span class="p">,</span> <span class="n">cw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cn</span><span class="p">,</span><span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span><span class="p">[</span><span class="n">cw</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">max_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cn</span><span class="p">,</span><span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdepl</span>
+                    <span class="n">basekey</span> <span class="o">=</span> <span class="n">cresp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">agg_base_stream_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cn</span><span class="p">,</span><span class="n">basekey</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdepl</span>
+
+
+            <span class="c1"># totals</span>
+            <span class="c1">#proposed</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_proposed&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_proposed&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdepl</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_base_stream_sum_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_base_stream_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_proposed&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cdepl</span><span class="p">)</span>
+                
+            <span class="c1">#existing</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_existing&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_existing&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdepl</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_base_stream_sum_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_base_stream_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_existing&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cdepl</span><span class="p">)</span>
+                
+            <span class="c1">#total</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_combined&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_combined&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdepl</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_base_stream_sum_depletion</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_base_stream_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_combined&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cdepl</span><span class="p">)</span>
+                
+
+            <span class="n">agg_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span>
+            <span class="n">agg_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">rows</span>
+            
+            <span class="c1"># make a report file - named from the YML name</span>
+            <span class="n">ymlbase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">outfile</span> <span class="o">=</span> <span class="n">ymlbase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">,</span><span class="s1">&#39;.table_report.csv&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_output_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outpath</span> <span class="o">/</span> <span class="n">outfile</span>
+            <span class="n">agg_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_output_filename</span><span class="p">)</span>
+            <span class="c1"># slap the csv dataframes into self</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_df</span> <span class="o">=</span> <span class="n">agg_df</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_stream_output_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outpath</span> <span class="o">/</span> <span class="n">outfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">,</span><span class="s1">&#39;.base_stream_depletion.csv&#39;</span><span class="p">)</span>
+            <span class="n">agg_base_stream_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_stream_output_filename</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_stream_output_ts_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outpath</span> <span class="o">/</span> <span class="n">outfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">,</span><span class="s1">&#39;.all_ts.csv&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_stream_output_ts_filename</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_base_stream_df</span> <span class="o">=</span> <span class="n">agg_base_stream_df</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cn</span><span class="p">,</span> <span class="n">cw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cn</span><span class="p">,</span><span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>
+            <span class="c1"># totals</span>
+            <span class="c1">#proposed</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_proposed&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>
+            <span class="c1">#existing</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_existing&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>
+            <span class="c1">#total</span>
+            <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;total_combined&#39;</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span>    
+                
+
+            <span class="n">agg_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span>
+            <span class="n">agg_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">rows</span>
+            
+            <span class="c1"># make a report file - named from the YML name</span>
+            <span class="n">ymlbase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">outfile</span> <span class="o">=</span> <span class="n">ymlbase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.yml&#39;</span><span class="p">,</span><span class="s1">&#39;.table_report.csv&#39;</span><span class="p">)</span>
+            <span class="c1"># make a home for the report file</span>
+            <span class="n">outpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;output&#39;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outpath</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">outpath</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_output_filename</span> <span class="o">=</span> <span class="n">outpath</span> <span class="o">/</span> <span class="n">outfile</span>
+            <span class="n">agg_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_output_filename</span><span class="p">)</span></div></div>
+            
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+      <span class="lastupdated">Last updated on May 08, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

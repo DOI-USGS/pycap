@@ -26,7 +26,7 @@ In `index.rst`
 ::
 
     .. toctree::
-       hicap_analysis.name_of_module-no_py_extension
+       pycap.name_of_module-no_py_extension
 
 
 The module `rst` file looks like
@@ -38,7 +38,7 @@ The module `rst` file looks like
 
     Long description if desired....  the automodule commands pull in the docstrings.
 
-    .. automodule:: hicap_analysis.utilities
+    .. automodule:: pycap.utilities
           :members:
           :show-inheritance:
 
