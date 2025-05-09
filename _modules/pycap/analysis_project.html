@@ -89,7 +89,6 @@
              
   <h1>Source code for pycap.analysis_project</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">asin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">radians</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">sqrt</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -98,7 +97,7 @@
 
 <span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">GPM2CFD</span>
 <span class="kn">from</span> <span class="nn">pycap.utilities</span> <span class="kn">import</span> <span class="n">Q2ts</span>
-<span class="kn">from</span> <span class="nn">pycap.wells</span> <span class="kn">import</span> <span class="n">Well</span><span class="p">,</span> <span class="n">WellResponse</span>
+<span class="kn">from</span> <span class="nn">pycap.wells</span> <span class="kn">import</span> <span class="n">Well</span>
 
 <span class="c1"># def _loc_to_dist(loc0, loc1):</span>
 <span class="c1">#     &#39;&#39;&#39;</span>
@@ -163,7 +162,7 @@
 <span class="k">def</span> <span class="nf">_print_combined_well_results</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cw_dat</span><span class="p">):</span>
     <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">total_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dat</span><span class="o">.</span><span class="n">drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
-    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Total Drawdown (ft):   </span><span class="si">{total_dd:&lt;16.4f}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total Drawdown (ft):   </span><span class="si">{</span><span class="n">total_dd</span><span class="si">:</span><span class="s2">&lt;16.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">:</span>

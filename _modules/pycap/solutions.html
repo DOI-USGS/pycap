@@ -107,34 +107,34 @@
     <span class="sd">&quot;&quot;&quot;Function to calculate Theis drawdown. Units are not specified, but</span>
 <span class="sd">        should be consistent length and time</span>
 
-<span class="sd">         Calculates the Theis drawdown solution at specified times</span>
-<span class="sd">         or distances from a pumping well.</span>
+<span class="sd">        Calculates the Theis drawdown solution at specified times</span>
+<span class="sd">        or distances from a pumping well.</span>
 
-<span class="sd">         https://pubs.usgs.gov/publication/70198446</span>
+<span class="sd">        https://pubs.usgs.gov/publication/70198446</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">     T: float</span>
-<span class="sd">         transmissivity [L**2/T]</span>
-<span class="sd">     S: float</span>
-<span class="sd">         storage [unitless]</span>
-<span class="sd">     time: float, optionally np.array or list</span>
-<span class="sd">         time at which to calculate results [d]</span>
-<span class="sd">     dist: float, optionally np.array or list</span>
-<span class="sd">         distance at which to calculate results in [ft]</span>
-<span class="sd">     Q: float</span>
-<span class="sd">         pumping rate (+ is extraction) [ft**3/d]</span>
+<span class="sd">    T: float</span>
+<span class="sd">        transmissivity [L**2/T]</span>
+<span class="sd">    S: float</span>
+<span class="sd">        storage [unitless]</span>
+<span class="sd">    time: float, optionally np.array or list</span>
+<span class="sd">        time at which to calculate results [d]</span>
+<span class="sd">    dist: float, optionally np.array or list</span>
+<span class="sd">        distance at which to calculate results in [ft]</span>
+<span class="sd">    Q: float</span>
+<span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
 <span class="sd">     **kwargs: included to all drawdown methods for extra values required in some calls</span>
 
-<span class="sd">     Returns</span>
-<span class="sd">     -------</span>
-<span class="sd">     drawdown: float or array of floats</span>
-<span class="sd">         drawdown values at input parameter times/distances [ft]</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    drawdown: float or array of floats</span>
+<span class="sd">        drawdown values at input parameter times/distances [ft]</span>
 
-<span class="sd">     Other Parameters</span>
-<span class="sd">     ----------------</span>
+<span class="sd">    Other Parameters</span>
+<span class="sd">    ----------------</span>
 <span class="sd">     **kwargs: dict</span>
-<span class="sd">         no keyword arguments are needed for the Theis (1935) drawdown solution</span>
+<span class="sd">        no keyword arguments are needed for the Theis (1935) drawdown solution</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">isarray</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -194,7 +194,8 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    drawdown: float</span>
-<span class="sd">        single value, meshgrid of drawdowns, or np.array with shape (ntimes, meshgridxx, meshgridyy)</span>
+<span class="sd">        single value, meshgrid of drawdowns, or np.array with shape (ntimes,</span>
+<span class="sd">            meshgridxx, meshgridyy)</span>
 <span class="sd">        depending on input form of x, y, and ntimes</span>
 
 <span class="sd">    Other Parameters</span>
@@ -1026,9 +1027,6 @@
         <span class="n">y</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># Initialize output arrays</span>
-    <span class="n">s1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-    <span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
     <span class="c1"># Inverse Fourier transform</span>
     <span class="n">DeltaQ</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1_dQ</span><span class="p">(</span>
         <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>

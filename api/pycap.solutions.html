@@ -410,7 +410,7 @@ is aligned with y-axis at x=0</p>
 water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <a class="reference external" href="https://doi.org/10.1111/j.1745-6584.1999.tb00962.x">https://doi.org/10.1111/j.1745-6584.1999.tb00962.x</a></p>
 </div></blockquote>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>T: float</strong></dt><dd><p>Transmissivity of aquifer (ft^2/day)</p>
@@ -427,9 +427,12 @@ water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>drawdown: float</dt><dd><p>single value, meshgrid of drawdowns, or np.array with shape (ntimes, meshgridxx, meshgridyy)
-depending on input form of x, y, and ntimes</p>
+<dd class="field-even"><dl>
+<dt>drawdown: float</dt><dd><dl class="simple">
+<dt>single value, meshgrid of drawdowns, or np.array with shape (ntimes,</dt><dd><p>meshgridxx, meshgridyy)</p>
+</dd>
+</dl>
+<p>depending on input form of x, y, and ntimes</p>
 </dd>
 </dl>
 </dd>
@@ -489,16 +492,14 @@ Investigations, Chapter D1, Book 4, <a class="reference external" href="https://
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">theis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#theis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.theis" title="Permalink to this definition"></a></dt>
 <dd><dl>
 <dt>Function to calculate Theis drawdown. Units are not specified, but</dt><dd><p>should be consistent length and time</p>
-<blockquote>
-<div><p>Calculates the Theis drawdown solution at specified times
+<p>Calculates the Theis drawdown solution at specified times
 or distances from a pumping well.</p>
 <p><a class="reference external" href="https://pubs.usgs.gov/publication/70198446">https://pubs.usgs.gov/publication/70198446</a></p>
-</div></blockquote>
 </dd>
 </dl>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
+<dd class="field-odd"><dl>
 <dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
 <dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
@@ -507,9 +508,11 @@ or distances from a pumping well.</p>
 </dd>
 <dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft]</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
+<dt><strong>Q: float</strong></dt><dd><blockquote>
+<div><p>pumping rate (+ is extraction) [ft**3/d]</p>
+</div></blockquote>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: included to all drawdown methods for extra values required in some calls</p>
 </dd>
-<dt><strong>**kwargs: included to all drawdown methods for extra values required in some calls</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
