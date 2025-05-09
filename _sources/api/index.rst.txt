@@ -4,15 +4,15 @@ API reference
 Classes
 -------
 .. toctree::
-    hicap_analysis.analysis_project
-    hicap_analysis.wells
+    pycap.analysis_project
+    pycap.wells
 
 Analytical Solutions
 --------------------
 .. toctree::
-    hicap_analysis.solutions
+    pycap.solutions
     
 Static functions
 ----------------
 .. toctree::
-    hicap_analysis.utilities
+    pycap.utilities

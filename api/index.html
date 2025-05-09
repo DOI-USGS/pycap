@@ -25,7 +25,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Release History" href="../release-history.html" />
+    <link rel="next" title="Analysis_Project" href="pycap.analysis_project.html" />
     <link rel="prev" title="Usage" href="../usage.html" /> 
 </head>
 
@@ -56,25 +56,31 @@
 <p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycap.analysis_project.html">Analysis_Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycap.wells.html">Wells</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#analytical-solutions">Analytical Solutions</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="#analytical-solutions">Analytical Solutions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycap.solutions.html">Solutions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#static-functions">Static functions</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="#static-functions">Static functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycap.utilities.html">Utility functions</a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/Solutions_Demonstration.html"><code class="docutils literal notranslate"><span class="pre">pycap</span></code> demonstrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/Solutions_Demonstration.html#Individual-Functions">Individual Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/Solutions_Demonstration.html#Higher-Level-Classes">Higher Level Classes</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Release history</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../release-history.html"> Release History</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Developer</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to HiCap_Analysis</a></li>
 </ul>
 
         </div>
@@ -130,16 +136,62 @@
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pycap.analysis_project.html">Analysis_Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pycap.analysis_project.html#pycap.analysis_project.Project"><code class="docutils literal notranslate"><span class="pre">Project</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycap.analysis_project.html#pycap.analysis_project.Project.aggregate_results"><code class="docutils literal notranslate"><span class="pre">Project.aggregate_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycap.analysis_project.html#pycap.analysis_project.Project.report_responses"><code class="docutils literal notranslate"><span class="pre">Project.report_responses()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycap.analysis_project.html#pycap.analysis_project.Project.write_responses_csv"><code class="docutils literal notranslate"><span class="pre">Project.write_responses_csv()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pycap.wells.html">Wells</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pycap.wells.html#pycap.wells.Well"><code class="docutils literal notranslate"><span class="pre">Well</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycap.wells.html#pycap.wells.Well.depletion"><code class="docutils literal notranslate"><span class="pre">Well.depletion</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycap.wells.html#pycap.wells.Well.drawdown"><code class="docutils literal notranslate"><span class="pre">Well.drawdown</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycap.wells.html#pycap.wells.Well.max_depletion"><code class="docutils literal notranslate"><span class="pre">Well.max_depletion</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.wells.html#pycap.wells.WellResponse"><code class="docutils literal notranslate"><span class="pre">WellResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycap.wells.html#pycap.wells.WellResponse.depletion"><code class="docutils literal notranslate"><span class="pre">WellResponse.depletion</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycap.wells.html#pycap.wells.WellResponse.drawdown"><code class="docutils literal notranslate"><span class="pre">WellResponse.drawdown</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 <section id="analytical-solutions">
 <h2>Analytical Solutions<a class="headerlink" href="#analytical-solutions" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pycap.solutions.html">Solutions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.WardLoughDepletion"><code class="docutils literal notranslate"><span class="pre">WardLoughDepletion()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.WardLoughDrawdown"><code class="docutils literal notranslate"><span class="pre">WardLoughDrawdown()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.glover"><code class="docutils literal notranslate"><span class="pre">glover()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.hunt2003"><code class="docutils literal notranslate"><span class="pre">hunt2003()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.hunt99"><code class="docutils literal notranslate"><span class="pre">hunt99()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.hunt99ddwn"><code class="docutils literal notranslate"><span class="pre">hunt99ddwn()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.sdf"><code class="docutils literal notranslate"><span class="pre">sdf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.theis"><code class="docutils literal notranslate"><span class="pre">theis()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.solutions.html#pycap.solutions.walton"><code class="docutils literal notranslate"><span class="pre">walton()</span></code></a></li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 <section id="static-functions">
 <h2>Static functions<a class="headerlink" href="#static-functions" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pycap.utilities.html">Utility functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pycap.utilities.html#pycap.utilities.Q2ts"><code class="docutils literal notranslate"><span class="pre">Q2ts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycap.utilities.html#pycap.utilities.create_timeseries_template"><code class="docutils literal notranslate"><span class="pre">create_timeseries_template()</span></code></a></li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 </section>
@@ -149,7 +201,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../release-history.html" class="btn btn-neutral float-right" title="Release History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pycap.analysis_project.html" class="btn btn-neutral float-right" title="Analysis_Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
