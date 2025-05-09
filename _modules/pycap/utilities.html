@@ -89,9 +89,12 @@
              
   <h1>Source code for pycap.utilities</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">calendar</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">GPM2CFD</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">GPM2CFD</span>
+
 
 <div class="viewcode-block" id="Q2ts"><a class="viewcode-back" href="../../api/pycap.utilities.html#pycap.utilities.Q2ts">[docs]</a><span class="k">def</span> <span class="nf">Q2ts</span><span class="p">(</span><span class="n">depl_pump_time</span><span class="p">,</span> <span class="n">depletion_years</span><span class="p">,</span> <span class="n">Q_scalar</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to convert a scalar Q to a time series</span>
@@ -106,14 +109,22 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">365</span><span class="p">)</span>
     <span class="n">y1</span><span class="p">[:</span><span class="n">depl_pump_time</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q_scalar</span>
-    <span class="n">Q</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="n">depletion_years</span><span class="o">*</span><span class="mi">365</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span><span class="o">*</span><span class="n">depletion_years</span><span class="p">)</span> <span class="o">*</span> <span class="n">GPM2CFD</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+            <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">depletion_years</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span> <span class="o">*</span> <span class="n">depletion_years</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">*</span> <span class="n">GPM2CFD</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">Q</span></div>
 
-<div class="viewcode-block" id="create_timeseries_template"><a class="viewcode-back" href="../../api/pycap.utilities.html#pycap.utilities.create_timeseries_template">[docs]</a><span class="k">def</span> <span class="nf">create_timeseries_template</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../examples/blank_ts.csv&#39;</span><span class="p">,</span> 
-                <span class="n">numyears</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
-                <span class="n">well_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;well1&#39;</span><span class="p">,</span><span class="s1">&#39;well2&#39;</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;create a template timeseries CSV file ready to populate with </span>
+
+<div class="viewcode-block" id="create_timeseries_template"><a class="viewcode-back" href="../../api/pycap.utilities.html#pycap.utilities.create_timeseries_template">[docs]</a><span class="k">def</span> <span class="nf">create_timeseries_template</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;../examples/blank_ts.csv&quot;</span><span class="p">,</span>
+    <span class="n">numyears</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">well_ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;well1&quot;</span><span class="p">,</span> <span class="s2">&quot;well2&quot;</span><span class="p">],</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;create a template timeseries CSV file ready to populate with</span>
 <span class="sd">    pumping rates in gallons per minute for running multiple times</span>
 
 <span class="sd">    Args:</span>
@@ -121,34 +132,40 @@
 <span class="sd">        numyears (int, optional): Number of repeated years to generate. Defaults to 1.</span>
 <span class="sd">        well_ids(list, optional): list of well identifiers which will be used as column names</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># do not set to true, unless maybe you are running a single year</span>
     <span class="n">leapyear</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">leapyear</span><span class="p">:</span>
         <span class="n">refyear</span> <span class="o">=</span> <span class="mi">2020</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">refyear</span> <span class="o">=</span> <span class="mi">2021</span>
-        
+
     <span class="c1"># make lists of months and days for the date columns</span>
     <span class="n">months</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">days</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">):</span>
-        <span class="n">dayspermonth</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">monthrange</span><span class="p">(</span><span class="n">refyear</span><span class="p">,</span><span class="n">i</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">months</span> <span class="o">+=</span> <span class="p">([</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">dayspermonth</span><span class="p">)</span>
-        <span class="n">days</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dayspermonth</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+        <span class="n">dayspermonth</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">monthrange</span><span class="p">(</span><span class="n">refyear</span><span class="p">,</span> <span class="n">i</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">months</span> <span class="o">+=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dayspermonth</span>
+        <span class="n">days</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dayspermonth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="c1"># now make a dataframe</span>
-    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;year&#39;</span><span class="p">:</span><span class="nb">sum</span><span class="p">([[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="mi">365</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">numyears</span><span class="o">+</span><span class="mi">1</span><span class="p">)],[]),</span>
-                                            <span class="s1">&#39;month&#39;</span><span class="p">:</span><span class="n">months</span> <span class="o">*</span> <span class="n">numyears</span><span class="p">,</span>
-                                            <span class="s1">&#39;day&#39;</span><span class="p">:</span><span class="n">days</span><span class="o">*</span><span class="n">numyears</span><span class="p">})</span>
+    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">365</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numyears</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="p">[]),</span>
+            <span class="s2">&quot;month&quot;</span><span class="p">:</span> <span class="n">months</span> <span class="o">*</span> <span class="n">numyears</span><span class="p">,</span>
+            <span class="s2">&quot;day&quot;</span><span class="p">:</span> <span class="n">days</span> <span class="o">*</span> <span class="n">numyears</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
     <span class="n">ts_df</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;sequential_day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">ts_df</span><span class="p">[</span><span class="s2">&quot;sequential_day&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">index</span>
     <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">well_ids</span><span class="p">:</span>
         <span class="n">ts_df</span><span class="p">[</span><span class="n">cc</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="c1"># and write it out</span>
-    <span class="n">ts_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>    </div>
-<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">create_timeseries_template</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;well</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)])</span>
+    <span class="n">ts_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_timeseries_template</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;well</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])</span>
 </pre></div>
 
            </div>

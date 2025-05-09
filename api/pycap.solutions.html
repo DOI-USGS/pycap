@@ -124,11 +124,11 @@ well in an infinite aquifer.</p>
 <p><em>needs to be refactored to use kwargs</em></p>
 <blockquote>
 <div><p>Ward and Lough (2011) presented a solution for streamflow depletion
-by a pumping well in a layered aquifer system.  The stream 
+by a pumping well in a layered aquifer system.  The stream
 is in the upper aquifer, and the pumping well is in a lower
-aquifer that is separated from the upper aquifer by a 
+aquifer that is separated from the upper aquifer by a
 semi-confining aquitard layer.</p>
-<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a 
+<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a
 semiconfined aquifer in a two-layer leaky aquifer system (techical note):
 Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
 <a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
@@ -193,11 +193,11 @@ Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
 <p><em>needs to be refactored to use kwargs</em></p>
 <blockquote>
 <div><p>Ward and Lough (2011) presented a solution for streamflow depletion
-by a pumping well in a layered aquifer system.  The stream 
+by a pumping well in a layered aquifer system.  The stream
 is in the upper aquifer, and the pumping well is in a lower
-aquifer that is separated from the upper aquifer by a 
+aquifer that is separated from the upper aquifer by a
 semi-confining aquitard layer.</p>
-<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a 
+<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a
 semiconfined aquifer in a two-layer leaky aquifer system (techical note):
 Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
 <a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
@@ -360,7 +360,7 @@ v.8, no. 1, pgs 12-19. <a class="reference external" href="https://doi.org/10.10
 <div><p>Computes streamflow depletion by a pumping well for a partially penetrating
 stream with streambed resistance.</p>
 <p>Hunt, B., 1999, Unsteady streamflow depletion from ground
-water pumping: Groundwater, v. 37, no. 1, pgs. 98-102, 
+water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <a class="reference external" href="https://doi.org/10.1111/j.1745-6584.1999.tb00962.x">https://doi.org/10.1111/j.1745-6584.1999.tb00962.x</a></p>
 </div></blockquote>
 <dl class="field-list simple">
@@ -407,7 +407,7 @@ from Theis or Glover and Balmer (1954) as streambed conductance gets very large.
 Note that the well is located at the location x,y = (l, 0) and the stream
 is aligned with y-axis at x=0</p>
 <p>Hunt, B., 1999, Unsteady streamflow depletion from ground
-water pumping: Groundwater, v. 37, no. 1, pgs. 98-102, 
+water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <a class="reference external" href="https://doi.org/10.1111/j.1745-6584.1999.tb00962.x">https://doi.org/10.1111/j.1745-6584.1999.tb00962.x</a></p>
 </div></blockquote>
 <dl class="field-list simple">
@@ -455,9 +455,9 @@ depending on input form of x, y, and ntimes</p>
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">sdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#sdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.sdf" title="Permalink to this definition"></a></dt>
 <dd><p>internal function for Stream Depletion Factor</p>
 <blockquote>
-<div><p>Stream Depletion Factor was defined by Jenkins (1968) and described 
-in Jenkins as the time when the volume of stream depletion is 
-28 percent of the net volume pumped from the well.  
+<div><p>Stream Depletion Factor was defined by Jenkins (1968) and described
+in Jenkins as the time when the volume of stream depletion is
+28 percent of the net volume pumped from the well.
 SDF = dist**2 * S/T.</p>
 <p>Jenkins, C.T., Computation of rate and volume of stream depletion
 by wells: U.S. Geological Survey Techniques of Water-Resources
@@ -487,7 +487,7 @@ Investigations, Chapter D1, Book 4, <a class="reference external" href="https://
 <dl class="py function">
 <dt class="sig sig-object py" id="pycap.solutions.theis">
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">theis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#theis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.theis" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate Theis drawdown</p>
+<dd><p>Function to calculate Theis drawdown. Units are not specified, but should be consistent</p>
 <blockquote>
 <div><p>Calculates the Theis drawdown solution at specified times
 or distances from a pumping well.</p>
@@ -496,7 +496,7 @@ or distances from a pumping well.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d]</p>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
 <dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
 </dd>
@@ -506,7 +506,7 @@ or distances from a pumping well.</p>
 </dd>
 <dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
 </dd>
-<dt><strong>**kwargs: included to all drawdown methods for extra values reuired in some calls</strong></dt><dd></dd>
+<dt><strong>**kwargs: included to all drawdown methods for extra values required in some calls</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -530,7 +530,7 @@ or distances from a pumping well.</p>
 <dd><p>Calculate depletion using Walton (1987) PT-8 BASIC program logic</p>
 <blockquote>
 <div><p>Provides the Glover and Balmer (Jenkins) solution.</p>
-<p>Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea, 
+<p>Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea,
 Michigan, 201 p.</p>
 </div></blockquote>
 <dl class="field-list simple">
