@@ -214,7 +214,6 @@ Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
 <dt class="sig sig-object py" id="pycap.solutions.WardLoughDrawdown">
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">WardLoughDrawdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#WardLoughDrawdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.WardLoughDrawdown" title="Permalink to this definition"></a></dt>
 <dd><p>Compute drawdown using Ward and Lough (2011) solution</p>
-<p><em>needs to be refactored to use kwargs</em></p>
 <blockquote>
 <div><p>Ward and Lough (2011) presented a solution for streamflow depletion
 by a pumping well in a layered aquifer system.  The stream
@@ -423,46 +422,31 @@ water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <dl class="py function">
 <dt class="sig sig-object py" id="pycap.solutions.hunt99ddwn">
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt99ddwn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt99ddwn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt99ddwn" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate drawdown in an aquifer with a partially penetrating stream including streambed resistance (Hunt, 1999).</p>
-<blockquote>
-<div><p>The solution becomes the Theis
-solution if streambed conductance is zero, and approaches an image-well solution
-from Theis or Glover and Balmer (1954) as streambed conductance gets very large.
+<dd><dl>
+<dt>Function to calculate drawdown in an aquifer with a partially </dt><dd><p>penetrating stream including streambed resistance (Hunt, 1999). 
+Units are not specified, but should be consistent length and time.</p>
+<p>The solution becomes the Theis solution if streambed conductance 
+is zero, and approaches an image-well solution from Theis or Glover 
+and Balmer (1954) as streambed conductance gets very large.
 Note that the well is located at the location x,y = (l, 0) and the stream
 is aligned with y-axis at x=0</p>
 <p>Hunt, B., 1999, Unsteady streamflow depletion from ground
 water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <a class="reference external" href="https://doi.org/10.1111/j.1745-6584.1999.tb00962.x">https://doi.org/10.1111/j.1745-6584.1999.tb00962.x</a></p>
-</div></blockquote>
-<dl class="field-list">
+</dd>
+</dl>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>Transmissivity of aquifer (ft^2/day)</p>
+<dt><strong>T: float</strong></dt><dd><p>Transmissivity of aquifer [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>Storativity of aquifer (dimensionless)</p>
+<dt><strong>S: float</strong></dt><dd><p>Storativity of aquifer [dimensionless]</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>l: float</strong></dt><dd><p>distance between well and stream in [ft]</p>
+<dt><strong>l: float</strong></dt><dd><p>distance between well and stream in [L]</p>
 </dd>
-<dt><strong>Q</strong><span class="classifier">float</span></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
-</dd>
-<dt><strong>**kwargs:  See Other Parameters below</strong></dt><dd></dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt>drawdown: float</dt><dd><dl class="simple">
-<dt>single value, meshgrid of drawdowns, or np.array with shape (ntimes,</dt><dd><p>meshgridxx, meshgridyy)</p>
-</dd>
-</dl>
-<p>depending on input form of x, y, and ntimes</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-odd">Other Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>keyword arguments needed for the Hunt (1999) drawdown solution are:</p>
+<dt><strong>Q</strong><span class="classifier">float</span></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
 </dd>
 <dt><strong>streambed: float</strong></dt><dd><p>streambed conductance [ft/d] (lambda in the paper)</p>
 </dd>
@@ -470,7 +454,17 @@ water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 </dd>
 <dt><strong>y: float, optionally vector from numpy meshgrid giving grid of x,y locations</strong></dt><dd><p>distance parallel to stream, well is located at y=0</p>
 </dd>
-<dt><strong>call signature is:</strong></dt><dd><p>_hunt99ddwn(T, S, time, l, Q, streambed=streambed_value, x=X, y=Y)</p>
+<dt><strong>**kwargs:  included to all drawdown methods for extra values required</strong></dt><dd><p>in some calls</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>drawdown: float</dt><dd><p>single value, meshgrid of drawdowns, or np.array with shape 
+(ntimes, meshgridxx, meshgridyy)
+depending on input form of x, y, and ntimes [L]</p>
+</dd>
+<dt>call signature is:</dt><dd><p>hunt99ddwn(T, S, time, l, Q, streambed=streambed_value, x=X, y=Y)</p>
 </dd>
 </dl>
 </dd>
@@ -515,39 +509,32 @@ Investigations, Chapter D1, Book 4, <a class="reference external" href="https://
 <dt class="sig sig-object py" id="pycap.solutions.theis">
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">theis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#theis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.theis" title="Permalink to this definition"></a></dt>
 <dd><dl>
-<dt>Function to calculate Theis drawdown. Units are not specified, but</dt><dd><p>should be consistent length and time</p>
+<dt>Function to calculate Theis drawdown. Units are not specified, but</dt><dd><p>should be consistent length and time.</p>
 <p>Calculates the Theis drawdown solution at specified times
 or distances from a pumping well.</p>
 <p><a class="reference external" href="https://pubs.usgs.gov/publication/70198446">https://pubs.usgs.gov/publication/70198446</a></p>
 </dd>
 </dl>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
+<dd class="field-odd"><dl class="simple">
 <dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
+<dt><strong>S: float</strong></dt><dd><p>storage [dimensionless]</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft]</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><blockquote>
-<div><p>pumping rate (+ is extraction) [ft**3/d]</p>
-</div></blockquote>
-<p><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: included to all drawdown methods for extra values required in some calls</p>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
+</dd>
+<dt><strong>**kwargs: included to all drawdown methods for extra values required</strong></dt><dd><p>in some calls</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>drawdown: float or array of floats</dt><dd><p>drawdown values at input parameter times/distances [ft]</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-odd">Other Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>no keyword arguments are needed for the Theis (1935) drawdown solution</p>
+<dt>drawdown: float or array of floats</dt><dd><p>drawdown values at input parameter times/distances [L]</p>
 </dd>
 </dl>
 </dd>
@@ -608,7 +595,7 @@ Michigan, 201 p.</p>
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 09, 2025.
+      <span class="lastupdated">Last updated on May 10, 2025.
       </span></p>
   </div>
 
