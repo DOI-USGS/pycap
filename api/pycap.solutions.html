@@ -143,9 +143,8 @@ a pumping well near a stream.  Also includes the Theis (1935) solution for a
 well in an infinite aquifer.</p>
 <span class="target" id="module-pycap.solutions"></span><dl class="py function">
 <dt class="sig sig-object py" id="pycap.solutions.WardLoughDepletion">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">WardLoughDepletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NStehl2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#WardLoughDepletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.WardLoughDepletion" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">WardLoughDepletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#WardLoughDepletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.WardLoughDepletion" title="Permalink to this definition"></a></dt>
 <dd><p>Compute streamflow depletion using Ward and Lough (2011) solution</p>
-<p><em>needs to be refactored to use kwargs</em></p>
 <blockquote>
 <div><p>Ward and Lough (2011) presented a solution for streamflow depletion
 by a pumping well in a layered aquifer system.  The stream
@@ -157,53 +156,55 @@ semiconfined aquifer in a two-layer leaky aquifer system (techical note):
 Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
 <a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
 </div></blockquote>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d] (K*D in the original paper)</p>
+<dd class="field-odd"><dl>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless] (V in the original paper)</p>
+<dt><strong>storage [unitless]</strong></dt><dd><p>specific yield in the upper q aquifer</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft] (X1 in the paper)</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
+<dt><strong>Q: float</strong></dt><dd><blockquote>
+<div><p>pumping rate (+ is extraction) [L**3/T]</p>
+</div></blockquote>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: included to all depletion methods for extra values required in some calls</p>
 </dd>
-<dt><strong>**kwargs: see Other Parameters below</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list depending on input of time and dist [CFS]</p>
+<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list
+depending on input of time and dist [L**3/T]</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Other Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>keyword arguments needed for the Hunt (2003) depletion solution are:</p>
-</dd>
-<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of</p>
+<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of deeper system</p>
 </dd>
 <dt><strong>S2: float</strong></dt><dd><p>Storativity of</p>
 </dd>
 <dt><strong>streambed_thick: float</strong></dt><dd><p>thickness of streambed</p>
 </dd>
-<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, ft/day</p>
+<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, [L/T]</p>
 </dd>
-<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, ft</p>
+<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, [L]</p>
 </dd>
-<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, ft/day</p>
+<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, [L/T]</p>
 </dd>
-<dt><strong>x: float</strong></dt><dd><p>xxxxxx</p>
+<dt><strong>x: float</strong></dt><dd><p>x-coordinate of drawdown location
+(with origin being x=0 at stream location) [L]</p>
 </dd>
-<dt><strong>y: float</strong></dt><dd><p>yyyyyy</p>
+<dt><strong>y: float</strong></dt><dd><p>y-coordinate of drawdown location
+(with origin being y=0 at pumping well location) [L]</p>
 </dd>
-<dt><strong>NSteh1: int</strong></dt><dd><p>IIIIII</p>
+<dt><strong>NSteh1: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
+Defaults to 2.</p>
 </dd>
-<dt><strong>NStehl2: int</strong></dt><dd><p>IIIII</p>
-</dd>
-<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [ft]</p>
+<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
 </dd>
 </dl>
 </dd>
@@ -228,50 +229,53 @@ Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d] (K*D in the original paper)</p>
+<dt><strong>T: float</strong></dt><dd><p>Transmissivity  in the upper aquifer [L**2/T]
+(K*D or T1 in the original paper)</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless] (V in the original paper)</p>
+<dt><strong>S: float</strong></dt><dd><p>Specific yield for upper aquifer [unitless]
+(S1 in the original paper)</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>t: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft] (X1 in the paper)</p>
+<dt><strong>dist: Distance between pumping well and stream [L]</strong></dt><dd><p>(L in the original paper)</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
 </dd>
-<dt><strong>**kwargs: see Other Parameters below</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>ddwn float</dt><dd><p>drawdown at specified location or locations [ft]</p>
+<dt>ddwn float</dt><dd><p>drawdown at specified location or locations [L]</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Other Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>keyword arguments needed for the Hunt (2003) depletion solution are:</p>
-</dd>
-<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of</p>
+<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of deeper system</p>
 </dd>
 <dt><strong>S2: float</strong></dt><dd><p>Storativity of</p>
 </dd>
 <dt><strong>streambed_thick: float</strong></dt><dd><p>thickness of streambed</p>
 </dd>
-<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, ft/day</p>
+<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, [L/T]</p>
 </dd>
-<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, ft</p>
+<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, [L]</p>
 </dd>
-<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, ft/day</p>
+<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, [L/T]</p>
 </dd>
-<dt><strong>x: float</strong></dt><dd><p>xxxxxx</p>
+<dt><strong>x: float</strong></dt><dd><p>x-coordinate of drawdown location
+(with origin being x=0 at stream location) [L]</p>
 </dd>
-<dt><strong>y: float</strong></dt><dd><p>yyyyyy</p>
+<dt><strong>y: float</strong></dt><dd><p>y-coordinate of drawdown location
+(with origin being y=0 at pumping well location) [L]</p>
 </dd>
-<dt><strong>NSteh1: int</strong></dt><dd><p>IIIIII</p>
+<dt><strong>NSteh1: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
+Defaults to 2.</p>
 </dd>
-<dt><strong>NStehl2: int</strong></dt><dd><p>IIIII</p>
+<dt><strong>NStehl2: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
+Defaults to 2.</p>
 </dd>
-<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [ft]</p>
+<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
 </dd>
 </dl>
 </dd>
@@ -292,28 +296,22 @@ v. 35, no. 3, pg. 468-470, <a class="reference external" href="https://doi.org/1
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d] (K*D in the original paper)</p>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless] (V in the original paper)</p>
+<dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft] (X1 in the paper)</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft]</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
 </dd>
-<dt><strong>**kwargs: included to all depletion methods for extra values reuired in some calls</strong></dt><dd></dd>
+<dt><strong>**kwargs: included to all depletion methods for extra values required in some calls</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
 <dt>drawdown: float</dt><dd><p>depletion values at at input parameter times/distances</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-odd">Other Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>no keyword arguments are needed for the Glover and Balmer (1954) depletion solution</p>
 </dd>
 </dl>
 </dd>
@@ -335,40 +333,41 @@ v.8, no. 1, pgs 12-19. <a class="reference external" href="https://doi.org/10.10
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d] (K*D in the original paper)</p>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless] (V in the original paper)</p>
+<dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft] (X1 in the paper)</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
 </dd>
-<dt><strong>**kwargs: see Other Parameters below</strong></dt><dd></dd>
+<dt><strong>**kwargs: included to all depletion methods for extra values required in some calls</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list depending on input of time and dist [CFS]</p>
+<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list
+depending on input of time and dist [L**3/T]</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Other Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>keyword arguments needed for the Hunt (2003) depletion solution are:</p>
+<dt><strong>Bprime: float</strong></dt><dd><p>saturated thickness of semiconfining layer containing stream, [L]</p>
 </dd>
-<dt><strong>Bprime: float</strong></dt><dd><p>saturated thickness of semiconfining layer containing stream, [ft]</p>
+<dt><strong>Bdouble: float</strong></dt><dd><p>distance from bottom of stream to bottom of semiconfining layer,
+[L] (aquitard thickness beneath the stream)</p>
 </dd>
-<dt><strong>Bdouble: float</strong></dt><dd><p>distance from bottom of stream to bottom of semiconfining layer, [ft] (aquitard thickness beneath the stream)</p>
-</dd>
-<dt><strong>K: float</strong></dt><dd><p>hydraulic conductivity of semiconfining layer [ft/day]</p>
+<dt><strong>K: float</strong></dt><dd><p>hydraulic conductivity of semiconfining layer [L/T]</p>
 </dd>
 <dt><strong>sigma: float</strong></dt><dd><p>porosity of semiconfining layer</p>
 </dd>
-<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [ft]</p>
+<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [T]</p>
 </dd>
-<dt><strong>streambed: float</strong></dt><dd><p>streambed conductance [ft/d] (lambda in the paper), only used if K is less than 1e-10</p>
+<dt><strong>streambed: float</strong></dt><dd><p>streambed conductance [L/T] (lambda in the paper),
+only used if K is less than 1e-10</p>
 </dd>
 </dl>
 </dd>
@@ -389,29 +388,28 @@ water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d] (K*D in the original paper)</p>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless] (V in the original paper)</p>
+<dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
 </dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft] (X1 in the paper)</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
 </dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
 </dd>
-<dt><strong>**kwargs: see Other Parameters below</strong></dt><dd></dd>
+<dt><strong>**kwargs: included to all depletion methods for extra values required in some calls</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list depending on input of time and dist [CFS]</p>
+<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list
+depending on input of time and dist [L**3/T]</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Other Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>keyword arguments needed for the Hunt (1999) depletion solution are:</p>
-</dd>
 <dt><strong>streambed: float</strong></dt><dd><p>streambed conductance [ft/d] (lambda in the paper)</p>
 </dd>
 </dl>
@@ -423,10 +421,10 @@ water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 <dt class="sig sig-object py" id="pycap.solutions.hunt99ddwn">
 <span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt99ddwn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt99ddwn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt99ddwn" title="Permalink to this definition"></a></dt>
 <dd><dl>
-<dt>Function to calculate drawdown in an aquifer with a partially </dt><dd><p>penetrating stream including streambed resistance (Hunt, 1999). 
+<dt>Function to calculate drawdown in an aquifer with a partially</dt><dd><p>penetrating stream including streambed resistance (Hunt, 1999).
 Units are not specified, but should be consistent length and time.</p>
-<p>The solution becomes the Theis solution if streambed conductance 
-is zero, and approaches an image-well solution from Theis or Glover 
+<p>The solution becomes the Theis solution if streambed conductance
+is zero, and approaches an image-well solution from Theis or Glover
 and Balmer (1954) as streambed conductance gets very large.
 Note that the well is located at the location x,y = (l, 0) and the stream
 is aligned with y-axis at x=0</p>
@@ -460,7 +458,7 @@ water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>drawdown: float</dt><dd><p>single value, meshgrid of drawdowns, or np.array with shape 
+<dt>drawdown: float</dt><dd><p>single value, meshgrid of drawdowns, or np.array with shape
 (ntimes, meshgridxx, meshgridyy)
 depending on input form of x, y, and ntimes [L]</p>
 </dd>
@@ -487,18 +485,18 @@ Investigations, Chapter D1, Book 4, <a class="reference external" href="https://
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d]</p>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
 </dd>
 <dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft]</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
 </dd>
-<dt><strong>**kwargs: just included to all for extra values in call</strong></dt><dd></dd>
+<dt><strong>**kwargs: included to all depletion methods for extra values required in some calls</strong></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>SDF: float</dt><dd><p>Stream depletion factor [d]</p>
+<dt>SDF: float</dt><dd><p>Stream depletion factor [T]</p>
 </dd>
 </dl>
 </dd>
@@ -549,17 +547,19 @@ or distances from a pumping well.</p>
 <div><p>Provides the Glover and Balmer (Jenkins) solution.</p>
 <p>Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea,
 Michigan, 201 p.</p>
+<p>Note that unlike the other depletion functions, this Walton function
+is unit-specific, using feet and days as dimensions.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [ft**2/d] (K*D in the original paper)</p>
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [gal per d per ft]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>storage [unitless] (V in the original paper)</p>
+<dt><strong>S: float</strong></dt><dd><p>storage [unitless]</p>
 </dd>
 <dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [d]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft] (X1 in the paper)</p>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [ft]</p>
 </dd>
 <dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [ft**3/d]</p>
 </dd>
@@ -569,12 +569,6 @@ Michigan, 201 p.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
 <dt>drawdown: float</dt><dd><p>depletion values at at input parameter times/distances</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-odd">Other Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>**kwargs: dict</strong></dt><dd><p>no keyword arguments are needed for Walton (1987) depletion solution</p>
 </dd>
 </dl>
 </dd>
@@ -595,7 +589,7 @@ Michigan, 201 p.</p>
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

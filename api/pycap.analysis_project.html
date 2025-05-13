@@ -136,21 +136,37 @@
 <dt class="sig sig-object py" id="pycap.analysis_project.Project">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycap.analysis_project.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ymlfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>[summary]</p>
+<p>Highest-level Class for a well drawdown and/or depletion analysis.
+This Class is developed for the specific analysis needs of the
+Wisconsin Department of Natural Resources and was initially created
+to reproduce the logic and results of an internal, spreadsheet-driven
+workflow. This workflow may also serve as an example template for other
+users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ymlfile: string or pathlib.Path</strong></dt><dd><p>Path to a yml file containing configuration information for a project.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycap.analysis_project.Project.aggregate_results">
 <span class="sig-name descname"><span class="pre">aggregate_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project.aggregate_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project.aggregate_results" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Aggregate all results from the Project</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycap.analysis_project.Project.report_responses">
 <span class="sig-name descname"><span class="pre">report_responses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project.report_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project.report_responses" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>make a report file - named from the YML name</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycap.analysis_project.Project.write_responses_csv">
 <span class="sig-name descname"><span class="pre">write_responses_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/analysis_project.html#Project.write_responses_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.analysis_project.Project.write_responses_csv" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Write all responses to an external CSV file</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -168,7 +184,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

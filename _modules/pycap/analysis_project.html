@@ -101,17 +101,23 @@
 <span class="kn">from</span> <span class="nn">pycap.utilities</span> <span class="kn">import</span> <span class="n">Q2ts</span>
 <span class="kn">from</span> <span class="nn">pycap.wells</span> <span class="kn">import</span> <span class="n">Well</span>
 
-<span class="c1"># def _loc_to_dist(loc0, loc1):</span>
-<span class="c1">#     &#39;&#39;&#39;</span>
-<span class="c1">#     Euclidean distance between two 2-d points assuming expressed in consistent units</span>
-<span class="c1">#     &#39;&#39;&#39;</span>
-<span class="c1">#     dist = np.sqrt((loc0[0]-loc1[0])**2 +(loc0[1]-loc1[1])**2)</span>
-<span class="c1">#     return dist</span>
-
 
 <span class="k">def</span> <span class="nf">_loc_to_dist</span><span class="p">(</span><span class="n">loc0</span><span class="p">,</span> <span class="n">loc1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Distance between two points in lat/long using Haversine Formula assuming lat/long in decimal degrees, returned in feet</span>
+<span class="sd">    Distance between two points in lat/long using Haversine Formula assuming</span>
+<span class="sd">    lat/long in decimal degrees, returned in feet</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    loc0: list-like pair of floats</span>
+<span class="sd">        one point location in lat/long</span>
+<span class="sd">    loc1: list-like pair of floats</span>
+<span class="sd">        one point location in lat/long</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dist: float</span>
+<span class="sd">        distance between loc0 and loc1 in feet</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># convert decimal degrees to radians</span>
     <span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">radians</span><span class="p">,</span> <span class="p">[</span><span class="n">loc0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">loc0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">loc1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">loc1</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
@@ -126,11 +132,19 @@
 
 
 <span class="k">def</span> <span class="nf">_print_to_screen_and_file</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ofp</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;[summary]</span>
+    <span class="sd">&quot;&quot;&quot;function to print formatted output to both</span>
+<span class="sd">    the screen and a file</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        s ([type]): [description]</span>
-<span class="sd">        ofp ([type]): [description]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    s: string</span>
+<span class="sd">        string to point</span>
+<span class="sd">    ofp: file pointer</span>
+<span class="sd">        handle to an open output file for printing to</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -138,6 +152,26 @@
 
 <span class="c1"># some helper functions for printing out results</span>
 <span class="k">def</span> <span class="nf">_print_dd_depl</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">cw_dd</span><span class="p">,</span> <span class="n">cw_max_depl</span><span class="p">,</span> <span class="n">theis_dd_days</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to write drawdown and depletion to a file.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ofp: file pointer</span>
+<span class="sd">        handle to an open output file for printing to</span>
+<span class="sd">    cw_dd: float</span>
+<span class="sd">        Drawdown value(s) to print</span>
+<span class="sd">    cw_max_depl: float</span>
+<span class="sd">        Maximum depletion value(s) to print</span>
+
+<span class="sd">    theis_dd_days: int</span>
+<span class="sd">        Optional index from which to dereference drawdown value.</span>
+<span class="sd">        Defaults to None.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;             **Drawdown**</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;Response&#39;</span><span class="si">:</span><span class="s2">30s</span><span class="si">}{</span><span class="s1">&#39;Drawdown(ft)&#39;</span><span class="si">:</span><span class="s2">30s</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
@@ -152,7 +186,7 @@
         <span class="sa">f</span><span class="s2">&quot;          **Maximum Depletion**</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;Response&#39;</span><span class="si">:</span><span class="s2">30s</span><span class="si">}{</span><span class="s1">&#39;Depletion(cfs)&#39;</span><span class="si">:</span><span class="s2">30s</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
     <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_depl</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ck</span><span class="si">:</span><span class="s2">30s</span><span class="si">}{</span><span class="n">v</span><span class="si">:</span><span class="s2">&lt;30.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># convert max depletion to CFS</span>
+        <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ck</span><span class="si">:</span><span class="s2">30s</span><span class="si">}{</span><span class="n">v</span><span class="si">:</span><span class="s2">&lt;30.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># convert max depletion to CFS</span>
 
 
 <span class="k">def</span> <span class="nf">_print_single_well_header</span><span class="p">(</span><span class="n">ofp</span><span class="p">,</span> <span class="n">wname</span><span class="p">,</span> <span class="n">wstatus</span><span class="p">):</span>
@@ -169,7 +203,21 @@
 
 <div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ymlfile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;[summary]&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Highest-level Class for a well drawdown and/or depletion analysis.</span>
+<span class="sd">        This Class is developed for the specific analysis needs of the</span>
+<span class="sd">        Wisconsin Department of Natural Resources and was initially created</span>
+<span class="sd">        to reproduce the logic and results of an internal, spreadsheet-driven</span>
+<span class="sd">        workflow. This workflow may also serve as an example template for other</span>
+<span class="sd">        users.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ymlfile: string or pathlib.Path</span>
+<span class="sd">            Path to a yml file containing configuration information for a project.</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status_categories</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s2">&quot;existing&quot;</span><span class="p">,</span>
             <span class="s2">&quot;active&quot;</span><span class="p">,</span>
@@ -249,7 +297,7 @@
 
         <span class="c1"># parse well blocks</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wellkeys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_wells</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_wells</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="p">(</span><span class="s2">&quot;No wells were defined in the input file. Goodbye&quot;</span><span class="p">)</span>
 
@@ -265,8 +313,10 @@
     <span class="k">def</span> <span class="nf">_parse_project_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pp</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to parse all the project properties from the YAML file block</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            pp ([dict]): project properties block read from YML]</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pp: dict</span>
+<span class="sd">            Project properties block read from YML file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;depl_method&quot;</span> <span class="ow">in</span> <span class="n">pp</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s2">&quot;depl_method&quot;</span><span class="p">]</span>
@@ -288,9 +338,12 @@
     <span class="k">def</span> <span class="nf">_parse_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;populate information about the responses to pull from in calculations</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            keys ([type]): [description]</span>
-<span class="sd">            d ([dict]): yml file data</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        keys: list like</span>
+<span class="sd">            Dictionary keys to read from d</span>
+<span class="sd">        d: dict</span>
+<span class="sd">            yml file data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;dd&quot;</span><span class="p">):</span>
@@ -308,14 +361,16 @@
                     <span class="s2">&quot;streambed_conductance&quot;</span>
                 <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_parse_wells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">Q_ts</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_parse_wells</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;populate information about wells assigning apportionment values and</span>
 <span class="sd">            the lists of proposed and existing wells</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            d (dict): yml file data</span>
-<span class="sd">            ts (bool): flag as to whether a timeseries dataframe was read in</span>
-<span class="sd">            Q_ts (pandas DataFrame): pumping data table for all the wells</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d: dict</span>
+<span class="sd">            yml file data</span>
+<span class="sd">        ts: bool</span>
+<span class="sd">            flag as to whether a timeseries dataframe was read in</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__well_data</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -327,8 +382,10 @@
             <span class="k">if</span> <span class="n">ts</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">if</span> <span class="s2">&quot;Q&quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;pumping_days&quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="k">raise</span> <span class="p">(</span>
-                        <span class="s2">&quot;ERROR:</span><span class="se">\n</span><span class="s2">time series file was supplied AND Q of pumping_days was supplied for at</span><span class="se">\n</span><span class="s2">&quot;</span>
-                        <span class="o">+</span> <span class="s2">&quot;one well. User can only supply pumping rates in one or the other</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="s2">&quot;ERROR:</span><span class="se">\n</span><span class="s2">time series file was supplied AND Q of &quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;pumping_days was supplied for at</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;one well. User can only supply pumping &quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;rates in one or the other</span><span class="se">\n</span><span class="s2">&quot;</span>
                         <span class="o">+</span> <span class="s2">&quot;Please try again....&quot;</span>
                     <span class="p">)</span>
 
@@ -347,7 +404,10 @@
                     <span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">ck</span><span class="p">][</span><span class="n">cak</span><span class="p">][</span><span class="s2">&quot;apportionment&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_create_well_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepare to populate a Well object for each well, using the attributes of each well and response&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare to populate a Well object for each well,</span>
+<span class="sd">        using the attributes of each well and response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">cw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Project__well_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="c1"># update defaults as appropriate</span>
@@ -432,7 +492,9 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_report_yaml_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;summarize broad details of the YAML file read in&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        summarize broad details of the YAML file read in</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;.yml.import_report&quot;</span><span class="p">)</span>
         <span class="n">logfile</span> <span class="o">=</span> <span class="n">logfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;.yml.import_report&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ofp</span><span class="p">:</span>
@@ -479,7 +541,9 @@
                 <span class="p">)</span>
 
 <div class="viewcode-block" id="Project.report_responses"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project.report_responses">[docs]</a>    <span class="k">def</span> <span class="nf">report_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># make a report file - named from the YML name</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        make a report file - named from the YML name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ymlbase</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymlfile</span><span class="o">.</span><span class="n">name</span>
         <span class="n">outfile</span> <span class="o">=</span> <span class="n">ymlbase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;.report.txt&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">report_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outpath</span> <span class="o">/</span> <span class="n">outfile</span>
@@ -561,6 +625,9 @@
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Project.aggregate_results"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project.aggregate_results">[docs]</a>    <span class="k">def</span> <span class="nf">aggregate_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Aggregate all results from the Project</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># make a master dataframe for all the results</span>
         <span class="n">times</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">times</span><span class="p">)</span>
@@ -600,7 +667,7 @@
                     <span class="p">]</span>
             <span class="c1"># first sum up depletion time series per well to later get max of sum by location</span>
             <span class="n">cw_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">depletion</span>
-            <span class="n">cw_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">cw_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
                     <span class="p">(</span>
@@ -631,7 +698,7 @@
 
             <span class="c1"># then oldskool max per location</span>
             <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">max_depletion</span>
-            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">existing_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
@@ -652,7 +719,7 @@
                     <span class="p">]</span>
             <span class="c1"># first sum up depletion time series per well to later get max of sum by location</span>
             <span class="n">cw_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">depletion</span>
-            <span class="n">cw_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">cw_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">all_depl_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
                     <span class="p">(</span>
@@ -680,7 +747,7 @@
                     <span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
             <span class="c1"># then oldskool max per location</span>
             <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">max_depletion</span>
-            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">proposed_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
@@ -701,7 +768,7 @@
                     <span class="p">]</span>
             <span class="c1"># first sum up depletion time series per well to later get max of sum by location</span>
             <span class="n">cw_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">depletion</span>
-            <span class="n">cw_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">cw_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_sum_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_sum_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
@@ -722,7 +789,7 @@
                     <span class="p">]</span> <span class="o">+=</span> <span class="n">v</span>
             <span class="c1"># then oldskool max per location</span>
             <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">cwell</span><span class="p">]</span><span class="o">.</span><span class="n">max_depletion</span>
-            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">cw_max_dep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="k">for</span> <span class="n">ck</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cw_max_dep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">ck</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
@@ -730,6 +797,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_max_depletion</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span></div>
 
 <div class="viewcode-block" id="Project.write_responses_csv"><a class="viewcode-back" href="../../api/pycap.analysis_project.html#pycap.analysis_project.Project.write_responses_csv">[docs]</a>    <span class="k">def</span> <span class="nf">write_responses_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write all responses to an external CSV file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># create a dataframe to hold the aggregated results</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:dd (ft)&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_aggregated_drawdown</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -765,7 +835,7 @@
                 <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdd</span> <span class="ow">in</span> <span class="n">cw</span><span class="o">.</span><span class="n">drawdown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cn</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdd</span><span class="p">[</span><span class="n">cw</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">]</span>
                 <span class="n">cwmaxdep</span> <span class="o">=</span> <span class="n">cw</span><span class="o">.</span><span class="n">max_depletion</span>
-                <span class="n">cwmaxdep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">cwmaxdep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                <span class="n">cwmaxdep</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">3600</span> <span class="o">/</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cwmaxdep</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
                 <span class="k">for</span> <span class="n">cresp</span><span class="p">,</span> <span class="n">cdepl</span> <span class="ow">in</span> <span class="n">cwmaxdep</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="n">agg_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cn</span><span class="p">,</span> <span class="n">cresp</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdepl</span>
                     <span class="n">basekey</span> <span class="o">=</span> <span class="n">cresp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -865,7 +935,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

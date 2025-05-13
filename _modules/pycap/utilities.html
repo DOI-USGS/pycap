@@ -101,13 +101,19 @@
 <div class="viewcode-block" id="Q2ts"><a class="viewcode-back" href="../../api/pycap.utilities.html#pycap.utilities.Q2ts">[docs]</a><span class="k">def</span> <span class="nf">Q2ts</span><span class="p">(</span><span class="n">depl_pump_time</span><span class="p">,</span> <span class="n">depletion_years</span><span class="p">,</span> <span class="n">Q_scalar</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to convert a scalar Q to a time series</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        depl_pump_time (float): Number of days the well should be pumping from day 0</span>
-<span class="sd">        depletion_years (float): Number of years of pumping to be simulated</span>
-<span class="sd">        Q_scalar (float): Pumping rate in GPM</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    depl_pump_time: float</span>
+<span class="sd">        Number of days the well should be pumping from day 0</span>
+<span class="sd">    depletion_years: float</span>
+<span class="sd">        Number of years of pumping to be simulated</span>
+<span class="sd">    Q_scalar: float</span>
+<span class="sd">        Pumping rate [L**3/d]</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Q (pd.Series): day-indexed time series of pumping in CFD</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Q: pd.Series</span>
+<span class="sd">        time-indexed time series of pumping [L**3/d]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">365</span><span class="p">)</span>
     <span class="n">y1</span><span class="p">[:</span><span class="n">depl_pump_time</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q_scalar</span>
@@ -129,10 +135,18 @@
     <span class="sd">&quot;&quot;&quot;create a template timeseries CSV file ready to populate with</span>
 <span class="sd">    pumping rates in gallons per minute for running multiple times</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        filename (str, optional): Filename in which to write the template. Defaults to &#39;../examples/blank_ts.csv&#39;.</span>
-<span class="sd">        numyears (int, optional): Number of repeated years to generate. Defaults to 1.</span>
-<span class="sd">        well_ids(list, optional): list of well identifiers which will be used as column names</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename: str, optional</span>
+<span class="sd">        Filename in which to write the template.</span>
+<span class="sd">        Defaults to &#39;../examples/blank_ts.csv&#39;.</span>
+<span class="sd">    numyears: int, optional</span>
+<span class="sd">        Number of repeated years to generate.</span>
+<span class="sd">        Defaults to 1.</span>
+<span class="sd">    well_ids: list, optional</span>
+<span class="sd">        list of well identifiers</span>
+<span class="sd">        which will be used as column names</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># do not set to true, unless maybe you are running a single year</span>
@@ -178,7 +192,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

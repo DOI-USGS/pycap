@@ -126,7 +126,7 @@
 <span class="sd">        distance at which to calculate results in [L]</span>
 <span class="sd">    Q: float</span>
 <span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
-<span class="sd">    **kwargs: included to all drawdown methods for extra values required </span>
+<span class="sd">    **kwargs: included to all drawdown methods for extra values required</span>
 <span class="sd">        in some calls</span>
 
 <span class="sd">    Returns</span>
@@ -162,12 +162,12 @@
 
 
 <div class="viewcode-block" id="hunt99ddwn"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99ddwn">[docs]</a><span class="k">def</span> <span class="nf">hunt99ddwn</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Function to calculate drawdown in an aquifer with a partially </span>
-<span class="sd">        penetrating stream including streambed resistance (Hunt, 1999). </span>
+    <span class="sd">&quot;&quot;&quot;Function to calculate drawdown in an aquifer with a partially</span>
+<span class="sd">        penetrating stream including streambed resistance (Hunt, 1999).</span>
 <span class="sd">        Units are not specified, but should be consistent length and time.</span>
 
-<span class="sd">        The solution becomes the Theis solution if streambed conductance </span>
-<span class="sd">        is zero, and approaches an image-well solution from Theis or Glover </span>
+<span class="sd">        The solution becomes the Theis solution if streambed conductance</span>
+<span class="sd">        is zero, and approaches an image-well solution from Theis or Glover</span>
 <span class="sd">        and Balmer (1954) as streambed conductance gets very large.</span>
 <span class="sd">        Note that the well is located at the location x,y = (l, 0) and the stream</span>
 <span class="sd">        is aligned with y-axis at x=0</span>
@@ -195,13 +195,13 @@
 <span class="sd">        distance from stream, [ft]</span>
 <span class="sd">    y: float, optionally vector from numpy meshgrid giving grid of x,y locations</span>
 <span class="sd">        distance parallel to stream, well is located at y=0</span>
-<span class="sd">    **kwargs:  included to all drawdown methods for extra values required </span>
+<span class="sd">    **kwargs:  included to all drawdown methods for extra values required</span>
 <span class="sd">        in some calls</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    drawdown: float</span>
-<span class="sd">        single value, meshgrid of drawdowns, or np.array with shape </span>
+<span class="sd">        single value, meshgrid of drawdowns, or np.array with shape</span>
 <span class="sd">        (ntimes, meshgridxx, meshgridyy)</span>
 <span class="sd">        depending on input form of x, y, and ntimes [L]</span>
 
@@ -324,7 +324,7 @@
 
 
 <span class="k">def</span> <span class="nf">_ddwn2</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Internal method to calculate function that gets integrated </span>
+    <span class="sd">&quot;&quot;&quot;Internal method to calculate function that gets integrated</span>
 <span class="sd">        in the Hunt (1999) solution</span>
 
 <span class="sd">    Equations 29 and 30 in the paper, theta is the constant</span>
@@ -373,48 +373,51 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d] (K*D in the original paper)</span>
+<span class="sd">        Transmissivity  in the upper aquifer [L**2/T]</span>
+<span class="sd">        (K*D or T1 in the original paper)</span>
 <span class="sd">    S: float</span>
-<span class="sd">        storage [unitless] (V in the original paper)</span>
-<span class="sd">    time: float, optionally np.array or list</span>
-<span class="sd">        time at which to calculate results [d]</span>
-<span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft] (X1 in the paper)</span>
+<span class="sd">        Specific yield for upper aquifer [unitless]</span>
+<span class="sd">        (S1 in the original paper)</span>
+<span class="sd">    t: float, optionally np.array or list</span>
+<span class="sd">        time at which to calculate results [T]</span>
+<span class="sd">    dist: Distance between pumping well and stream [L]</span>
+<span class="sd">        (L in the original paper)</span>
 <span class="sd">    Q: float</span>
-<span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
-<span class="sd">    **kwargs: see Other Parameters below</span>
+<span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    ddwn float</span>
-<span class="sd">        drawdown at specified location or locations [ft]</span>
+<span class="sd">        drawdown at specified location or locations [L]</span>
 
 <span class="sd">    Other Parameters</span>
 <span class="sd">    ----------------</span>
-<span class="sd">    **kwargs: dict</span>
-<span class="sd">        keyword arguments needed for the Hunt (2003) depletion solution are:</span>
 <span class="sd">    T2: float</span>
-<span class="sd">        Transmissivity of</span>
+<span class="sd">        Transmissivity of deeper system</span>
 <span class="sd">    S2: float</span>
 <span class="sd">        Storativity of</span>
 <span class="sd">    streambed_thick: float</span>
 <span class="sd">        thickness of streambed</span>
 <span class="sd">    streambed_K: float</span>
-<span class="sd">        hydraulic conductivity of streambed, ft/day</span>
+<span class="sd">        hydraulic conductivity of streambed, [L/T]</span>
 <span class="sd">    aquitard_thick: float</span>
-<span class="sd">        thickness of intervening leaky aquitard, ft</span>
+<span class="sd">        thickness of intervening leaky aquitard, [L]</span>
 <span class="sd">    aquitard_K: float</span>
-<span class="sd">        hydraulic conductivity of intervening leaky aquifer, ft/day</span>
+<span class="sd">        hydraulic conductivity of intervening leaky aquifer, [L/T]</span>
 <span class="sd">    x: float</span>
-<span class="sd">        xxxxxx</span>
+<span class="sd">        x-coordinate of drawdown location</span>
+<span class="sd">        (with origin being x=0 at stream location) [L]</span>
 <span class="sd">    y: float</span>
-<span class="sd">        yyyyyy</span>
+<span class="sd">        y-coordinate of drawdown location</span>
+<span class="sd">        (with origin being y=0 at pumping well location) [L]</span>
 <span class="sd">    NSteh1: int</span>
-<span class="sd">        IIIIII</span>
+<span class="sd">        Number of Stehfest series levels - algorithmic tuning parameter.</span>
+<span class="sd">        Defaults to 2.</span>
 <span class="sd">    NStehl2: int</span>
-<span class="sd">        IIIII</span>
+<span class="sd">        Number of Stehfest series levels - algorithmic tuning parameter.</span>
+<span class="sd">        Defaults to 2.</span>
 <span class="sd">    width: float</span>
-<span class="sd">        stream width (b in paper) [ft]</span>
+<span class="sd">        stream width (b in paper) [L]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># first nondimensionalize all the parameters</span>
@@ -484,26 +487,23 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d] (K*D in the original paper)</span>
+<span class="sd">        transmissivity [L**2/T]</span>
 <span class="sd">    S: float</span>
-<span class="sd">        storage [unitless] (V in the original paper)</span>
+<span class="sd">        storage [unitless]</span>
 <span class="sd">    time: float, optionally np.array or list</span>
-<span class="sd">        time at which to calculate results [d]</span>
+<span class="sd">        time at which to calculate results [T]</span>
 <span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft] (X1 in the paper)</span>
+<span class="sd">        distance at which to calculate results in [ft]</span>
 <span class="sd">    Q: float</span>
-<span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
-<span class="sd">    **kwargs: included to all depletion methods for extra values reuired in some calls</span>
+<span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
+<span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    drawdown: float</span>
 <span class="sd">        depletion values at at input parameter times/distances</span>
 
-<span class="sd">    Other Parameters</span>
-<span class="sd">    ----------------</span>
-<span class="sd">    **kwargs: dict</span>
-<span class="sd">        no keyword arguments are needed for the Glover and Balmer (1954) depletion solution</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></div>
@@ -524,17 +524,17 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d]</span>
+<span class="sd">        transmissivity [L**2/T]</span>
 <span class="sd">    S: float</span>
 <span class="sd">        storage [unitless]</span>
 <span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft]</span>
-<span class="sd">    **kwargs: just included to all for extra values in call</span>
+<span class="sd">        distance at which to calculate results in [L]</span>
+<span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    SDF: float</span>
-<span class="sd">        Stream depletion factor [d]</span>
+<span class="sd">        Stream depletion factor [T]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
@@ -549,16 +549,19 @@
 <span class="sd">        Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea,</span>
 <span class="sd">        Michigan, 201 p.</span>
 
+<span class="sd">        Note that unlike the other depletion functions, this Walton function</span>
+<span class="sd">        is unit-specific, using feet and days as dimensions.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d] (K*D in the original paper)</span>
+<span class="sd">        transmissivity [gal per d per ft]</span>
 <span class="sd">    S: float</span>
-<span class="sd">        storage [unitless] (V in the original paper)</span>
+<span class="sd">        storage [unitless]</span>
 <span class="sd">    time: float, optionally np.array or list</span>
 <span class="sd">        time at which to calculate results [d]</span>
 <span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft] (X1 in the paper)</span>
+<span class="sd">        distance at which to calculate results in [ft]</span>
 <span class="sd">    Q: float</span>
 <span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
 <span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
@@ -568,10 +571,6 @@
 <span class="sd">    drawdown: float</span>
 <span class="sd">        depletion values at at input parameter times/distances</span>
 
-<span class="sd">    Other Parameters</span>
-<span class="sd">    ----------------</span>
-<span class="sd">    **kwargs: dict</span>
-<span class="sd">        no keyword arguments are needed for Walton (1987) depletion solution</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
@@ -606,26 +605,25 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d] (K*D in the original paper)</span>
+<span class="sd">        transmissivity [L**2/T]</span>
 <span class="sd">    S: float</span>
-<span class="sd">        storage [unitless] (V in the original paper)</span>
+<span class="sd">        storage [unitless]</span>
 <span class="sd">    time: float, optionally np.array or list</span>
-<span class="sd">        time at which to calculate results [d]</span>
+<span class="sd">        time at which to calculate results [T]</span>
 <span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft] (X1 in the paper)</span>
+<span class="sd">        distance at which to calculate results in [L]</span>
 <span class="sd">    Q: float</span>
-<span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
-<span class="sd">    **kwargs: see Other Parameters below</span>
+<span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
+<span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Qs: float</span>
-<span class="sd">        streamflow depletion rate, optionally np.array or list depending on input of time and dist [CFS]</span>
+<span class="sd">        streamflow depletion rate, optionally np.array or list</span>
+<span class="sd">        depending on input of time and dist [L**3/T]</span>
 
 <span class="sd">    Other Parameters</span>
 <span class="sd">    ----------------</span>
-<span class="sd">    **kwargs: dict</span>
-<span class="sd">        keyword arguments needed for the Hunt (1999) depletion solution are:</span>
 <span class="sd">    streambed: float</span>
 <span class="sd">        streambed conductance [ft/d] (lambda in the paper)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -678,38 +676,39 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d] (K*D in the original paper)</span>
+<span class="sd">        transmissivity [L**2/T]</span>
 <span class="sd">    S: float</span>
-<span class="sd">        storage [unitless] (V in the original paper)</span>
+<span class="sd">        storage [unitless]</span>
 <span class="sd">    time: float, optionally np.array or list</span>
-<span class="sd">        time at which to calculate results [d]</span>
+<span class="sd">        time at which to calculate results [T]</span>
 <span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft] (X1 in the paper)</span>
+<span class="sd">        distance at which to calculate results in [L]</span>
 <span class="sd">    Q: float</span>
-<span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
-<span class="sd">    **kwargs: see Other Parameters below</span>
+<span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
+<span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Qs: float</span>
-<span class="sd">        streamflow depletion rate, optionally np.array or list depending on input of time and dist [CFS]</span>
+<span class="sd">        streamflow depletion rate, optionally np.array or list</span>
+<span class="sd">        depending on input of time and dist [L**3/T]</span>
 
 <span class="sd">    Other Parameters</span>
 <span class="sd">    ----------------</span>
-<span class="sd">    **kwargs: dict</span>
-<span class="sd">        keyword arguments needed for the Hunt (2003) depletion solution are:</span>
 <span class="sd">    Bprime: float</span>
-<span class="sd">        saturated thickness of semiconfining layer containing stream, [ft]</span>
+<span class="sd">        saturated thickness of semiconfining layer containing stream, [L]</span>
 <span class="sd">    Bdouble: float</span>
-<span class="sd">        distance from bottom of stream to bottom of semiconfining layer, [ft] (aquitard thickness beneath the stream)</span>
+<span class="sd">        distance from bottom of stream to bottom of semiconfining layer,</span>
+<span class="sd">        [L] (aquitard thickness beneath the stream)</span>
 <span class="sd">    K: float</span>
-<span class="sd">        hydraulic conductivity of semiconfining layer [ft/day]</span>
+<span class="sd">        hydraulic conductivity of semiconfining layer [L/T]</span>
 <span class="sd">    sigma: float</span>
 <span class="sd">        porosity of semiconfining layer</span>
 <span class="sd">    width: float</span>
-<span class="sd">        stream width (b in paper) [ft]</span>
+<span class="sd">        stream width (b in paper) [T]</span>
 <span class="sd">    streambed: float</span>
-<span class="sd">        streambed conductance [ft/d] (lambda in the paper), only used if K is less than 1e-10</span>
+<span class="sd">        streambed conductance [L/T] (lambda in the paper),</span>
+<span class="sd">        only used if K is less than 1e-10</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -942,11 +941,8 @@
     <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">NSteh1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">NStehl2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute streamflow depletion using Ward and Lough (2011) solution</span>
-
-<span class="sd">    *needs to be refactored to use kwargs*</span>
 
 <span class="sd">        Ward and Lough (2011) presented a solution for streamflow depletion</span>
 <span class="sd">        by a pumping well in a layered aquifer system.  The stream</span>
@@ -962,48 +958,49 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    T: float</span>
-<span class="sd">        transmissivity [ft**2/d] (K*D in the original paper)</span>
-<span class="sd">    S: float</span>
-<span class="sd">        storage [unitless] (V in the original paper)</span>
+<span class="sd">        transmissivity [L**2/T]</span>
+<span class="sd">    storage [unitless]</span>
+<span class="sd">        specific yield in the upper q aquifer</span>
 <span class="sd">    time: float, optionally np.array or list</span>
-<span class="sd">        time at which to calculate results [d]</span>
+<span class="sd">        time at which to calculate results [T]</span>
 <span class="sd">    dist: float, optionally np.array or list</span>
-<span class="sd">        distance at which to calculate results in [ft] (X1 in the paper)</span>
+<span class="sd">        distance at which to calculate results in [L]</span>
 <span class="sd">    Q: float</span>
-<span class="sd">        pumping rate (+ is extraction) [ft**3/d]</span>
-<span class="sd">    **kwargs: see Other Parameters below</span>
+<span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
+<span class="sd">     **kwargs: included to all depletion methods for extra values required in some calls</span>
+
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Qs: float</span>
-<span class="sd">        streamflow depletion rate, optionally np.array or list depending on input of time and dist [CFS]</span>
+<span class="sd">        streamflow depletion rate, optionally np.array or list</span>
+<span class="sd">        depending on input of time and dist [L**3/T]</span>
 
 <span class="sd">    Other Parameters</span>
 <span class="sd">    ----------------</span>
-<span class="sd">    **kwargs: dict</span>
-<span class="sd">        keyword arguments needed for the Hunt (2003) depletion solution are:</span>
 <span class="sd">    T2: float</span>
-<span class="sd">        Transmissivity of</span>
+<span class="sd">        Transmissivity of deeper system</span>
 <span class="sd">    S2: float</span>
 <span class="sd">        Storativity of</span>
 <span class="sd">    streambed_thick: float</span>
 <span class="sd">        thickness of streambed</span>
 <span class="sd">    streambed_K: float</span>
-<span class="sd">        hydraulic conductivity of streambed, ft/day</span>
+<span class="sd">        hydraulic conductivity of streambed, [L/T]</span>
 <span class="sd">    aquitard_thick: float</span>
-<span class="sd">        thickness of intervening leaky aquitard, ft</span>
+<span class="sd">        thickness of intervening leaky aquitard, [L]</span>
 <span class="sd">    aquitard_K: float</span>
-<span class="sd">        hydraulic conductivity of intervening leaky aquifer, ft/day</span>
+<span class="sd">        hydraulic conductivity of intervening leaky aquifer, [L/T]</span>
 <span class="sd">    x: float</span>
-<span class="sd">        xxxxxx</span>
+<span class="sd">        x-coordinate of drawdown location</span>
+<span class="sd">        (with origin being x=0 at stream location) [L]</span>
 <span class="sd">    y: float</span>
-<span class="sd">        yyyyyy</span>
+<span class="sd">        y-coordinate of drawdown location</span>
+<span class="sd">        (with origin being y=0 at pumping well location) [L]</span>
 <span class="sd">    NSteh1: int</span>
-<span class="sd">        IIIIII</span>
-<span class="sd">    NStehl2: int</span>
-<span class="sd">        IIIII</span>
+<span class="sd">        Number of Stehfest series levels - algorithmic tuning parameter.</span>
+<span class="sd">        Defaults to 2.</span>
 <span class="sd">    width: float</span>
-<span class="sd">        stream width (b in paper) [ft]</span>
+<span class="sd">        stream width (b in paper) [L]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># first nondimensionalize all the parameters</span>
@@ -1034,7 +1031,7 @@
         <span class="p">)</span>
     <span class="n">DeltaQ</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">lambd</span> <span class="o">*</span> <span class="n">DeltaQ</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span>
 
-    <span class="k">return</span> <span class="n">DeltaQ</span> <span class="o">*</span> <span class="n">Q</span>   <span class="c1"># convert back to CFS from CFD</span></div>
+    <span class="k">return</span> <span class="n">DeltaQ</span> <span class="o">*</span> <span class="n">Q</span>  <span class="c1"># convert back to CFS from CFD</span></div>
 
 
 <span class="k">def</span> <span class="nf">_if1_dQ</span><span class="p">(</span><span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -1239,7 +1236,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

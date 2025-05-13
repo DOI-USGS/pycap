@@ -2,27 +2,27 @@
 Usage
 =====
 
-Start by importing HiCap_Analysis
+Start by importing `pycap`
 
 .. code-block:: python
 
-    import hicap_analysis
+    import pycap
 
 
 Or import a well functions
 
 .. code-block:: python
 
-    import hicap_analysis.wells as wo
+    import pycap.wells as wo
 
-    ddwn = wo._theis()
+    ddwn = wo.theis()
 
 Or import a specific function.
 
 .. code-block:: python
 
-    from hicap_analysis.wells import _theis
+    from pycap.wells import glover
 
-    ddwn = _theis()
+    depl = glover()
 
     

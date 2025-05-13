@@ -135,12 +135,22 @@
 <dt class="sig sig-object py" id="pycap.utilities.Q2ts">
 <span class="sig-prename descclassname"><span class="pre">pycap.utilities.</span></span><span class="sig-name descname"><span class="pre">Q2ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depl_pump_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depletion_years</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q_scalar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/utilities.html#Q2ts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.utilities.Q2ts" title="Permalink to this definition"></a></dt>
 <dd><p>Function to convert a scalar Q to a time series</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>depl_pump_time (float): Number of days the well should be pumping from day 0
-depletion_years (float): Number of years of pumping to be simulated
-Q_scalar (float): Pumping rate in GPM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>depl_pump_time: float</strong></dt><dd><p>Number of days the well should be pumping from day 0</p>
 </dd>
-<dt>Returns:</dt><dd><p>Q (pd.Series): day-indexed time series of pumping in CFD</p>
+<dt><strong>depletion_years: float</strong></dt><dd><p>Number of years of pumping to be simulated</p>
+</dd>
+<dt><strong>Q_scalar: float</strong></dt><dd><p>Pumping rate [L**3/d]</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Q: pd.Series</dt><dd><p>time-indexed time series of pumping [L**3/d]</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -150,10 +160,19 @@ Q_scalar (float): Pumping rate in GPM</p>
 <span class="sig-prename descclassname"><span class="pre">pycap.utilities.</span></span><span class="sig-name descname"><span class="pre">create_timeseries_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../examples/blank_ts.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numyears</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">well_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['well1',</span> <span class="pre">'well2']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/utilities.html#create_timeseries_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.utilities.create_timeseries_template" title="Permalink to this definition"></a></dt>
 <dd><p>create a template timeseries CSV file ready to populate with
 pumping rates in gallons per minute for running multiple times</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>filename (str, optional): Filename in which to write the template. Defaults to ‘../examples/blank_ts.csv’.
-numyears (int, optional): Number of repeated years to generate. Defaults to 1.
-well_ids(list, optional): list of well identifiers which will be used as column names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename: str, optional</strong></dt><dd><p>Filename in which to write the template.
+Defaults to ‘../examples/blank_ts.csv’.</p>
+</dd>
+<dt><strong>numyears: int, optional</strong></dt><dd><p>Number of repeated years to generate.
+Defaults to 1.</p>
+</dd>
+<dt><strong>well_ids: list, optional</strong></dt><dd><p>list of well identifiers
+which will be used as column names</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -172,7 +191,7 @@ well_ids(list, optional): list of well identifiers which will be used as column 
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

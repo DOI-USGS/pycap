@@ -118,20 +118,20 @@
 </style>
 <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
-<p>Start by importing HiCap_Analysis</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hicap_analysis</span>
+<p>Start by importing <cite>pycap</cite></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycap</span>
 </pre></div>
 </div>
 <p>Or import a well functions</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hicap_analysis.wells</span> <span class="k">as</span> <span class="nn">wo</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycap.wells</span> <span class="k">as</span> <span class="nn">wo</span>
 
-<span class="n">ddwn</span> <span class="o">=</span> <span class="n">wo</span><span class="o">.</span><span class="n">_theis</span><span class="p">()</span>
+<span class="n">ddwn</span> <span class="o">=</span> <span class="n">wo</span><span class="o">.</span><span class="n">theis</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Or import a specific function.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hicap_analysis.wells</span> <span class="kn">import</span> <span class="n">_theis</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.wells</span> <span class="kn">import</span> <span class="n">glover</span>
 
-<span class="n">ddwn</span> <span class="o">=</span> <span class="n">_theis</span><span class="p">()</span>
+<span class="n">depl</span> <span class="o">=</span> <span class="n">glover</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -148,7 +148,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

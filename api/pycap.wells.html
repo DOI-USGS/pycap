@@ -137,33 +137,41 @@
 <dt class="sig sig-object py" id="pycap.wells.Well">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycap.wells.</span></span><span class="sig-name descname"><span class="pre">Well</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">well_status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pending'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-9999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-99999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-99999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depletion_years</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theis_dd_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-9999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depl_pump_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-9999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_dist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawdown_dist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream_apportionment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depl_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'walton'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/wells.html#Well"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.wells.Well" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Object to evaluate a pending (or existing, or a couple other possibilities) well with all relevant impacts.
+<p>Object to evaluate a pending (or existing,
+or a couple other possibilities) well with all relevant impacts.
 Preprocessing makes unit conversions and calculates distances as needed</p>
-<p>[summary]</p>
+<p>Object to evaluate a pending (or existing,
+or a couple other possibilities) well with all relevant impacts.
+Preprocessing makes unit conversions and calculates distances as needed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>Aquifer Transmissivity</p>
+<dt><strong>T: float</strong></dt><dd><p>Aquifer Transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>Aquifer Storage</p>
+<dt><strong>S: float</strong></dt><dd><p>Aquifer Storage [unitless]</p>
 </dd>
-<dt><strong>Q: pandas series</strong></dt><dd><p>Pumping rate changes and times</p>
+<dt><strong>Q: pandas series</strong></dt><dd><p>Pumping rate changes and times [L**3/T]</p>
 </dd>
-<dt><strong>depletion_years: int</strong></dt><dd><p>[description]. Defaults to 4.</p>
+<dt><strong>depletion_years: int, optional</strong></dt><dd><p>Number of years over which to calculate depletion. Defaults to 4.</p>
 </dd>
-<dt><strong>theis_dd_days: int</strong></dt><dd><p>[description]. Defaults to -9999.</p>
+<dt><strong>theis_dd_days: int</strong></dt><dd><p>Number of days at which drawdown is calculated. Defaults to -9999.</p>
 </dd>
-<dt><strong>depl_pump_time: int</strong></dt><dd><p>[description]. Defaults to -9999.</p>
+<dt><strong>depl_pump_time: integer, optional</strong></dt><dd><p>Length of time per year that pumping should be simulated for depletion
+calculations [T]. Not used if pumping time series is used.
+Defaults to -99999.</p>
 </dd>
-<dt><strong>stream_dist: float</strong></dt><dd><p>[description]. Defaults to None.</p>
+<dt><strong>stream_apportionment: dict of floats</strong></dt><dd><p>Dictionary with stream responses and fraction of depletion
+attributed to each. Defaults to None.</p>
 </dd>
-<dt><strong>drawdown_dist: float</strong></dt><dd><p>[description]. Defaults to None.</p>
+<dt><strong>drawdown_dist: float</strong></dt><dd><p>Distance between well and drawdown calculation location. [L]</p>
 </dd>
-<dt><strong>stream_apportionment: type</strong></dt><dd><p>[description]. Defaults to None.</p>
+<dt><strong>stream_apportionment: dict of floats</strong></dt><dd><p>Dictionary with stream responses and fraction of depletion
+attributed to each. Defaults to None.</p>
 </dd>
-<dt><strong>depl_method: string</strong></dt><dd><p>description]. Defaults to walton</p>
+<dt><strong>depl_method: string, optional</strong></dt><dd><p>Method to be used for depletion calculations. Defaults to ‘Glover’.</p>
 </dd>
-<dt><strong>streambed_conductance: dict</strong></dt><dd><p>dictionary of streambed conductances. Defaults to None</p>
+<dt><strong>streambed_conductance: float</strong></dt><dd><p>Streambed conductance for the Hunt99 depletion method [L/T].
+Defaults to None</p>
 </dd>
 </dl>
 </dd>
@@ -196,7 +204,6 @@ users will not have to access analytical solutions directly, but
 can set up a WellResponse object.  The generation of WellResponse
 objects is generally done through an AnalysisProject object.</p>
 <p>Class to calculate a single response for a single pumping well.</p>
-<p><em>refactor for kwargs?</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -204,25 +211,30 @@ objects is generally done through an AnalysisProject object.</p>
 </dd>
 <dt><strong>response_type: string</strong></dt><dd><p>reserved for future implementation</p>
 </dd>
-<dt><strong>T: float</strong></dt><dd><p>Aquifer Transmissivity</p>
+<dt><strong>T: float</strong></dt><dd><p>Aquifer Transmissivity [L**2/T]</p>
 </dd>
-<dt><strong>S: float</strong></dt><dd><p>Aquifer Storage</p>
+<dt><strong>S: float</strong></dt><dd><p>Aquifer Storage [unitless]</p>
 </dd>
-<dt><strong>dist: float</strong></dt><dd><p>Distance between well and response</p>
+<dt><strong>dist: float</strong></dt><dd><p>Distance between well and response [L]</p>
 </dd>
-<dt><strong>Q: pandas series</strong></dt><dd><p>Pumping rate changes and times</p>
+<dt><strong>Q: pandas series</strong></dt><dd><p>Pumping rate changes and times [L**3/T]</p>
 </dd>
-<dt><strong>stream_apportionment: string</strong></dt><dd><p>([type], optional): [description]. Defaults to None.</p>
+<dt><strong>stream_apportionment: dict of floats</strong></dt><dd><p>Dictionary with stream responses and fraction of depletion
+attributed to each. Defaults to None.</p>
 </dd>
-<dt><strong>dd_method: string</strong></dt><dd><p>[description]. Defaults to ‘Theis’.</p>
+<dt><strong>dd_method: string, optional</strong></dt><dd><p>Method to be used for drawdown calculations. Defaults to ‘Theis’.</p>
 </dd>
-<dt><strong>depl_method:string</strong></dt><dd><p>(str, optional): [description]. Defaults to ‘Glover’.</p>
+<dt><strong>depl_method: string, optional</strong></dt><dd><p>Method to be used for depletion calculations. Defaults to ‘Glover’.</p>
 </dd>
-<dt><strong>theis_time: integer</strong></dt><dd><p>(int, optional): [description]. Defaults to -9999.</p>
+<dt><strong>theis_time: integer, optional</strong></dt><dd><p>Time at which drawdown calculation should be made [T].
+Defaults to -9999.</p>
 </dd>
-<dt><strong>depl_pump_time: integer</strong></dt><dd><p>(int, optional): [description]. Defaults to -99999.</p>
+<dt><strong>depl_pump_time: integer, optional</strong></dt><dd><p>Length of time per year that pumping should be simulated for depletion
+calculations [T]. Not used if pumping time series is used.
+Defaults to -99999.</p>
 </dd>
-<dt><strong>streambed_conductance: float</strong></dt><dd><p>Streambed conductance for the Hunt99 depletion method. Defaults to None</p>
+<dt><strong>streambed_conductance: float</strong></dt><dd><p>Streambed conductance for the Hunt99 depletion method [L/T].
+Defaults to None</p>
 </dd>
 </dl>
 </dd>
@@ -253,7 +265,7 @@ objects is generally done through an AnalysisProject object.</p>
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 

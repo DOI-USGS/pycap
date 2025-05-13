@@ -123,8 +123,6 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Class to calculate a single response for a single pumping well.</span>
 
-<span class="sd">        *refactor for kwargs?*</span>
-
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        name: string</span>
@@ -132,31 +130,38 @@
 <span class="sd">        response_type: string</span>
 <span class="sd">            reserved for future implementation</span>
 <span class="sd">        T: float</span>
-<span class="sd">            Aquifer Transmissivity</span>
+<span class="sd">            Aquifer Transmissivity [L**2/T]</span>
 <span class="sd">        S: float</span>
-<span class="sd">            Aquifer Storage</span>
+<span class="sd">            Aquifer Storage [unitless]</span>
 <span class="sd">        dist: float</span>
-<span class="sd">            Distance between well and response</span>
+<span class="sd">            Distance between well and response [L]</span>
 <span class="sd">        Q: pandas series</span>
-<span class="sd">            Pumping rate changes and times</span>
-<span class="sd">        stream_apportionment: string</span>
-<span class="sd">                ([type], optional): [description]. Defaults to None.</span>
-<span class="sd">        dd_method: string</span>
-<span class="sd">            [description]. Defaults to &#39;Theis&#39;.</span>
-<span class="sd">        depl_method:string</span>
-<span class="sd">            (str, optional): [description]. Defaults to &#39;Glover&#39;.</span>
-<span class="sd">        theis_time: integer</span>
-<span class="sd">            (int, optional): [description]. Defaults to -9999.</span>
-<span class="sd">        depl_pump_time: integer</span>
-<span class="sd">            (int, optional): [description]. Defaults to -99999.</span>
+<span class="sd">            Pumping rate changes and times [L**3/T]</span>
+<span class="sd">        stream_apportionment: dict of floats</span>
+<span class="sd">                Dictionary with stream responses and fraction of depletion</span>
+<span class="sd">                attributed to each. Defaults to None.</span>
+<span class="sd">        dd_method: string, optional</span>
+<span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;Theis&#39;.</span>
+<span class="sd">        depl_method: string, optional</span>
+<span class="sd">            Method to be used for depletion calculations. Defaults to &#39;Glover&#39;.</span>
+<span class="sd">        theis_time: integer, optional</span>
+<span class="sd">            Time at which drawdown calculation should be made [T].</span>
+<span class="sd">            Defaults to -9999.</span>
+<span class="sd">        depl_pump_time: integer, optional</span>
+<span class="sd">            Length of time per year that pumping should be simulated for depletion</span>
+<span class="sd">            calculations [T]. Not used if pumping time series is used.</span>
+<span class="sd">            Defaults to -99999.</span>
 <span class="sd">        streambed_conductance: float</span>
-<span class="sd">            Streambed conductance for the Hunt99 depletion method. Defaults to None</span>
+<span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
+<span class="sd">            Defaults to None</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  <span class="c1"># name of response (stream, or drawdown response (e.g. assessed well, lake, spring)) evaluated</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">response_type</span> <span class="o">=</span> <span class="n">response_type</span>  <span class="c1"># might use this later to sort out which response to return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  <span class="c1"># name of response (stream, or drawdown response</span>
+        <span class="c1"># (e.g. assessed well, lake, spring)) evaluated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_type</span> <span class="o">=</span> <span class="n">response_type</span>  <span class="c1"># might use this later to</span>
+        <span class="c1"># sort out which response to return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">T_gpd_ft</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="mf">7.48</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span>
@@ -170,7 +175,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
 
     <span class="k">def</span> <span class="nf">_calc_drawdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;calculate drawdown at requested distance and time using solution given as attribute to the object&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;calculate drawdown at requested distance and</span>
+<span class="sd">        time using solution given as attribute to the object&quot;&quot;&quot;</span>
         <span class="n">dd_f</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DD_METHODS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dd_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
         <span class="c1"># start with zero drawdown</span>
         <span class="n">dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
@@ -194,7 +200,8 @@
         <span class="k">return</span> <span class="n">dd</span>
 
     <span class="k">def</span> <span class="nf">_calc_depletion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;calculate streamflow depletion at time using solution given as attribute to the object&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;calculate streamflow depletion at</span>
+<span class="sd">        time using solution given as attribute to the object&quot;&quot;&quot;</span>
         <span class="n">depl_f</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DEPL_METHODS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
         <span class="c1"># start with zero depletion</span>
         <span class="n">depl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
@@ -227,8 +234,8 @@
             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">cQ</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
                 <span class="n">idx</span> <span class="o">-=</span> <span class="mi">2</span>
                 <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span> <span class="o">-</span> <span class="n">idx</span><span class="p">))</span>
-                <span class="c1"># note that by setting Q negative from the diff calculations, we always add</span>
-                <span class="c1"># below for the image wells</span>
+                <span class="c1"># note that by setting Q negative from the diff</span>
+                <span class="c1"># calculations, we always add below for the image wells</span>
                 <span class="n">depl</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">depl_f</span><span class="p">(</span>
                     <span class="n">T</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span>
@@ -249,7 +256,8 @@
 
 
 <div class="viewcode-block" id="Well"><a class="viewcode-back" href="../../api/pycap.wells.html#pycap.wells.Well">[docs]</a><span class="k">class</span> <span class="nc">Well</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Object to evaluate a pending (or existing, or a couple other possibilities) well with all relevant impacts.</span>
+    <span class="sd">&quot;&quot;&quot;Object to evaluate a pending (or existing,</span>
+<span class="sd">    or a couple other possibilities) well with all relevant impacts.</span>
 <span class="sd">    Preprocessing makes unit conversions and calculates distances as needed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -268,32 +276,40 @@
         <span class="n">depl_method</span><span class="o">=</span><span class="s2">&quot;walton&quot;</span><span class="p">,</span>
         <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;[summary]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Object to evaluate a pending (or existing,</span>
+<span class="sd">        or a couple other possibilities) well with all relevant impacts.</span>
+<span class="sd">        Preprocessing makes unit conversions and calculates distances as needed</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        T: float</span>
-<span class="sd">            Aquifer Transmissivity</span>
+<span class="sd">            Aquifer Transmissivity [L**2/T]</span>
 <span class="sd">        S: float</span>
-<span class="sd">            Aquifer Storage</span>
+<span class="sd">            Aquifer Storage [unitless]</span>
 <span class="sd">        Q: pandas series</span>
-<span class="sd">            Pumping rate changes and times</span>
-<span class="sd">        depletion_years: int</span>
-<span class="sd">            [description]. Defaults to 4.</span>
+<span class="sd">            Pumping rate changes and times [L**3/T]</span>
+<span class="sd">        depletion_years: int, optional</span>
+<span class="sd">            Number of years over which to calculate depletion. Defaults to 4.</span>
 <span class="sd">        theis_dd_days: int</span>
-<span class="sd">            [description]. Defaults to -9999.</span>
-<span class="sd">        depl_pump_time: int</span>
-<span class="sd">            [description]. Defaults to -9999.</span>
-<span class="sd">        stream_dist: float</span>
-<span class="sd">            [description]. Defaults to None.</span>
+<span class="sd">            Number of days at which drawdown is calculated. Defaults to -9999.</span>
+<span class="sd">        depl_pump_time: integer, optional</span>
+<span class="sd">            Length of time per year that pumping should be simulated for depletion</span>
+<span class="sd">            calculations [T]. Not used if pumping time series is used.</span>
+<span class="sd">            Defaults to -99999.</span>
+<span class="sd">        stream_apportionment: dict of floats</span>
+<span class="sd">                Dictionary with stream responses and fraction of depletion</span>
+<span class="sd">                attributed to each. Defaults to None.</span>
 <span class="sd">        drawdown_dist: float</span>
-<span class="sd">            [description]. Defaults to None.</span>
-<span class="sd">        stream_apportionment: type</span>
-<span class="sd">            [description]. Defaults to None.</span>
-<span class="sd">        depl_method: string</span>
-<span class="sd">            description]. Defaults to walton</span>
-<span class="sd">        streambed_conductance: dict</span>
-<span class="sd">            dictionary of streambed conductances. Defaults to None</span>
+<span class="sd">            Distance between well and drawdown calculation location. [L]</span>
+<span class="sd">        stream_apportionment: dict of floats</span>
+<span class="sd">                Dictionary with stream responses and fraction of depletion</span>
+<span class="sd">                attributed to each. Defaults to None.</span>
+<span class="sd">        depl_method: string, optional</span>
+<span class="sd">            Method to be used for depletion calculations. Defaults to &#39;Glover&#39;.</span>
+<span class="sd">        streambed_conductance: float</span>
+<span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
+<span class="sd">            Defaults to None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># placeholders for values returned with @property decorators</span>
@@ -311,11 +327,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span> <span class="o">=</span> <span class="n">stream_apportionment</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict of WellResponse objects for this well with streams</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_responses</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict of WellResponse objects for this well with drawdown responses</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">well_status</span> <span class="o">=</span> <span class="n">well_status</span>  <span class="c1"># this is for the well object - later used for aggregation and must be</span>
-        <span class="c1"># {&#39;existing&#39;, &#39;active&#39;, &#39;pending&#39;, &#39;new_approved&#39;, &#39;inactive&#39; }</span>
-        <span class="c1"># make sure stream names consistent between dist and apportionment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict of WellResponse objects</span>
+        <span class="c1"># for this well with streams</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_responses</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict of WellResponse objects</span>
+        <span class="c1"># for this well with drawdown responses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">well_status</span> <span class="o">=</span> <span class="n">well_status</span>  <span class="c1"># this is for the well object -</span>
+        <span class="c1"># later used for aggregation and must be</span>
+        <span class="c1"># {&#39;existing&#39;, &#39;active&#39;, &#39;pending&#39;,</span>
+        <span class="c1"># &#39;new_approved&#39;, &#39;inactive&#39; }</span>
+        <span class="c1"># make sure stream names consistent</span>
+        <span class="c1"># between dist and apportionment</span>
         <span class="k">if</span> <span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stream_apportionment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
                 <span class="nb">len</span><span class="p">(</span>
@@ -406,7 +427,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 10, 2025.
+      <span class="lastupdated">Last updated on May 13, 2025.
       </span></p>
   </div>
 
