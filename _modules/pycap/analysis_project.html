@@ -473,9 +473,11 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q_ts</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">*</span> <span class="n">GPM2CFD</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">Q</span> <span class="o">=</span> <span class="n">Q2ts</span><span class="p">(</span>
-                    <span class="n">cw</span><span class="p">[</span><span class="s2">&quot;pumping_days&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">cw</span><span class="p">[</span><span class="s2">&quot;depletion_years&quot;</span><span class="p">]),</span> <span class="n">cw</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span>
-                <span class="p">)</span>
+                <span class="n">Q</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">Q2ts</span><span class="p">(</span>
+                        <span class="n">cw</span><span class="p">[</span><span class="s2">&quot;pumping_days&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">cw</span><span class="p">[</span><span class="s2">&quot;depletion_years&quot;</span><span class="p">]),</span> <span class="n">cw</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span> <span class="o">*</span> <span class="n">GPM2CFD</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wells</span><span class="p">[</span><span class="n">ck</span><span class="p">]</span> <span class="o">=</span> <span class="n">Well</span><span class="p">(</span>

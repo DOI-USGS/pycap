@@ -117,12 +117,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">365</span><span class="p">)</span>
     <span class="n">y1</span><span class="p">[:</span><span class="n">depl_pump_time</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q_scalar</span>
-    <span class="n">Q</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-            <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">depletion_years</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
-            <span class="n">data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span> <span class="o">*</span> <span class="n">depletion_years</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="o">*</span> <span class="n">GPM2CFD</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+        <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">depletion_years</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span> <span class="o">*</span> <span class="n">depletion_years</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">Q</span></div>
 
