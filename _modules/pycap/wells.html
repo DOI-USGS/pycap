@@ -120,6 +120,18 @@
         <span class="n">theis_time</span><span class="o">=-</span><span class="mi">9999</span><span class="p">,</span>
         <span class="n">depl_pump_time</span><span class="o">=-</span><span class="mi">99999</span><span class="p">,</span>
         <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">Bprime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">Bdouble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">T2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">S2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">streambed_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">streambed_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">aquitard_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">aquitard_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Class to calculate a single response for a single pumping well.</span>
 
@@ -155,6 +167,38 @@
 <span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
 <span class="sd">            Defaults to None</span>
 
+<span class="sd">        Additional Parameters Used by Hunt and Ward/Lough Solutions</span>
+<span class="sd">        -----------------------------------------------------------</span>
+<span class="sd">        Bprime: float</span>
+<span class="sd">            saturated thickness of semiconfining layer containing stream, [L]</span>
+<span class="sd">        Bdouble: float</span>
+<span class="sd">            distance from bottom of stream to bottom of semiconfining layer,</span>
+<span class="sd">            [L] (aquitard thickness beneath the stream)</span>
+<span class="sd">        aquitard_K: float</span>
+<span class="sd">            hydraulic conductivity of semiconfining layer [L/T]</span>
+<span class="sd">        sigma: float</span>
+<span class="sd">            porosity of semiconfining layer</span>
+<span class="sd">        width: float</span>
+<span class="sd">            stream width [T]</span>
+<span class="sd">        x: float</span>
+<span class="sd">            x-coordinate of drawdown location</span>
+<span class="sd">            (with origin being x=0 at stream location) [L]</span>
+<span class="sd">        y: float</span>
+<span class="sd">            y-coordinate of drawdown location</span>
+<span class="sd">            (with origin being y=0 at pumping well location) [L]</span>
+
+<span class="sd">        Additional Parameters Used by Ward/Lough Solutions</span>
+<span class="sd">        --------------------------------------------------</span>
+<span class="sd">        T2: float</span>
+<span class="sd">            Transmissivity of deeper system</span>
+<span class="sd">        S2: float</span>
+<span class="sd">            Storativity of</span>
+<span class="sd">        streambed_thick: float</span>
+<span class="sd">            thickness of streambed</span>
+<span class="sd">        streambed_K: float</span>
+<span class="sd">            hydraulic conductivity of streambed, [L/T]</span>
+<span class="sd">        aquitard_thick: float</span>
+<span class="sd">            thickness of intervening leaky aquitard, [L]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_depletion</span> <span class="o">=</span> <span class="kc">None</span>
@@ -173,19 +217,48 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span> <span class="o">=</span> <span class="n">stream_apportionment</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bprime</span> <span class="o">=</span> <span class="n">Bprime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bdouble</span> <span class="o">=</span> <span class="n">Bdouble</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T2</span> <span class="o">=</span> <span class="n">T2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S2</span> <span class="o">=</span> <span class="n">S2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streambed_thick</span> <span class="o">=</span> <span class="n">streambed_thick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streambed_K</span> <span class="o">=</span> <span class="n">streambed_K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_thick</span> <span class="o">=</span> <span class="n">aquitard_thick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_K</span> <span class="o">=</span> <span class="n">aquitard_K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
 
     <span class="k">def</span> <span class="nf">_calc_drawdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;calculate drawdown at requested distance and</span>
 <span class="sd">        time using solution given as attribute to the object&quot;&quot;&quot;</span>
         <span class="n">dd_f</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DD_METHODS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dd_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
         <span class="c1"># start with zero drawdown</span>
-        <span class="n">dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;lough&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dd_method</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
         <span class="n">deltaQ</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">_calc_deltaQ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
         <span class="c1"># initialize with pumping at the first time being positive</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">cQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)))</span>
-        <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;streambed_conductance&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span><span class="p">,</span>
+            <span class="s2">&quot;Bprime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bprime</span><span class="p">,</span>
+            <span class="s2">&quot;Bdouble&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bdouble</span><span class="p">,</span>
+            <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+            <span class="s2">&quot;T2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">T2</span><span class="p">,</span>
+            <span class="s2">&quot;S2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">S2</span><span class="p">,</span>
+            <span class="s2">&quot;streambed_thick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_thick</span><span class="p">,</span>
+            <span class="s2">&quot;streambed_K&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_K</span><span class="p">,</span>
+            <span class="s2">&quot;aquitard_thick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_thick</span><span class="p">,</span>
+            <span class="s2">&quot;aquitard_K&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_K</span><span class="p">,</span>
+            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="n">dd</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">=</span> <span class="n">dd_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">,</span> <span class="n">cQ</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_args</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">deltaQ</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">deltaQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -217,10 +290,21 @@
             <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T_gpd_ft</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;hunt99&quot;</span><span class="p">:</span>
-            <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;streambed&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;streambed_conductance&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span><span class="p">,</span>
+            <span class="s2">&quot;Bprime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bprime</span><span class="p">,</span>
+            <span class="s2">&quot;Bdouble&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bdouble</span><span class="p">,</span>
+            <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+            <span class="s2">&quot;T2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">T2</span><span class="p">,</span>
+            <span class="s2">&quot;S2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">S2</span><span class="p">,</span>
+            <span class="s2">&quot;streambed_thick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_thick</span><span class="p">,</span>
+            <span class="s2">&quot;streambed_K&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_K</span><span class="p">,</span>
+            <span class="s2">&quot;aquitard_thick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_thick</span><span class="p">,</span>
+            <span class="s2">&quot;aquitard_K&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_K</span><span class="p">,</span>
+            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="n">depl</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span> <span class="o">=</span> <span class="n">depl_f</span><span class="p">(</span>
             <span class="n">T</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span>
@@ -274,7 +358,20 @@
         <span class="n">drawdown_dist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">stream_apportionment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">depl_method</span><span class="o">=</span><span class="s2">&quot;walton&quot;</span><span class="p">,</span>
+        <span class="n">drawdown_method</span><span class="o">=</span><span class="s2">&quot;theis&quot;</span><span class="p">,</span>
         <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">Bprime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">Bdouble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">T2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">S2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">streambed_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">streambed_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">aquitard_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">aquitard_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Object to evaluate a pending (or existing,</span>
@@ -307,9 +404,44 @@
 <span class="sd">                attributed to each. Defaults to None.</span>
 <span class="sd">        depl_method: string, optional</span>
 <span class="sd">            Method to be used for depletion calculations. Defaults to &#39;Glover&#39;.</span>
+<span class="sd">        drawdown_method: string, optional</span>
+<span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;Theis&#39;.</span>
 <span class="sd">        streambed_conductance: float</span>
 <span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
 <span class="sd">            Defaults to None</span>
+
+<span class="sd">        Additional Parameters Used by Hunt and Ward/Lough Solutions</span>
+<span class="sd">        -----------------------------------------------------------</span>
+<span class="sd">        Bprime: float</span>
+<span class="sd">            saturated thickness of semiconfining layer containing stream, [L]</span>
+<span class="sd">        Bdouble: float</span>
+<span class="sd">            distance from bottom of stream to bottom of semiconfining layer,</span>
+<span class="sd">            [L] (aquitard thickness beneath the stream)</span>
+<span class="sd">        aquitard_K: float</span>
+<span class="sd">            hydraulic conductivity of semiconfining layer [L/T]</span>
+<span class="sd">        sigma: float</span>
+<span class="sd">            porosity of semiconfining layer</span>
+<span class="sd">        width: float</span>
+<span class="sd">            stream width [T]</span>
+<span class="sd">        x: float</span>
+<span class="sd">            x-coordinate of drawdown location</span>
+<span class="sd">            (with origin being x=0 at stream location) [L]</span>
+<span class="sd">        y: float</span>
+<span class="sd">            y-coordinate of drawdown location</span>
+<span class="sd">            (with origin being y=0 at pumping well location) [L]</span>
+
+<span class="sd">        Additional Parameters Used by Ward/Lough Solutions</span>
+<span class="sd">        --------------------------------------------------</span>
+<span class="sd">        T2: float</span>
+<span class="sd">            Transmissivity of deeper system</span>
+<span class="sd">        S2: float</span>
+<span class="sd">            Storativity of</span>
+<span class="sd">        streambed_thick: float</span>
+<span class="sd">            thickness of streambed</span>
+<span class="sd">        streambed_K: float</span>
+<span class="sd">            hydraulic conductivity of streambed, [L/T]</span>
+<span class="sd">        aquitard_thick: float</span>
+<span class="sd">            thickness of intervening leaky aquitard, [L]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># placeholders for values returned with @property decorators</span>
@@ -317,6 +449,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_drawdown</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_depletion</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="n">depl_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span> <span class="o">=</span> <span class="n">drawdown_method</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span> <span class="o">=</span> <span class="n">stream_dist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_dist</span> <span class="o">=</span> <span class="n">drawdown_dist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
@@ -327,6 +460,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span> <span class="o">=</span> <span class="n">stream_apportionment</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bprime</span> <span class="o">=</span> <span class="n">Bprime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bdouble</span> <span class="o">=</span> <span class="n">Bdouble</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T2</span> <span class="o">=</span> <span class="n">T2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S2</span> <span class="o">=</span> <span class="n">S2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streambed_thick</span> <span class="o">=</span> <span class="n">streambed_thick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streambed_K</span> <span class="o">=</span> <span class="n">streambed_K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_thick</span> <span class="o">=</span> <span class="n">aquitard_thick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_K</span> <span class="o">=</span> <span class="n">aquitard_K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict of WellResponse objects</span>
         <span class="c1"># for this well with streams</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_responses</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dict of WellResponse objects</span>
@@ -360,6 +505,20 @@
 
         <span class="c1"># now make all the WellResponse objects</span>
         <span class="c1"># first for streams</span>
+        <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Bprime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bprime</span><span class="p">,</span>
+            <span class="s2">&quot;Bdouble&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bdouble</span><span class="p">,</span>
+            <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+            <span class="s2">&quot;T2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">T2</span><span class="p">,</span>
+            <span class="s2">&quot;S2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">S2</span><span class="p">,</span>
+            <span class="s2">&quot;streambed_thick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_thick</span><span class="p">,</span>
+            <span class="s2">&quot;streambed_K&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_K</span><span class="p">,</span>
+            <span class="s2">&quot;aquitard_thick&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_thick</span><span class="p">,</span>
+            <span class="s2">&quot;aquitard_K&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aquitard_K</span><span class="p">,</span>
+            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">cs</span><span class="p">,</span> <span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">cdist</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_dist</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">streambed_conductance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -379,6 +538,7 @@
                     <span class="n">stream_apportionment</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_apportionment</span><span class="p">[</span><span class="n">cname</span><span class="p">],</span>
                     <span class="n">depl_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="p">,</span>
                     <span class="n">streambed_conductance</span><span class="o">=</span><span class="n">streambed_conductance_current</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">extra_args</span><span class="p">,</span>
                 <span class="p">)</span>
 
         <span class="c1"># next for drawdown responses</span>
@@ -392,7 +552,8 @@
                     <span class="n">dist</span><span class="o">=</span><span class="n">cdist</span><span class="p">,</span>
                     <span class="n">theis_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">theis_dd_days</span><span class="p">,</span>
                     <span class="n">Q</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span>
-                    <span class="n">dd_method</span><span class="o">=</span><span class="s2">&quot;theis&quot;</span><span class="p">,</span>
+                    <span class="n">dd_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">extra_args</span><span class="p">,</span>
                 <span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -414,7 +575,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">max_depletion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="n">cwob</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cwob</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span>
+            <span class="n">cwob</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">cwob</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">cwob</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_responses</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span></div>
 </pre></div>
@@ -427,7 +588,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 13, 2025.
+      <span class="lastupdated">Last updated on May 14, 2025.
       </span></p>
   </div>
 

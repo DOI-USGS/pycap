@@ -161,7 +161,9 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">exp1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="hunt99ddwn"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99ddwn">[docs]</a><span class="k">def</span> <span class="nf">hunt99ddwn</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="hunt99ddwn"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99ddwn">[docs]</a><span class="k">def</span> <span class="nf">hunt99ddwn</span><span class="p">(</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to calculate drawdown in an aquifer with a partially</span>
 <span class="sd">        penetrating stream including streambed resistance (Hunt, 1999).</span>
 <span class="sd">        Units are not specified, but should be consistent length and time.</span>
@@ -169,8 +171,12 @@
 <span class="sd">        The solution becomes the Theis solution if streambed conductance</span>
 <span class="sd">        is zero, and approaches an image-well solution from Theis or Glover</span>
 <span class="sd">        and Balmer (1954) as streambed conductance gets very large.</span>
-<span class="sd">        Note that the well is located at the location x,y = (l, 0) and the stream</span>
-<span class="sd">        is aligned with y-axis at x=0</span>
+<span class="sd">        Note that the well is located at the location x,y = (l, 0)</span>
+<span class="sd">        and the stream is aligned with y-axis at x=0.</span>
+
+<span class="sd">        x and y locations provided are the points at which drawdown is</span>
+<span class="sd">        calculated and reported. It is possible to provide x and y</span>
+<span class="sd">        ndarrays generated with `numpy.meshgrid`.</span>
 
 <span class="sd">        Hunt, B., 1999, Unsteady streamflow depletion from ground</span>
 <span class="sd">        water pumping: Groundwater, v. 37, no. 1, pgs. 98-102,</span>
@@ -185,16 +191,16 @@
 <span class="sd">        Storativity of aquifer [dimensionless]</span>
 <span class="sd">    time: float, optionally np.array or list</span>
 <span class="sd">        time at which to calculate results [T]</span>
-<span class="sd">    l: float</span>
+<span class="sd">    dist: float</span>
 <span class="sd">        distance between well and stream in [L]</span>
 <span class="sd">    Q : float</span>
 <span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
-<span class="sd">    streambed: float</span>
+<span class="sd">    streambed_conductance: float</span>
 <span class="sd">        streambed conductance [ft/d] (lambda in the paper)</span>
-<span class="sd">    x: float, optionally vector from numpy meshgrid giving grid of x,y locations</span>
-<span class="sd">        distance from stream, [ft]</span>
-<span class="sd">    y: float, optionally vector from numpy meshgrid giving grid of x,y locations</span>
-<span class="sd">        distance parallel to stream, well is located at y=0</span>
+<span class="sd">    x: float, optionally ndarray</span>
+<span class="sd">        x locations at which to report calculated drawdown.</span>
+<span class="sd">    y: float, optionally ndarray</span>
+<span class="sd">        y locations at which to report calculated drawdown.</span>
 <span class="sd">    **kwargs:  included to all drawdown methods for extra values required</span>
 <span class="sd">        in some calls</span>
 
@@ -204,19 +210,7 @@
 <span class="sd">        single value, meshgrid of drawdowns, or np.array with shape</span>
 <span class="sd">        (ntimes, meshgridxx, meshgridyy)</span>
 <span class="sd">        depending on input form of x, y, and ntimes [L]</span>
-
-
-
-<span class="sd">    call signature is:</span>
-<span class="sd">        hunt99ddwn(T, S, time, l, Q, streambed=streambed_value, x=X, y=Y)</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;streambed&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">streambed</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;streambed&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="s2">&quot;x&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="s2">&quot;y&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
 
     <span class="c1"># turn lists into np.array so they get handled correctly,</span>
     <span class="c1"># check if time or space is an array</span>
@@ -234,10 +228,14 @@
     <span class="c1"># compute a single x, y point at a given time</span>
     <span class="k">if</span> <span class="n">timescalar</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
         <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
-            <span class="n">_ddwn2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+            <span class="n">_ddwn2</span><span class="p">,</span>
+            <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
-            <span class="n">_ddwn1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="o">-</span> <span class="n">strmintegral</span>
+            <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+            <span class="o">-</span> <span class="n">strmintegral</span>
         <span class="p">)</span>
 
     <span class="c1"># compute a vector of times for a given point</span>
@@ -245,11 +243,17 @@
         <span class="n">drawdowns</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">time</span><span class="p">:</span>
             <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
-                <span class="n">_ddwn2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                <span class="n">_ddwn2</span><span class="p">,</span>
+                <span class="mf">0.0</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="n">drawdowns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
-                <span class="o">*</span> <span class="p">(</span><span class="n">_ddwn1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="o">-</span> <span class="n">strmintegral</span><span class="p">)</span>
+                <span class="o">*</span> <span class="p">(</span>
+                    <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                    <span class="o">-</span> <span class="n">strmintegral</span>
+                <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">drawdowns</span>
 
@@ -273,7 +277,7 @@
                             <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">T</span><span class="p">,</span>
-                            <span class="n">streambed</span><span class="p">,</span>
+                            <span class="n">streambed_conductance</span><span class="p">,</span>
                             <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">],</span>
                             <span class="n">S</span><span class="p">,</span>
                         <span class="p">),</span>
@@ -284,7 +288,7 @@
                             <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">T</span><span class="p">,</span>
-                            <span class="n">streambed</span><span class="p">,</span>
+                            <span class="n">streambed_conductance</span><span class="p">,</span>
                             <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">],</span>
                             <span class="n">S</span><span class="p">,</span>
                         <span class="p">)</span>
@@ -293,25 +297,25 @@
         <span class="k">return</span> <span class="n">drawdowns</span></div>
 
 
-<span class="k">def</span> <span class="nf">_ddwn1</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Internal method to calculate Theis drawdown function for a point (x,y)</span>
 
 <span class="sd">    Used in computing Hunt, 1999 estimate of drawdown.  Equation 30 from</span>
 <span class="sd">    the paper.  Variables described in hunt99ddwn function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">values</span>
 
     <span class="n">isarray</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">isarray</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="c1"># construct the well function argument</span>
     <span class="c1"># if (l-x) is zero, then function does not exist</span>
     <span class="c1"># trap for (l-x)==0 and set to small value</span>
-    <span class="n">dist</span> <span class="o">=</span> <span class="n">l</span> <span class="o">-</span> <span class="n">x</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">-</span> <span class="n">x</span>
     <span class="k">if</span> <span class="n">isarray</span><span class="p">:</span>
         <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dist</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -341,21 +345,22 @@
 
 <div class="viewcode-block" id="WardLoughDrawdown"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.WardLoughDrawdown">[docs]</a><span class="k">def</span> <span class="nf">WardLoughDrawdown</span><span class="p">(</span>
     <span class="n">T1</span><span class="p">,</span>
-    <span class="n">T2</span><span class="p">,</span>
     <span class="n">S1</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">,</span>
+    <span class="n">Q</span><span class="p">,</span>
+    <span class="n">T2</span><span class="p">,</span>
     <span class="n">S2</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
-    <span class="n">Q</span><span class="p">,</span>
-    <span class="n">dist</span><span class="p">,</span>
     <span class="n">streambed_thick</span><span class="p">,</span>
     <span class="n">streambed_K</span><span class="p">,</span>
     <span class="n">aquitard_thick</span><span class="p">,</span>
     <span class="n">aquitard_K</span><span class="p">,</span>
-    <span class="n">t</span><span class="p">,</span>
     <span class="n">x</span><span class="p">,</span>
     <span class="n">y</span><span class="p">,</span>
     <span class="n">NSteh1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">NSteh2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute drawdown using Ward and Lough (2011) solution</span>
 
@@ -366,7 +371,7 @@
 <span class="sd">        semi-confining aquitard layer.</span>
 
 <span class="sd">        Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a</span>
-<span class="sd">        semiconfined aquifer in a two-layer leaky aquifer system (techical note):</span>
+<span class="sd">        semiconfined aquifer in a two-layer leaky aquifer system (technical note):</span>
 <span class="sd">        Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,</span>
 <span class="sd">        https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382.</span>
 
@@ -384,11 +389,14 @@
 <span class="sd">        (L in the original paper)</span>
 <span class="sd">    Q: float</span>
 <span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
-
+<span class="sd">    **kwargs:  included to all drawdown methods for extra values required</span>
+<span class="sd">        in some calls</span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    ddwn float</span>
-<span class="sd">        drawdown at specified location or locations [L]</span>
+<span class="sd">    ddwn float, 2-column ndarray</span>
+<span class="sd">        drawdown at specified location [L]</span>
+<span class="sd">        in the shallow aquifer (column 0)</span>
+<span class="sd">        and the deeper aquifer (column 1)</span>
 
 <span class="sd">    Other Parameters</span>
 <span class="sd">    ----------------</span>
@@ -470,19 +478,20 @@
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overflow error in s2 calculation at index </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Assign NaN if there&#39;s an overflow</span>
 
-    <span class="k">return</span> <span class="n">s1</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">T2</span><span class="p">,</span> <span class="n">s2</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">T2</span>  <span class="c1"># re-dimensionalize</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">s1</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">T2</span><span class="p">,</span> <span class="n">s2</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">T2</span><span class="p">)))</span>  <span class="c1"># re-dimensionalize</span></div>
 
 
 <span class="c1"># define stream depletion methods here</span>
 <div class="viewcode-block" id="glover"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.glover">[docs]</a><span class="k">def</span> <span class="nf">glover</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate Glover and Balmer (1954) solution for stream depletion</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate Glover and Balmer (1954) solution for stream depletion</span>
 
-<span class="sd">        Depletion solution for a well near a river where the river fully</span>
-<span class="sd">        penetrates the aquifer and there is no streambed resistance.</span>
+<span class="sd">    Depletion solution for a well near a river where the river fully</span>
+<span class="sd">    penetrates the aquifer and there is no streambed resistance.</span>
 
-<span class="sd">        Glover, R.E. and Balmer, G.G., 1954, River depletion from pumping</span>
-<span class="sd">        a well near a river, Eos Transactions of the American Geophysical Union,</span>
-<span class="sd">        v. 35, no. 3, pg. 468-470, https://doi.org/10.1029/TR035i003p00468.</span>
+<span class="sd">    Glover, R.E. and Balmer, G.G., 1954, River depletion from pumping</span>
+<span class="sd">    a well near a river, Eos Transactions of the American Geophysical Union,</span>
+<span class="sd">    v. 35, no. 3, pg. 468-470, https://doi.org/10.1029/TR035i003p00468.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -510,16 +519,17 @@
 
 
 <div class="viewcode-block" id="sdf"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.sdf">[docs]</a><span class="k">def</span> <span class="nf">sdf</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;internal function for Stream Depletion Factor</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    internal function for Stream Depletion Factor</span>
 
-<span class="sd">        Stream Depletion Factor was defined by Jenkins (1968) and described</span>
-<span class="sd">        in Jenkins as the time when the volume of stream depletion is</span>
-<span class="sd">        28 percent of the net volume pumped from the well.</span>
-<span class="sd">        SDF = dist**2 * S/T.</span>
+<span class="sd">    Stream Depletion Factor was defined by Jenkins (1968) and described</span>
+<span class="sd">    in Jenkins as the time when the volume of stream depletion is</span>
+<span class="sd">    28 percent of the net volume pumped from the well.</span>
+<span class="sd">    SDF = dist**2 * S/T.</span>
 
-<span class="sd">        Jenkins, C.T., Computation of rate and volume of stream depletion</span>
-<span class="sd">        by wells: U.S. Geological Survey Techniques of Water-Resources</span>
-<span class="sd">        Investigations, Chapter D1, Book 4, https://pubs.usgs.gov/twri/twri4d1/.</span>
+<span class="sd">    Jenkins, C.T., Computation of rate and volume of stream depletion</span>
+<span class="sd">    by wells: U.S. Geological Survey Techniques of Water-Resources</span>
+<span class="sd">    Investigations, Chapter D1, Book 4, https://pubs.usgs.gov/twri/twri4d1/.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -542,15 +552,16 @@
 
 
 <div class="viewcode-block" id="walton"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.walton">[docs]</a><span class="k">def</span> <span class="nf">walton</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate depletion using Walton (1987) PT-8 BASIC program logic</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate depletion using Walton (1987) PT-8 BASIC program logic</span>
 
-<span class="sd">        Provides the Glover and Balmer (Jenkins) solution.</span>
+<span class="sd">    Provides the Glover and Balmer (Jenkins) solution.</span>
 
-<span class="sd">        Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea,</span>
-<span class="sd">        Michigan, 201 p.</span>
+<span class="sd">    Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea,</span>
+<span class="sd">    Michigan, 201 p.</span>
 
-<span class="sd">        Note that unlike the other depletion functions, this Walton function</span>
-<span class="sd">        is unit-specific, using feet and days as dimensions.</span>
+<span class="sd">    Note that unlike the other depletion functions, this Walton function</span>
+<span class="sd">    is unit-specific, using feet and days as dimensions.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -592,7 +603,7 @@
     <span class="k">return</span> <span class="n">ret_vals</span></div>
 
 
-<div class="viewcode-block" id="hunt99"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99">[docs]</a><span class="k">def</span> <span class="nf">hunt99</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="hunt99"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99">[docs]</a><span class="k">def</span> <span class="nf">hunt99</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function for Hunt (1999) solution for streamflow depletion by a pumping well.</span>
 
 <span class="sd">        Computes streamflow depletion by a pumping well for a partially penetrating</span>
@@ -624,11 +635,10 @@
 
 <span class="sd">    Other Parameters</span>
 <span class="sd">    ----------------</span>
-<span class="sd">    streambed: float</span>
-<span class="sd">        streambed conductance [ft/d] (lambda in the paper)</span>
+<span class="sd">    streambed_conductance: float</span>
+<span class="sd">        streambed_conductance conductance [L/T] (lambda in the paper)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;streambed&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">streambed</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;streambed&quot;</span><span class="p">]</span>
+
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cannot have both time and distance as arrays&quot;</span><span class="p">)</span>
@@ -641,8 +651,8 @@
         <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">dist</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">))</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed</span> <span class="o">*</span> <span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span> <span class="o">*</span> <span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
     <span class="c1"># Qs/Q = erfc(a) - exp(b+c)*erfc(sqrt(b) + a)</span>
     <span class="c1"># in order to calculate exp(x)erfc(y)</span>
     <span class="c1"># as values get big. Use numpy special erfcx(),</span>
@@ -660,7 +670,18 @@
 
 
 <div class="viewcode-block" id="hunt2003"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt2003">[docs]</a><span class="k">def</span> <span class="nf">hunt2003</span><span class="p">(</span>
-    <span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Bprime</span><span class="p">,</span> <span class="n">Bdouble</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">streambed</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="n">T</span><span class="p">,</span>
+    <span class="n">S</span><span class="p">,</span>
+    <span class="n">time</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">,</span>
+    <span class="n">Q</span><span class="p">,</span>
+    <span class="n">Bprime</span><span class="p">,</span>
+    <span class="n">Bdouble</span><span class="p">,</span>
+    <span class="n">aquitard_K</span><span class="p">,</span>
+    <span class="n">sigma</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">streambed_conductance</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function for Hunt (2003) solution for streamflow depletion by a pumping well.</span>
 
@@ -700,13 +721,13 @@
 <span class="sd">    Bdouble: float</span>
 <span class="sd">        distance from bottom of stream to bottom of semiconfining layer,</span>
 <span class="sd">        [L] (aquitard thickness beneath the stream)</span>
-<span class="sd">    K: float</span>
+<span class="sd">    aquitard_K: float</span>
 <span class="sd">        hydraulic conductivity of semiconfining layer [L/T]</span>
 <span class="sd">    sigma: float</span>
 <span class="sd">        porosity of semiconfining layer</span>
 <span class="sd">    width: float</span>
 <span class="sd">        stream width (b in paper) [T]</span>
-<span class="sd">    streambed: float</span>
+<span class="sd">    streambed_conductance: float</span>
 <span class="sd">        streambed conductance [L/T] (lambda in the paper),</span>
 <span class="sd">        only used if K is less than 1e-10</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -726,13 +747,13 @@
 
     <span class="c1"># if K is really small, set streambed conductance to a value</span>
     <span class="c1"># so solution collapses to Hunt 1999 (confined aquifer solution)</span>
-    <span class="k">if</span> <span class="n">K</span> <span class="o">&lt;</span> <span class="mf">1.0e-10</span><span class="p">:</span>
-        <span class="n">lam</span> <span class="o">=</span> <span class="n">streambed</span>
+    <span class="k">if</span> <span class="n">aquitard_K</span> <span class="o">&lt;</span> <span class="mf">1.0e-10</span><span class="p">:</span>
+        <span class="n">lam</span> <span class="o">=</span> <span class="n">streambed_conductance</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">lam</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="n">Bdouble</span>
+        <span class="n">lam</span> <span class="o">=</span> <span class="n">aquitard_K</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="n">Bdouble</span>
     <span class="n">dlam</span> <span class="o">=</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">T</span>
     <span class="n">epsilon</span> <span class="o">=</span> <span class="n">S</span> <span class="o">/</span> <span class="n">sigma</span>
-    <span class="n">dK</span> <span class="o">=</span> <span class="p">(</span><span class="n">K</span> <span class="o">/</span> <span class="n">Bprime</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">dK</span> <span class="o">=</span> <span class="p">(</span><span class="n">aquitard_K</span> <span class="o">/</span> <span class="n">Bprime</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
 
     <span class="c1"># numerical integration of F() and G() functions to</span>
     <span class="c1"># get correction to Hunt(1999) estimate of streamflow depletion</span>
@@ -915,8 +936,11 @@
     <span class="n">y</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Internal function to make non-dimensional groups for Ward and Lough solution&quot;&quot;&quot;</span>
-    <span class="n">x</span> <span class="o">/=</span> <span class="n">dist</span>
-    <span class="n">y</span> <span class="o">/=</span> <span class="n">dist</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># make sure not passing a list</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">/=</span> <span class="n">dist</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">/=</span> <span class="n">dist</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="n">T2</span> <span class="o">/</span> <span class="p">(</span><span class="n">S2</span> <span class="o">*</span> <span class="p">(</span><span class="n">dist</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
     <span class="n">T1</span> <span class="o">/=</span> <span class="n">T2</span>
     <span class="n">S1</span> <span class="o">/=</span> <span class="n">S2</span>
@@ -927,33 +951,35 @@
 
 <div class="viewcode-block" id="WardLoughDepletion"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.WardLoughDepletion">[docs]</a><span class="k">def</span> <span class="nf">WardLoughDepletion</span><span class="p">(</span>
     <span class="n">T1</span><span class="p">,</span>
-    <span class="n">T2</span><span class="p">,</span>
     <span class="n">S1</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">,</span>
+    <span class="n">Q</span><span class="p">,</span>
+    <span class="n">T2</span><span class="p">,</span>
     <span class="n">S2</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
-    <span class="n">Q</span><span class="p">,</span>
-    <span class="n">dist</span><span class="p">,</span>
     <span class="n">streambed_thick</span><span class="p">,</span>
     <span class="n">streambed_K</span><span class="p">,</span>
     <span class="n">aquitard_thick</span><span class="p">,</span>
     <span class="n">aquitard_K</span><span class="p">,</span>
-    <span class="n">t</span><span class="p">,</span>
     <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">NSteh1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute streamflow depletion using Ward and Lough (2011) solution</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute streamflow depletion using Ward and Lough (2011) solution</span>
 
-<span class="sd">        Ward and Lough (2011) presented a solution for streamflow depletion</span>
-<span class="sd">        by a pumping well in a layered aquifer system.  The stream</span>
-<span class="sd">        is in the upper aquifer, and the pumping well is in a lower</span>
-<span class="sd">        aquifer that is separated from the upper aquifer by a</span>
-<span class="sd">        semi-confining aquitard layer.</span>
+<span class="sd">    Ward and Lough (2011) presented a solution for streamflow depletion</span>
+<span class="sd">    by a pumping well in a layered aquifer system.  The stream</span>
+<span class="sd">    is in the upper aquifer, and the pumping well is in a lower</span>
+<span class="sd">    aquifer that is separated from the upper aquifer by a</span>
+<span class="sd">    semi-confining aquitard layer.</span>
 
-<span class="sd">        Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a</span>
-<span class="sd">        semiconfined aquifer in a two-layer leaky aquifer system (techical note):</span>
-<span class="sd">        Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,</span>
-<span class="sd">        https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382.</span>
+<span class="sd">    Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a</span>
+<span class="sd">    semiconfined aquifer in a two-layer leaky aquifer system (techical note):</span>
+<span class="sd">    Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,</span>
+<span class="sd">    https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -967,7 +993,7 @@
 <span class="sd">        distance at which to calculate results in [L]</span>
 <span class="sd">    Q: float</span>
 <span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
-<span class="sd">     **kwargs: included to all depletion methods for extra values required in some calls</span>
+<span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
 
 
 <span class="sd">    Returns</span>
@@ -1236,7 +1262,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 13, 2025.
+      <span class="lastupdated">Last updated on May 14, 2025.
       </span></p>
   </div>
 
