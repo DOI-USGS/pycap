@@ -1,0 +1,402 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "90465e37-a1ad-4a68-9d16-c00d6594cee4",
+   "metadata": {},
+   "source": [
+    "# Demonstration of WellResponse Class\n",
+    "\n",
+    "Notebook to demonstrate using the Well Class to \n",
+    "estimate drawdown or stream depletion using the \n",
+    "solutions available in the python module."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "95dbea60-dd79-408f-bb66-6bb84386187c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sys\n",
+    "sys.path.insert(1, '../../')\n",
+    "import pycap\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a1ec807f-632c-49ff-a703-da6b757f05d5",
+   "metadata": {},
+   "source": [
+    "# Example Depletion\n",
+    "The Well class will estimate depletions for streams.  The stream distances and\n",
+    "streambed conductances, if needed, are passed through dictionaries keyed by \n",
+    "a stream name or ID.  In this notebook a table of values will be made manually from \n",
+    "Table 2 from Reeves, H.W., Hamilton, D.A., Seelbach, P.W., and Asher, A.J., 2009, Ground-water-withdrawal component of the Michigan water-withdrawal screening tool: U.S. Geological Survey Scientific Investigations Report 2009–5003, 36 p.\n",
+    "[https://pubs.usgs.gov/sir/2009/5003/]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4d858624-c165-413d-bcc4-3e74f5b6362b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_table = pd.DataFrame(({'id': 8, 'distance': 14802},\n",
+    "                            {'id': 9, 'distance': 12609.2},\n",
+    "                            {'id': 11, 'distance': 15750.5},\n",
+    "                            {'id': 27, 'distance': 22567.6},\n",
+    "                            {'id': 9741, 'distance': 27565.2},\n",
+    "                            {'id': 10532, 'distance': 33059.5},\n",
+    "                            {'id': 11967, 'distance': 14846.3},\n",
+    "                            {'id': 12515, 'distance': 17042.55},\n",
+    "                            {'id': 12573, 'distance': 11959.5},\n",
+    "                            {'id': 12941, 'distance': 19070.8},\n",
+    "                            {'id': 13925, 'distance': 10028.9}))\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "449df4b2-def0-4e06-8b37-db85108d0a75",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_table.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "75c27baa-391a-4ee3-95c6-0ab52c1f06e4",
+   "metadata": {},
+   "source": [
+    "# Compute apportionment\n",
+    "\n",
+    "The Michigan screening tool uses inverse distance weighting apportionment.  Other\n",
+    "apportionment approaches that may be used as a simple way to extend the analytical\n",
+    "solution are discussed by Zipper and others (2019).  [https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2018WR024403]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cd49a471-83e2-403a-9695-5b315eedbcd2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "invers =np.array([1/x for x in stream_table['distance']])\n",
+    "stream_table['apportionment'] = (1./stream_table['distance'])/np.sum(invers)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ba408c90-1c58-4ac0-a56b-bc568b048810",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_table"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "853cb92d-6873-48a0-a622-64678d024494",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "np.sum(stream_table['apportionment'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "479dcb70-36b1-4cab-968e-1e7e785c05ee",
+   "metadata": {},
+   "source": [
+    "make dictionaries from the distances and apportionment values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "060425be-8fef-4fdb-ada6-f08cfcfd9c98",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "distances = dict(zip(stream_table.id.values, stream_table.distance.values))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eabbb8d3-9263-4cc6-9195-1c89ce5c8557",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "apportion = dict(zip(stream_table.id.values, stream_table.apportionment.values))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "478737c3-0e68-46a6-976b-eacf47820223",
+   "metadata": {},
+   "source": [
+    "# set aquifer properties and streambed conductances"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4010787c-a172-4366-92c9-2d56791c7ee0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_table = pd.DataFrame(({'id': 8, 'distance': 14802},\n",
+    "                            {'id': 9, 'distance': 12609.2},\n",
+    "                            {'id': 11, 'distance': 15750.5},\n",
+    "                            {'id': 27, 'distance': 22567.6},\n",
+    "                            {'id': 9741, 'distance': 27565.2},\n",
+    "                            {'id': 10532, 'distance': 33059.5},\n",
+    "                            {'id': 11967, 'distance': 14846.3},\n",
+    "                            {'id': 12515, 'distance': 17042.5},\n",
+    "                            {'id': 12573, 'distance': 11959.5},\n",
+    "                            {'id': 12941, 'distance': 19070.8},\n",
+    "                            {'id': 13925, 'distance': 10028.9}))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6de231c4-280f-4351-a6c5-d4dc939b9777",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "T= 7211.  # ft^2/day\n",
+    "S= 0.01\n",
+    "Q = 70  # 70 gpm in cubic feet per day\n",
+    "well_name = 'demo'\n",
+    "pumpdays = int(5. * 365)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c9aef4c4-3ab7-4fa2-9f4c-69955c054733",
+   "metadata": {},
+   "source": [
+    "## call a utility to convert Q to a series with appropriate formatting\n",
+    "\n",
+    "also convert to CFD from GPM"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "00d5ddce-a8e5-4343-b35a-e9fc73c58520",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Q = pycap.Q2ts(pumpdays, 5, Q) * pycap.GPM2CFD"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0686c301-9569-436e-8e9d-fea657deae7f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Q"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "be2435a8-bf30-4ceb-b9f4-8b0f94ac927f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_table['conductance'] = 7.11855  # example uses constant streambed_conductance"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c4d10dca-be43-4292-b3d5-3705669a7975",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_table.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8e925f15-7afe-4a7e-bf52-65aa41149de7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cond = dict(zip(stream_table.id.values, stream_table.conductance.values))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8ba31012-76ab-4c1e-9e16-be545dce05b2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "test_well = pycap.Well(T=T,\n",
+    "                 S=S,\n",
+    "                 Q=Q,\n",
+    "                 depletion_years=5,\n",
+    "                 depl_method='hunt99',\n",
+    "                 drawdown_dist={'test0':50.},\n",
+    "                 streambed_conductance=cond,\n",
+    "                 stream_dist=distances,\n",
+    "                 stream_apportionment=apportion)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "84ad8495-19bd-4b22-a67e-b3440c0af154",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "test_well.drawdown"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3d13cdfa-02b2-4605-a916-f26398696292",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "deltaQ = pycap._calc_deltaQ(Q)\n",
+    "deltaQ"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "06bbd502-45ad-490b-ac65-d8d2989363d8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "test_well.depletion"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "45c8ee4e-0a96-4812-8503-0fab8a99b54f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_depl = pd.DataFrame(test_well.depletion)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ef9d8276-f8e6-4a99-b08b-8c4766feb941",
+   "metadata": {},
+   "source": [
+    "## need to convert to GPM to compare results to Table 2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "79602e05-ab9d-46b8-88be-7feaf90eb98f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stream_depl = stream_depl/pycap.GPM2CFD\n",
+    "stream_depl"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7ad4a0b3-be39-4a3f-81f0-83701421be75",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "five_year= pd.DataFrame(stream_depl.loc[1824].T)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fd435288-e684-4b97-874d-336b682df562",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "five_year.rename(columns={1824: 'Depletion'}, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "293efd67-3acc-47f4-be9a-c4e0de0d74db",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pd.options.display.float_format = '{:,.2f}'.format\n",
+    "five_year"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5a56842b-a1b5-4311-82c3-4aa14edffa3d",
+   "metadata": {},
+   "source": [
+    "# Matches Table 2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "06d7dbb5-41c9-4f14-a2a9-2d0535276d46",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "42bdf026-21c5-4194-ac20-ea78afe218bb",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
