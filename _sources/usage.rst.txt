@@ -2,6 +2,20 @@
 Usage
 =====
 
+# Individual Solutions
+
+# Well object
+    - allows for superposition in time making time series pumping
+    - multiple responses
+    - changing the methods and apportionment
+
+# Analysis Project
+    - an example wrapping it all up together
+
+# maybe geoprocessing?
+
+
+
 Start by importing `pycap`
 
 .. code-block:: python
