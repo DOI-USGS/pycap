@@ -28,7 +28,8 @@ pycap-dss Documentation
 .. toctree::
    :maxdepth: 1
    :caption: Examples
-
+ 
+   examples/WellClass_Demonstration
    examples/Solutions_Demonstration
 
 

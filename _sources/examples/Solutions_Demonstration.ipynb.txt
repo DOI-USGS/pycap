@@ -1,8 +1,24 @@
 {
  "cells": [
   {
+   "cell_type": "markdown",
+   "id": "76283c7d-8237-4e8e-8d7c-ad74511deed1",
+   "metadata": {},
+   "source": [
+    "# `pycap-dss` demonstrations"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "56843571",
+   "metadata": {},
+   "source": [
+    "## First, make some imports"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": null,
    "id": "5cb2ece2-f25f-4a00-a64b-fd3524e5a2d2",
    "metadata": {},
    "outputs": [],
@@ -17,18 +33,10 @@
   },
   {
    "cell_type": "markdown",
-   "id": "76283c7d-8237-4e8e-8d7c-ad74511deed1",
-   "metadata": {},
-   "source": [
-    "# `pycap` demonstrations"
-   ]
-  },
-  {
-   "cell_type": "markdown",
    "id": "655b619f-ceb4-4e3e-9b24-97a142eaf9eb",
    "metadata": {},
    "source": [
-    "# Individual Functions"
+    "## Individual Functions"
    ]
   },
   {
@@ -36,7 +44,7 @@
    "id": "94ff2f06-cc50-4681-b07f-a35165f8fc88",
    "metadata": {},
    "source": [
-    "### Set some common variables to evaluate"
+    "### Set some common variables to evaluate. Note that the units here are using SI units. Almost all the functions in this suite are arbitrary provided the units are self-consistent. In other words, if T is provided in m/d, then Q must by in m**3/d and so on."
    ]
   },
   {
@@ -50,7 +58,7 @@
     "S = 3e-6   # Storativity [unitless]\n",
     "dist = 500 # distance [m]\n",
     "time = np.logspace(.1,2.5,150) # time [day]\n",
-    "Q = 4000   # pumping rate [m/day]\n"
+    "Q = 4000   # pumping rate [m**3/day]\n"
    ]
   },
   {
@@ -106,7 +114,7 @@
    "id": "cf6d45da-de36-4258-a064-99bc35ce1474",
    "metadata": {},
    "source": [
-    "### We need a couple more variables (assuming the previously defined variables pertain to the upper aquifer, then the lower aquifer is defined by T2,S2, etc.) and river and aquitard characterstics"
+    "### We need a couple more variables (assuming the previously defined variables pertain to the upper aquifer, then the lower aquifer is defined by T2,S2, etc.) and river and aquitard characterstics."
    ]
   },
   {
@@ -123,8 +131,10 @@
     "streambed_K = 250 # streambed hydraulic conductivity \n",
     "aquitard_thick = 1 # aquitard thickness [m]\n",
     "aquitard_K = 50 # aquitard hydraulic conductivity\n",
-    "x = 20\n",
-    "y = 5"
+    "x = 20      # x-location at which to calculate drawdown \n",
+    "            # (x=0 is at the stream)\n",
+    "y = 5       # x-location at which to calculate drawdown \n",
+    "            # (y=0 is the along-stream location of the pumping well)"
    ]
   },
   {
@@ -144,11 +154,13 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "s1,s2 = WardLoughDrawdown(T,T2,S,S2, \n",
-    "                          width, Q, dist, \n",
-    "                          streambed_thick, streambed_K,\n",
-    "                          aquitard_thick, aquitard_K,\n",
-    "                          time,x,y)"
+    "s_wl= WardLoughDrawdown(T,S, time, dist, Q,\n",
+    "                        width=width, \n",
+    "                        T2=T2,S2=S2,streambed_thick=streambed_thick, \n",
+    "                        streambed_K=streambed_K,\n",
+    "                        aquitard_thick=aquitard_thick, \n",
+    "                        aquitard_K=aquitard_K,\n",
+    "                        x=x,y=y)"
    ]
   },
   {
@@ -158,8 +170,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "plt.plot(time,s1, label='shallow s')\n",
-    "plt.plot(time,s2, label='deep s')\n",
+    "plt.plot(time,s_wl[:,0], label='shallow s')\n",
+    "plt.plot(time,s_wl[:,1], label='deep s')\n",
     "plt.legend()\n",
     "plt.xscale('log')\n",
     "plt.xlabel('log time')\n",
@@ -171,7 +183,9 @@
    "id": "02aa1861-cad2-45aa-bf53-0f99be56afd6",
    "metadata": {},
    "source": [
-    "## Walton Depletion"
+    "## Walton Depletion\n",
+    "\n",
+    "### Note that this function must use Imperial units of feet for length and days for time."
    ]
   },
   {
@@ -191,7 +205,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "qd = walton(T,S,time,dist,Q)"
+    "qd = walton(T*.3048,S,time,dist,Q*(.3048**3))"
    ]
   },
   {
@@ -271,9 +285,12 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "qd_wl = WardLoughDepletion(T,T2,S,S2,width,Q,\n",
-    "                            dist,streambed_thick,streambed_K,\n",
-    "                            aquitard_thick, aquitard_K, time)\n"
+    "qd_wl = WardLoughDepletion(T,S, time, dist, Q, \n",
+    "                            T2=T2,S2=S2,width=width,\n",
+    "                            streambed_thick=streambed_thick,\n",
+    "                            streambed_K=streambed_K,\n",
+    "                            aquitard_thick=aquitard_thick,\n",
+    "                            aquitard_K=aquitard_K)\n"
    ]
   },
   {
@@ -283,65 +300,15 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "plt.plot(time,qd_wl)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "8fbdbeac-5c1b-4754-b433-636662ecdeec",
-   "metadata": {},
-   "source": [
-    "# Higher Level Classes"
+    "plt.plot(time,qd_wl)\n",
+    "plt.xlabel('time')\n",
+    "plt.ylabel('depletion')"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "c88d30a7",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from pycap.wells import Well"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "7610ab8b",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "well_pending = Well('pending',T=T, S=S, Q=Q, depletion_years = 5, \n",
-    "            depl_pump_time=time.max(),\n",
-    "            stream_dist={'river_synthetica':dist},\n",
-    "            stream_apportionment={'river_synthetica':0.7},\n",
-    "            depl_method='glover')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "9f1dbdf5",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "well_pending.depletion"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "73f102df",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "Q"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "943375a4",
+   "id": "e5928516",
    "metadata": {},
    "outputs": [],
    "source": []
@@ -349,21 +316,9 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
+   "display_name": "pycap",
    "language": "python",
    "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.11.12"
   }
  },
  "nbformat": 4,
