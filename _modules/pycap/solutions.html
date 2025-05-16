@@ -91,6 +91,7 @@
              
   <h1>Source code for pycap.solutions</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -99,7 +100,7 @@
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gammaln</span>
 
 <span class="c1"># suppress divide by zero errors</span>
-<span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 
 <span class="sd">&quot;&quot;&quot; File of drawdown and stream depletion analytical solutions</span>
 <span class="sd">    as part of the pycap suite.</span>
@@ -230,6 +231,9 @@
 
     <span class="c1"># compute a single x, y point at a given time</span>
     <span class="k">if</span> <span class="n">timescalar</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+            <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
+        <span class="p">)</span>
         <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
             <span class="n">_ddwn2</span><span class="p">,</span>
             <span class="mf">0.0</span><span class="p">,</span>
@@ -245,6 +249,9 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">timescalar</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
         <span class="n">drawdowns</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">time</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+                <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
+            <span class="p">)</span>
             <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
                 <span class="n">_ddwn2</span><span class="p">,</span>
                 <span class="mf">0.0</span><span class="p">,</span>
@@ -271,6 +278,9 @@
         <span class="k">for</span> <span class="n">time_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numrow</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numcol</span><span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+                        <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
+                    <span class="p">)</span>
                     <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
                         <span class="n">_ddwn2</span><span class="p">,</span>
                         <span class="mf">0.0</span><span class="p">,</span>
@@ -774,6 +784,9 @@
     <span class="c1"># because of storage in the semiconfining aquifer</span>
     <span class="n">correction</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="n">dtime</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+            <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
+        <span class="p">)</span>
         <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
             <span class="n">_integrand</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dlam</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span>
         <span class="p">)</span>
@@ -1092,7 +1105,7 @@
         <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
         <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="p">)</span>
-
+    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span><span class="p">)</span>
     <span class="n">s1InvFour</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
         <span class="n">G</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">epsrel</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">epsabs</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span>
     <span class="p">)</span>
@@ -1112,7 +1125,7 @@
         <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
         <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="p">)</span>
-
+    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span><span class="p">)</span>
     <span class="n">s2InvFour</span><span class="p">,</span> <span class="n">errbnd</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
         <span class="n">H</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">epsrel</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">epsabs</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span>
     <span class="p">)</span>
