@@ -397,7 +397,7 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="Demonstration-of-Well-Class">
 <h1>Demonstration of Well Class<a class="headerlink" href="#Demonstration-of-Well-Class" title="Permalink to this heading"></a></h1>
-<p>Notebook to demonstrate using the Well Class to estimate drawdown or stream depletion using the solutions available in the python module.</p>
+<p>Notebook to demonstrate using the <code class="docutils literal notranslate"><span class="pre">Well</span></code> Class to estimate drawdown or stream depletion using the solutions available in the python module.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -413,8 +413,11 @@ div.rendered_html tbody tr:hover {
 </div>
 <section id="Example-Depletion">
 <h2>Example Depletion<a class="headerlink" href="#Example-Depletion" title="Permalink to this heading"></a></h2>
-<p>The Well class will estimate depletions for streams. The stream distances and streambed conductances, if needed, are passed through dictionaries keyed by a stream name or ID. In this notebook a table of values will be made manually from Table 2 from Reeves, H.W., Hamilton, D.A., Seelbach, P.W., and Asher, A.J., 2009, Ground-water-withdrawal component of the Michigan water-withdrawal screening tool: U.S. Geological Survey Scientific Investigations Report 2009–5003, 36 p.
+<p>The <code class="docutils literal notranslate"><span class="pre">Well</span></code> class will estimate depletions for streams. The stream distances and streambed conductances, if needed, are passed through dictionaries keyed by a stream name or ID. In this notebook a table of values will be made manually from Table 2 from Reeves, H.W., Hamilton, D.A., Seelbach, P.W., and Asher, A.J., 2009, Ground-water-withdrawal component of the Michigan water-withdrawal screening tool: U.S. Geological Survey Scientific Investigations Report 2009–5003, 36 p.
 [<a class="reference external" href="https://pubs.usgs.gov/sir/2009/5003/">https://pubs.usgs.gov/sir/2009/5003/</a>]</p>
+<blockquote>
+<div><p>pro tip: notice that the distance increases with increasing ID number. Useful for relative reference below.</p>
+</div></blockquote>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -455,7 +458,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span><span class="o">=</span> <span class="mf">7211.</span>  <span class="c1"># ft^2/day</span>
 <span class="n">S</span><span class="o">=</span> <span class="mf">0.01</span>
-<span class="n">Q</span> <span class="o">=</span> <span class="mi">70</span>  <span class="c1"># 70 gpm in cubic feet per day</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">70</span>  <span class="c1"># 70 gpm --&gt; must convert to cubic feet per day</span>
 <span class="n">pumpdays</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">5.</span> <span class="o">*</span> <span class="mi">365</span><span class="p">)</span>
 <span class="n">stream_table</span><span class="p">[</span><span class="s1">&#39;conductance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">7.11855</span>  <span class="c1"># example uses constant streambed_conductance</span>
 </pre></div>
@@ -464,7 +467,7 @@ div.rendered_html tbody tr:hover {
 </section>
 <section id="call-a-utility-to-convert-Q-to-a-series-with-appropriate-formatting">
 <h2>call a utility to convert Q to a series with appropriate formatting<a class="headerlink" href="#call-a-utility-to-convert-Q-to-a-series-with-appropriate-formatting" title="Permalink to this heading"></a></h2>
-<p>The Well Class works with a Pandas series of pumping rates, it may be easily constructed with the Q2ts function. The index of the series is pumping days. We also need to convert from pumping in GPM to cubic feet per day so that units are consistent.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Well</span></code> Class works with a Pandas series of pumping rates, it may be easily constructed with the <code class="docutils literal notranslate"><span class="pre">pycap-dss</span></code> <code class="docutils literal notranslate"><span class="pre">Q2ts</span></code> function. The index of the series is pumping days. We also need to convert from pumping in GPM to cubic feet per day so that units are consistent.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -700,7 +703,7 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_depl</span> <span class="o">=</span> <span class="n">stream_depl</span><span class="o">/</span><span class="n">pycap</span><span class="o">.</span><span class="n">GPM2CFD</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_depl</span> <span class="o">=</span> <span class="n">stream_depl</span> <span class="o">*</span> <span class="n">pycap</span><span class="o">.</span><span class="n">CFD2GPM</span>
 <span class="n">five_year</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">stream_depl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1824</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="n">five_year</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">1824</span><span class="p">:</span> <span class="s1">&#39;Depletion&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">five_year</span>
@@ -821,11 +824,11 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;pumping in days&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;depletion in GPM&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Explanation&#39;</span><span class="p">,</span>
-          <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
-          <span class="n">bbox_transform</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">transFigure</span><span class="p">,</span>
-          <span class="n">ncols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-          <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;expand&#39;</span><span class="p">,</span>
-          <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">)</span>
+        <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+        <span class="n">bbox_transform</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">transFigure</span><span class="p">,</span>
+        <span class="n">ncols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;expand&#39;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -835,7 +838,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7fac398ca550&gt;
+&lt;matplotlib.legend.Legend at 0x105eed790&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -892,7 +895,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glover_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_glover</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span>
-<span class="n">glover_depl</span> <span class="o">=</span> <span class="n">glover_depl</span><span class="o">/</span><span class="n">pycap</span><span class="o">.</span><span class="n">GPM2CFD</span>
+<span class="n">glover_depl</span> <span class="o">=</span> <span class="n">glover_depl</span><span class="o">*</span><span class="n">pycap</span><span class="o">.</span><span class="n">CFD2GPM</span>
 </pre></div>
 </div>
 </div>
@@ -915,7 +918,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7fac317978d0&gt;
+&lt;matplotlib.legend.Legend at 0x15fe65c50&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -928,24 +931,15 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </section>
 <section id="Intermittent-Pumping">
 <h2>Intermittent Pumping<a class="headerlink" href="#Intermittent-Pumping" title="Permalink to this heading"></a></h2>
-<p>The Well Class accepts Q as a series of daily pumping rates and will use superposition to produce a timeseries of drawdown or depletion. The Q2ts helper function is one way to generate an input series, but the user can make an arbitrary series.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Well</span></code> Class accepts Q as a series of daily pumping rates and will use superposition to produce a timeseries of drawdown or depletion. The <code class="docutils literal notranslate"><span class="pre">Q2ts</span></code> helper function is one way to generate an input series, but the user can make an arbitrary series.</p>
 <p>Set up a series pumping 3 days a week during June, July, and August</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2020-10-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2025-09-30&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/tmp/ipykernel_2426/2738069111.py:1: FutureWarning: The default dtype for empty Series will be &#39;object&#39; instead of &#39;float64&#39; in a future version. Specify a dtype explicitly to silence this warning.
-  Q_series = pd.Series(index=pd.period_range(start=&#39;2020-10-01&#39;, end=&#39;2025-09-30&#39;, freq=&#39;D&#39;))
-</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
@@ -985,7 +979,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 <img alt="../_images/examples_WellClass_Demonstration_34_1.png" src="../_images/examples_WellClass_Demonstration_34_1.png" />
 </div>
 </div>
-<p>Well Class expects series index to be integer days</p>
+<p><code class="docutils literal notranslate"><span class="pre">Well</span></code> Class expects series index to be integer days</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
@@ -1042,7 +1036,7 @@ Length: 1826, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermittent_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_intermittent</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span><span class="o">/</span><span class="n">pycap</span><span class="o">.</span><span class="n">GPM2CFD</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermittent_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_intermittent</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span><span class="o">*</span><span class="n">pycap</span><span class="o">.</span><span class="n">CFD2GPM</span>
 </pre></div>
 </div>
 </div>
@@ -1069,7 +1063,7 @@ Length: 1826, dtype: float64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7fac39ae0990&gt;
+&lt;matplotlib.legend.Legend at 0x168a20810&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1079,6 +1073,7 @@ Length: 1826, dtype: float64
 <img alt="../_images/examples_WellClass_Demonstration_40_1.png" src="../_images/examples_WellClass_Demonstration_40_1.png" />
 </div>
 </div>
+<p>Recall from above that only a single drawdown location was passed to the <code class="docutils literal notranslate"><span class="pre">Well</span></code></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
@@ -1105,14 +1100,14 @@ Length: 1826, dtype: float64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7fac31397950&gt;
+&lt;matplotlib.legend.Legend at 0x168b46150&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_42_1.png" src="../_images/examples_WellClass_Demonstration_42_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_43_1.png" src="../_images/examples_WellClass_Demonstration_43_1.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
