@@ -1,7 +1,7 @@
 import pathlib as pl
 import subprocess
 
-exampledir = pl.Path("../source/examples")
+exampledir = pl.Path("../docs/examples")
 nbs = exampledir.glob("*.ipynb")
 for nb in nbs:
     print("clearing", nb)
