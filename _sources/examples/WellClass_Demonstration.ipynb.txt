@@ -5,7 +5,7 @@
    "id": "90465e37-a1ad-4a68-9d16-c00d6594cee4",
    "metadata": {},
    "source": [
-    "# Demonstration of WellResponse Class\n",
+    "# Demonstration of Well Class\n",
     "\n",
     "Notebook to demonstrate using the Well Class to \n",
     "estimate drawdown or stream depletion using the \n",
@@ -32,7 +32,7 @@
    "id": "a1ec807f-632c-49ff-a703-da6b757f05d5",
    "metadata": {},
    "source": [
-    "# Example Depletion\n",
+    "## Example Depletion\n",
     "The Well class will estimate depletions for streams.  The stream distances and\n",
     "streambed conductances, if needed, are passed through dictionaries keyed by \n",
     "a stream name or ID.  In this notebook a table of values will be made manually from \n",
@@ -62,23 +62,13 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "449df4b2-def0-4e06-8b37-db85108d0a75",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "stream_table.head()"
-   ]
-  },
-  {
    "cell_type": "markdown",
    "id": "75c27baa-391a-4ee3-95c6-0ab52c1f06e4",
    "metadata": {},
    "source": [
-    "# Compute apportionment\n",
+    "## Compute apportionment\n",
     "\n",
-    "The Michigan screening tool uses inverse distance weighting apportionment.  Other\n",
+    "The example in the report uses inverse-distance weighting apportionment.  Other\n",
     "apportionment approaches that may be used as a simple way to extend the analytical\n",
     "solution are discussed by Zipper and others (2019).  [https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2018WR024403]"
    ]
@@ -95,79 +85,11 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "ba408c90-1c58-4ac0-a56b-bc568b048810",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "stream_table"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "853cb92d-6873-48a0-a622-64678d024494",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "np.sum(stream_table['apportionment'])"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "479dcb70-36b1-4cab-968e-1e7e785c05ee",
-   "metadata": {},
-   "source": [
-    "make dictionaries from the distances and apportionment values"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "060425be-8fef-4fdb-ada6-f08cfcfd9c98",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "distances = dict(zip(stream_table.id.values, stream_table.distance.values))"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "eabbb8d3-9263-4cc6-9195-1c89ce5c8557",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "apportion = dict(zip(stream_table.id.values, stream_table.apportionment.values))"
-   ]
-  },
-  {
    "cell_type": "markdown",
    "id": "478737c3-0e68-46a6-976b-eacf47820223",
    "metadata": {},
    "source": [
-    "# set aquifer properties and streambed conductances"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "4010787c-a172-4366-92c9-2d56791c7ee0",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "stream_table = pd.DataFrame(({'id': 8, 'distance': 14802},\n",
-    "                            {'id': 9, 'distance': 12609.2},\n",
-    "                            {'id': 11, 'distance': 15750.5},\n",
-    "                            {'id': 27, 'distance': 22567.6},\n",
-    "                            {'id': 9741, 'distance': 27565.2},\n",
-    "                            {'id': 10532, 'distance': 33059.5},\n",
-    "                            {'id': 11967, 'distance': 14846.3},\n",
-    "                            {'id': 12515, 'distance': 17042.5},\n",
-    "                            {'id': 12573, 'distance': 11959.5},\n",
-    "                            {'id': 12941, 'distance': 19070.8},\n",
-    "                            {'id': 13925, 'distance': 10028.9}))"
+    "## set aquifer properties and streambed conductances"
    ]
   },
   {
@@ -180,8 +102,8 @@
     "T= 7211.  # ft^2/day\n",
     "S= 0.01\n",
     "Q = 70  # 70 gpm in cubic feet per day\n",
-    "well_name = 'demo'\n",
-    "pumpdays = int(5. * 365)"
+    "pumpdays = int(5. * 365)\n",
+    "stream_table['conductance'] = 7.11855  # example uses constant streambed_conductance"
    ]
   },
   {
@@ -191,7 +113,10 @@
    "source": [
     "## call a utility to convert Q to a series with appropriate formatting\n",
     "\n",
-    "also convert to CFD from GPM"
+    "The Well Class works with a Pandas series of pumping rates, it may be\n",
+    "easily constructed with the Q2ts function.  The index of the\n",
+    "series is pumping days.  We also need to convert \n",
+    "from pumping in GPM to cubic feet per day so that units are consistent.\n"
    ]
   },
   {
@@ -217,21 +142,39 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "be2435a8-bf30-4ceb-b9f4-8b0f94ac927f",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "stream_table['conductance'] = 7.11855  # example uses constant streambed_conductance"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
    "id": "c4d10dca-be43-4292-b3d5-3705669a7975",
    "metadata": {},
    "outputs": [],
    "source": [
     "stream_table.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7c0ba891-d81d-4307-bb58-778443b7e7ff",
+   "metadata": {},
+   "source": [
+    "make dictionaries from the distances, apportionment, and conductance values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "060425be-8fef-4fdb-ada6-f08cfcfd9c98",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "distances = dict(zip(stream_table.id.values, stream_table.distance.values))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eabbb8d3-9263-4cc6-9195-1c89ce5c8557",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "apportion = dict(zip(stream_table.id.values, stream_table.apportionment.values))"
    ]
   },
   {
@@ -242,6 +185,24 @@
    "outputs": [],
    "source": [
     "cond = dict(zip(stream_table.id.values, stream_table.conductance.values))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4c8ec170-ad59-48b4-85c7-4724506e7f05",
+   "metadata": {},
+   "source": [
+    "## Make a Well object\n",
+    "\n",
+    "Depletion and drawdown can be easily returned as attributes of the object.\n",
+    "The choice of depletion or drawdown method is made through a parameter passed to\n",
+    "the object.  In this example the Hunt (1999) depletion method is used\n",
+    "to compute stream depletion for the dictionary of streams at the given\n",
+    "distances with the inverse-distance apportionment.  We also can\n",
+    "compute drawdown at a dictionary of locations.  If drawdown_dist\n",
+    "is not passed to the object, then drawdowns will not be computed.\n",
+    "Results are returned as arrays that may easily be converted to \n",
+    "Pandas dataframes for ease of viewing and plotting."
    ]
   },
   {
@@ -256,7 +217,7 @@
     "                 Q=Q,\n",
     "                 depletion_years=5,\n",
     "                 depl_method='hunt99',\n",
-    "                 drawdown_dist={'test0':50.},\n",
+    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
     "                 streambed_conductance=cond,\n",
     "                 stream_dist=distances,\n",
     "                 stream_apportionment=apportion)"
@@ -269,28 +230,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "test_well.drawdown"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "3d13cdfa-02b2-4605-a916-f26398696292",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "deltaQ = pycap._calc_deltaQ(Q)\n",
-    "deltaQ"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "06bbd502-45ad-490b-ac65-d8d2989363d8",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "test_well.depletion"
+    "drawdown = pd.DataFrame(test_well.drawdown)\n",
+    "drawdown.head()"
    ]
   },
   {
@@ -308,7 +249,11 @@
    "id": "ef9d8276-f8e6-4a99-b08b-8c4766feb941",
    "metadata": {},
    "source": [
-    "## need to convert to GPM to compare results to Table 2"
+    "## need to convert to GPM to compare results to Table 2\n",
+    "\n",
+    "The object get daily time series according to the \n",
+    "pumping schedule.  We can pull out the 5-year depletion\n",
+    "to note that the final results match Table 2."
    ]
   },
   {
@@ -319,60 +264,277 @@
    "outputs": [],
    "source": [
     "stream_depl = stream_depl/pycap.GPM2CFD\n",
-    "stream_depl"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "7ad4a0b3-be39-4a3f-81f0-83701421be75",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "five_year= pd.DataFrame(stream_depl.loc[1824].T)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "fd435288-e684-4b97-874d-336b682df562",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "five_year.rename(columns={1824: 'Depletion'}, inplace=True)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "293efd67-3acc-47f4-be9a-c4e0de0d74db",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "pd.options.display.float_format = '{:,.2f}'.format\n",
+    "five_year= pd.DataFrame(stream_depl.loc[1824].T)\n",
+    "five_year.rename(columns={1824: 'Depletion'}, inplace=True)\n",
     "five_year"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "5a56842b-a1b5-4311-82c3-4aa14edffa3d",
+   "id": "d752c6cb-2bc3-48ad-adca-03d23a2b19e9",
    "metadata": {},
    "source": [
-    "# Matches Table 2"
+    "## What about plotting?"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "06d7dbb5-41c9-4f14-a2a9-2d0535276d46",
+   "id": "42bdf026-21c5-4194-ac20-ea78afe218bb",
    "metadata": {},
    "outputs": [],
-   "source": []
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "drawdown.plot(ax=ax)\n",
+    "ax.set_xlabel('pumping in days')\n",
+    "ax.set_ylabel('drawdown in feet')"
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "42bdf026-21c5-4194-ac20-ea78afe218bb",
+   "id": "b63019e3-06c3-40bf-823b-6d65d5f9d072",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "stream_depl.plot(ax=ax)\n",
+    "ax.set_xlabel('pumping in days')\n",
+    "ax.set_ylabel('depletion in GPM')\n",
+    "ax.legend(title='Explanation', \n",
+    "          bbox_to_anchor=(0, 0.9, 1, 0.9), \n",
+    "          bbox_transform=fig.transFigure, \n",
+    "          ncols=5,\n",
+    "          mode='expand',\n",
+    "          loc='lower left')\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5268625c-244d-491c-8da7-9b558b21e00c",
+   "metadata": {},
+   "source": [
+    "## Change depletion method\n",
+    "Several depletion methods are available, see the solutions demonstation notebook\n",
+    "for more information.  The choice of depletion method is passed to the object\n",
+    "as a parameter.  Some solutions require additional parameters which need\n",
+    "to be passed as named variables."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ce28600d-f090-42ea-88d4-a570f0f20c5c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pycap.ALL_DEPL_METHODS"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8775a985-cd08-445c-b777-9a6501a5aa9c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# for example the Glover and Balmer solution for a stream assuming no streambed resistance. Note that\n",
+    "# the streambed_conductance parameter can be dropped from the call.\n",
+    "test_glover = pycap.Well(T=T,\n",
+    "                 S=S,\n",
+    "                 Q=Q,\n",
+    "                 depletion_years=5,\n",
+    "                 depl_method='glover',\n",
+    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
+    "                 stream_dist=distances,\n",
+    "                 stream_apportionment=apportion)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c722f2a9-0d21-4c3d-8c8b-f34ec490555b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "glover_depl = pd.DataFrame(test_glover.depletion)\n",
+    "glover_depl = glover_depl/pycap.GPM2CFD"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "98e59450-a1c8-45c2-a235-492487bffdd9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "ax.plot(glover_depl.index.values, glover_depl[8].values, 'g-', label='Glover and Balmer estimate')\n",
+    "ax.plot(stream_depl.index.values, stream_depl[8].values, 'b-', label='Hunt 1999 estimate')\n",
+    "ax.set_xlabel('pumping in days')\n",
+    "ax.set_ylabel('depletion in GPM')\n",
+    "ax.legend(loc='lower right')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f738227b-16db-4bc7-aa3a-c1627ff46ecb",
+   "metadata": {},
+   "source": [
+    "## Intermittent Pumping\n",
+    "The Well Class accepts Q as a series of daily pumping rates and will\n",
+    "use superposition to produce a timeseries of drawdown or depletion.\n",
+    "The Q2ts helper function is one way to generate an input series, \n",
+    "but the user can make an arbitrary series.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "248360aa-d910-43ce-87fb-753c7103f3d5",
+   "metadata": {},
+   "source": [
+    "Set up a series pumping 3 days a week during June, July, and August"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c11703a1-341d-4242-a278-c93478acc07d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Q_series = pd.Series(index=pd.period_range(start='2020-10-01', end='2025-09-30', freq='D'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "53a11fbf-817d-45ef-b690-7d7277344888",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for d in Q_series.index.values:\n",
+    "    Q_series[d]= 0.0\n",
+    "    if d.month in range(6,9):\n",
+    "        if d.dayofweek in range(3,6):\n",
+    "            Q_series[d] = 70 * pycap.GPM2CFD"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "504e8360-156e-4102-9e7e-91034a9d87a5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "Q_series.plot(ax=ax)\n",
+    "ax.set_xlim('2021-06-01', '2021-09-01')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "20f63637-cc4c-4d33-814a-66f0a04177fc",
+   "metadata": {},
+   "source": [
+    "Well Class expects series index to be integer days"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9fd1ed67-42ae-464d-b827-6e58a8b423eb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Q_days = pd.Series(Q_series.values, index=range(1, len(Q_series)+1))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4d097a81-1051-4fb7-be84-da9e9c288cc9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Q_days"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "257a4726-d059-4e91-a86c-0715eb63ddc1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "test_intermittent = pycap.Well(T=T,\n",
+    "                 S=S,\n",
+    "                 Q=Q_days,\n",
+    "                 depletion_years=5,\n",
+    "                 depl_method='hunt99',\n",
+    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
+    "                 streambed_conductance=cond,\n",
+    "                 stream_dist=distances,\n",
+    "                 stream_apportionment=apportion)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "caaed89e-dc90-4000-b302-da4a28e5e63d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "intermittent_depl = pd.DataFrame(test_intermittent.depletion)/pycap.GPM2CFD"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "aed97702-c809-47d1-b1a6-233a93cd42af",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "intermittent_depl.plot(ax=ax)\n",
+    "ax.set_xlabel('pumping in days')\n",
+    "ax.set_ylabel('depletion in GPM')\n",
+    "ax.legend(title='Explanation', \n",
+    "          bbox_to_anchor=(0, 0.9, 1, 0.9), \n",
+    "          bbox_transform=fig.transFigure, \n",
+    "          ncols=5,\n",
+    "          mode='expand',\n",
+    "          loc='lower left')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9dfe440a-d9ba-4a75-a172-f7c0c0ab27c1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "intermittent_drawdown = pd.DataFrame(test_intermittent.drawdown)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b077de02-da63-4541-bb51-fcf49aa61020",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, ax = plt.subplots()\n",
+    "intermittent_drawdown.plot(ax=ax)\n",
+    "ax.set_xlabel('pumping in days')\n",
+    "ax.set_ylabel('drawdown in feet')\n",
+    "ax.legend(loc='upper left')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a557f04e-7990-4dab-bea3-49a8bd36951c",
    "metadata": {},
    "outputs": [],
    "source": []
