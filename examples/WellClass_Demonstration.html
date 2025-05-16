@@ -633,15 +633,6 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:66: RuntimeWarning: divide by zero encountered in divide
-  u = dist**2.0 * S / (4.0 * T * time)
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -693,22 +684,13 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </table>
 </div></div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_well</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-</pre></div></div>
 </div>
 </section>
 <section id="need-to-convert-to-GPM-to-compare-results-to-Table-2">
@@ -853,7 +835,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7f6d3838c610&gt;
+&lt;matplotlib.legend.Legend at 0x7f290a86fb50&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -905,7 +887,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
@@ -913,15 +895,6 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 <span class="n">glover_depl</span> <span class="o">=</span> <span class="n">glover_depl</span><span class="o">/</span><span class="n">pycap</span><span class="o">.</span><span class="n">GPM2CFD</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:436: RuntimeWarning: divide by zero encountered in divide
-  z = dist / np.sqrt(4 * (T / S) * time)
-</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
@@ -942,7 +915,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7f6d3012dbd0&gt;
+&lt;matplotlib.legend.Legend at 0x7f2902651250&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -970,7 +943,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_2444/2738069111.py:1: FutureWarning: The default dtype for empty Series will be &#39;object&#39; instead of &#39;float64&#39; in a future version. Specify a dtype explicitly to silence this warning.
+/tmp/ipykernel_2412/2738069111.py:1: FutureWarning: The default dtype for empty Series will be &#39;object&#39; instead of &#39;float64&#39; in a future version. Specify a dtype explicitly to silence this warning.
   Q_series = pd.Series(index=pd.period_range(start=&#39;2020-10-01&#39;, end=&#39;2025-09-30&#39;, freq=&#39;D&#39;))
 </pre></div></div>
 </div>
@@ -1065,42 +1038,13 @@ Length: 1826, dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermittent_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_intermittent</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span><span class="o">/</span><span class="n">pycap</span><span class="o">.</span><span class="n">GPM2CFD</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:572: RuntimeWarning: divide by zero encountered in divide
-  a = np.sqrt(S * dist**2 / (4.0 * T * time))
-</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
@@ -1125,7 +1069,7 @@ Length: 1826, dtype: float64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7f6d2ccd7f90&gt;
+&lt;matplotlib.legend.Legend at 0x7f29027c4910&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1135,22 +1079,13 @@ Length: 1826, dtype: float64
 <img alt="../_images/examples_WellClass_Demonstration_40_1.png" src="../_images/examples_WellClass_Demonstration_40_1.png" />
 </div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermittent_drawdown</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_intermittent</span><span class="o">.</span><span class="n">drawdown</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/runner/work/pycap-dss/pycap-dss/source/examples/../../pycap/solutions.py:66: RuntimeWarning: divide by zero encountered in divide
-  u = dist**2.0 * S / (4.0 * T * time)
-</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
@@ -1170,7 +1105,7 @@ Length: 1826, dtype: float64
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x7f6d2ccde710&gt;
+&lt;matplotlib.legend.Legend at 0x7f29001d2a90&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
