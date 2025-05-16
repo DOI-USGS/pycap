@@ -16,7 +16,14 @@
    "cell_type": "code",
    "execution_count": 1,
    "id": "95dbea60-dd79-408f-bb66-6bb84386187c",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:02.895191Z",
+     "iopub.status.busy": "2025-05-16T17:49:02.894483Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.802871Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.802581Z"
+    }
+   },
    "outputs": [],
    "source": [
     "import sys\n",
@@ -46,7 +53,14 @@
    "cell_type": "code",
    "execution_count": 2,
    "id": "4d858624-c165-413d-bcc4-3e74f5b6362b",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.804496Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.804366Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.807392Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.807142Z"
+    }
+   },
    "outputs": [],
    "source": [
     "stream_table = pd.DataFrame(({'id': 8, 'distance': 14802},\n",
@@ -79,7 +93,14 @@
    "cell_type": "code",
    "execution_count": 3,
    "id": "cd49a471-83e2-403a-9695-5b315eedbcd2",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.808790Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.808694Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.811214Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.810969Z"
+    }
+   },
    "outputs": [],
    "source": [
     "invers =np.array([1/x for x in stream_table['distance']])\n",
@@ -98,7 +119,14 @@
    "cell_type": "code",
    "execution_count": 4,
    "id": "6de231c4-280f-4351-a6c5-d4dc939b9777",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.812461Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.812375Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.814405Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.814171Z"
+    }
+   },
    "outputs": [],
    "source": [
     "T= 7211.  # ft^2/day\n",
@@ -125,7 +153,14 @@
    "cell_type": "code",
    "execution_count": 5,
    "id": "00d5ddce-a8e5-4343-b35a-e9fc73c58520",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.815736Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.815650Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.817826Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.817588Z"
+    }
+   },
    "outputs": [],
    "source": [
     "Q = pycap.Q2ts(pumpdays, 5, Q) * pycap.GPM2CFD"
@@ -135,7 +170,14 @@
    "cell_type": "code",
    "execution_count": 6,
    "id": "0686c301-9569-436e-8e9d-fea657deae7f",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.819003Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.818921Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.822677Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.822406Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -167,7 +209,14 @@
    "cell_type": "code",
    "execution_count": 7,
    "id": "c4d10dca-be43-4292-b3d5-3705669a7975",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.823802Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.823726Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.840420Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.840166Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -266,7 +315,14 @@
    "cell_type": "code",
    "execution_count": 8,
    "id": "060425be-8fef-4fdb-ada6-f08cfcfd9c98",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.841666Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.841580Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.843416Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.843177Z"
+    }
+   },
    "outputs": [],
    "source": [
     "distances = dict(zip(stream_table.id.values, stream_table.distance.values))"
@@ -276,7 +332,14 @@
    "cell_type": "code",
    "execution_count": 9,
    "id": "eabbb8d3-9263-4cc6-9195-1c89ce5c8557",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.844604Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.844523Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.846210Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.845947Z"
+    }
+   },
    "outputs": [],
    "source": [
     "apportion = dict(zip(stream_table.id.values, stream_table.apportionment.values))"
@@ -286,7 +349,14 @@
    "cell_type": "code",
    "execution_count": 10,
    "id": "8e925f15-7afe-4a7e-bf52-65aa41149de7",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.847304Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.847227Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.848929Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.848676Z"
+    }
+   },
    "outputs": [],
    "source": [
     "cond = dict(zip(stream_table.id.values, stream_table.conductance.values))"
@@ -314,7 +384,14 @@
    "cell_type": "code",
    "execution_count": 11,
    "id": "8ba31012-76ab-4c1e-9e16-be545dce05b2",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.850075Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.849996Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.852037Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.851791Z"
+    }
+   },
    "outputs": [],
    "source": [
     "test_well = pycap.Well(T=T,\n",
@@ -332,7 +409,14 @@
    "cell_type": "code",
    "execution_count": 12,
    "id": "84ad8495-19bd-4b22-a67e-b3440c0af154",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.853232Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.853152Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.856594Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.856374Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -406,7 +490,14 @@
    "cell_type": "code",
    "execution_count": 13,
    "id": "45c8ee4e-0a96-4812-8503-0fab8a99b54f",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.857689Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.857614Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.862632Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.862379Z"
+    }
+   },
    "outputs": [],
    "source": [
     "stream_depl = pd.DataFrame(test_well.depletion)"
@@ -428,7 +519,14 @@
    "cell_type": "code",
    "execution_count": 14,
    "id": "79602e05-ab9d-46b8-88be-7feaf90eb98f",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.863778Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.863693Z",
+     "iopub.status.idle": "2025-05-16T17:49:09.866959Z",
+     "shell.execute_reply": "2025-05-16T17:49:09.866736Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -542,7 +640,14 @@
    "cell_type": "code",
    "execution_count": 15,
    "id": "42bdf026-21c5-4194-ac20-ea78afe218bb",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:09.868098Z",
+     "iopub.status.busy": "2025-05-16T17:49:09.868025Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.084732Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.084325Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -576,12 +681,19 @@
    "cell_type": "code",
    "execution_count": 16,
    "id": "b63019e3-06c3-40bf-823b-6d65d5f9d072",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.086497Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.086365Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.181209Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.180974Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x105eed790>"
+       "<matplotlib.legend.Legend at 0x13b08b410>"
       ]
      },
      "execution_count": 16,
@@ -628,7 +740,14 @@
    "cell_type": "code",
    "execution_count": 17,
    "id": "ce28600d-f090-42ea-88d4-a570f0f20c5c",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.182441Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.182366Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.184633Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.184423Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -653,7 +772,14 @@
    "cell_type": "code",
    "execution_count": 18,
    "id": "8775a985-cd08-445c-b777-9a6501a5aa9c",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.185735Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.185660Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.187539Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.187321Z"
+    }
+   },
    "outputs": [],
    "source": [
     "# for example the Glover and Balmer solution for a stream assuming no streambed resistance. Note that\n",
@@ -672,7 +798,14 @@
    "cell_type": "code",
    "execution_count": 19,
    "id": "c722f2a9-0d21-4c3d-8c8b-f34ec490555b",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.188618Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.188552Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.193288Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.193078Z"
+    }
+   },
    "outputs": [],
    "source": [
     "glover_depl = pd.DataFrame(test_glover.depletion)\n",
@@ -683,12 +816,19 @@
    "cell_type": "code",
    "execution_count": 20,
    "id": "98e59450-a1c8-45c2-a235-492487bffdd9",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.194398Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.194326Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.245042Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.244789Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x15fe65c50>"
+       "<matplotlib.legend.Legend at 0x13b17add0>"
       ]
      },
      "execution_count": 20,
@@ -739,7 +879,14 @@
    "cell_type": "code",
    "execution_count": 21,
    "id": "c11703a1-341d-4242-a278-c93478acc07d",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.246301Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.246227Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.248317Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.248103Z"
+    }
+   },
    "outputs": [],
    "source": [
     "Q_series = pd.Series(index=pd.period_range(start='2020-10-01', end='2025-09-30', freq='D'))"
@@ -749,7 +896,14 @@
    "cell_type": "code",
    "execution_count": 22,
    "id": "53a11fbf-817d-45ef-b690-7d7277344888",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.249411Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.249336Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.261889Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.261678Z"
+    }
+   },
    "outputs": [],
    "source": [
     "for d in Q_series.index.values:\n",
@@ -763,7 +917,14 @@
    "cell_type": "code",
    "execution_count": 23,
    "id": "504e8360-156e-4102-9e7e-91034a9d87a5",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.263048Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.262979Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.323553Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.323319Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -804,7 +965,14 @@
    "cell_type": "code",
    "execution_count": 24,
    "id": "9fd1ed67-42ae-464d-b827-6e58a8b423eb",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.324827Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.324752Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.326543Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.326292Z"
+    }
+   },
    "outputs": [],
    "source": [
     "Q_days = pd.Series(Q_series.values, index=range(1, len(Q_series)+1))"
@@ -814,7 +982,14 @@
    "cell_type": "code",
    "execution_count": 25,
    "id": "4d097a81-1051-4fb7-be84-da9e9c288cc9",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.327634Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.327563Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.330135Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.329928Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -846,7 +1021,14 @@
    "cell_type": "code",
    "execution_count": 26,
    "id": "257a4726-d059-4e91-a86c-0715eb63ddc1",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.331245Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.331176Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.333026Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.332827Z"
+    }
+   },
    "outputs": [],
    "source": [
     "test_intermittent = pycap.Well(T=T,\n",
@@ -864,7 +1046,14 @@
    "cell_type": "code",
    "execution_count": 27,
    "id": "caaed89e-dc90-4000-b302-da4a28e5e63d",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.334067Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.333997Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.412196Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.411978Z"
+    }
+   },
    "outputs": [],
    "source": [
     "intermittent_depl = pd.DataFrame(test_intermittent.depletion)*pycap.CFD2GPM"
@@ -874,12 +1063,19 @@
    "cell_type": "code",
    "execution_count": 28,
    "id": "aed97702-c809-47d1-b1a6-233a93cd42af",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.413340Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.413271Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.502346Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.502089Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x168a20810>"
+       "<matplotlib.legend.Legend at 0x13b2f9990>"
       ]
      },
      "execution_count": 28,
@@ -922,7 +1118,14 @@
    "cell_type": "code",
    "execution_count": 29,
    "id": "9dfe440a-d9ba-4a75-a172-f7c0c0ab27c1",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.503680Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.503585Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.511199Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.510992Z"
+    }
+   },
    "outputs": [],
    "source": [
     "intermittent_drawdown = pd.DataFrame(test_intermittent.drawdown)"
@@ -932,12 +1135,19 @@
    "cell_type": "code",
    "execution_count": 30,
    "id": "b077de02-da63-4541-bb51-fcf49aa61020",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-16T17:49:10.512308Z",
+     "iopub.status.busy": "2025-05-16T17:49:10.512239Z",
+     "iopub.status.idle": "2025-05-16T17:49:10.566159Z",
+     "shell.execute_reply": "2025-05-16T17:49:10.565927Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x168b46150>"
+       "<matplotlib.legend.Legend at 0x13b3d4cd0>"
       ]
      },
      "execution_count": 30,
