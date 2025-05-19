@@ -51,7 +51,13 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> More details on how to use the package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> More details on how to use the package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#individual-solutions">Individual Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Well Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-project">Analysis Project</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
 <ul>
@@ -59,9 +65,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Solutions_Demonstration.html">Solution Demonstrations for <code class="docutils literal notranslate"><span class="pre">pycap</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/WellClass_Demonstration.html">Demonstration of Well Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/Solutions_Demonstration.html"><code class="docutils literal notranslate"><span class="pre">pycap-dss</span></code> demonstrations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/WellClass_Demonstration.html">Demonstration of Well Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/AnalysisProject_Demonstration.html">Analysis Project Demonstration</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Release history</span></p>
 <ul>
@@ -118,36 +124,44 @@
 </style>
 <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
-<p># Individual Solutions</p>
-<dl class="simple">
-<dt># Well object</dt><dd><ul class="simple">
-<li><p>allows for superposition in time making time series pumping</p></li>
-<li><p>multiple responses</p></li>
-<li><p>changing the methods and apportionment</p></li>
-</ul>
-</dd>
-<dt># Analysis Project</dt><dd><ul class="simple">
-<li><p>an example wrapping it all up together</p></li>
-</ul>
-</dd>
-</dl>
-<p># maybe geoprocessing?</p>
-<p>Start by importing <cite>pycap</cite></p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>The <cite>pycap-dss</cite> software provides a suite of analytical solutions to quantify stream depletion and drawdown due to pumping a groundwater well. In the sections below are information about individual solutions. These can be exposed and evaluated directly. A list of available functions for depletion and drawdown, respectively, can be listed from the code as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycap</span>
+<span class="c1"># list the depletion functions</span>
+<span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DEP_METHODS</span>
+<span class="c1"># list the drawdown functions</span>
+<span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DD_METHODS</span>
 </pre></div>
 </div>
-<p>Or import a well functions</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycap.wells</span> <span class="k">as</span> <span class="nn">wo</span>
-
-<span class="n">ddwn</span> <span class="o">=</span> <span class="n">wo</span><span class="o">.</span><span class="n">theis</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Or import a specific function.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.wells</span> <span class="kn">import</span> <span class="n">glover</span>
-
-<span class="n">depl</span> <span class="o">=</span> <span class="n">glover</span><span class="p">()</span>
-</pre></div>
-</div>
+<p>The code is designed in a modular way such that additional methods can be implemented and then accessed by the rest of the code. The following sections expand on these capabilities and build on one another in terms of complexity. The <a class="reference internal" href="#individual-solutions"><span class="std std-ref">Individual Solutions</span></a> section describes how each analytical solution can be accessed directly and executed. The <a class="reference internal" href="#id1"><span class="std std-ref">Well Object</span></a> section describes the <cite>Well</cite> class that is a wrapper around the depletion and drawdown solution and also can be initialized with general properties about wells and responses (e.g. streams or drawdown locations). A single instance of a <cite>Well</cite> object represents a pumping well and can include aquifer properties, pumping schedules, and various responses at various locations. Finally, the <a class="reference internal" href="#analysis-project"><span class="std std-ref">Analysis Project</span></a> section describes an example project as implemented by the Wisconsin Department of Natural Resources in which multiple existing and/or proposed pumping wells with multiple responses can be evaluated in a coordinated single project. This represents one example, but not the only way, to coordinate a potentially complex area with many wells and responses and to systematically report the results.</p>
+</section>
+<section id="individual-solutions">
+<h2>Individual Solutions<a class="headerlink" href="#individual-solutions" title="Permalink to this heading"></a></h2>
+<p>Individual solutions are low-level implementations of analytical solutions tested against the literature documenting them. They are available in <cite>pycap-dss</cite> mostly for use by the higher-level classes documented below, but are also available directly if users wish to use them that way.</p>
+<p>The <a class="reference internal" href="examples/Solutions_Demonstration.html"><span class="doc">Solutions_Demonstration</span></a> notebook demonstrates the use of individual analytical solutions in <cite>pycap-dss</cite>. These individual solutions typically require a pumping rate, time, aquifer properties, and relevant geometry (e.g. distance from a stream, or from a drawdown response location, or both). Each function can be accessed directly from the <cite>pycap</cite> module as.
+.. code-block:: python</p>
+<blockquote>
+<div><p>import pycap
+# use the glover function for stream depletion
+pycap.glover</p>
+</div></blockquote>
+<p>The documentation for these functions specifies exactly which parameters are required and what is returned. Time and spatial coordinate parameters can broadcast to multiple values, but only for one or the other - not both.</p>
+<p>A note on units. For most functions, the concept is for units to be self-similar. In other words, a consistent length unit and time unit is assumed, and all properties, geometry, and times must be self consistent. An exception to this is the <cite>walton</cite> stream-depletion function. This special case assumes specific units for inputs.</p>
+</section>
+<section id="id1">
+<h2>Well Object<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>The <cite>pycap-dss</cite> code is designed modularly such that information common to multiple depletion and drawdown solutions can be contained in a higher-level object that is implemented from the perspective of evaluating responses to a single pumping well. As such, the class is called the <cite>Well</cite> class and the <a class="reference internal" href="examples/WellClass_Demonstration.html"><span class="doc">WellClass_Demonstration</span></a> notebook demonstrates the functionality.</p>
+<p>One key design element is the ability to provide either a <cite>csv</cite> file or a <cite>pandas Series</cite> with a time series of pumping rates. The index in either case is assumed to be provided in sequential days - 365 per year (leap years are not considered). With these time series, the <cite>Well</cite> class uses superposition and image wells (in time) to reconstruct the temporal response to variable pumping rates over time.</p>
+<p>It is also possible, in the <cite>Well</cite> class, to evaluate multiple response locations (either streams or drawdown locations). As a result, some response-related inputs are provided as dictionaries with keys indicating response names.</p>
+<p>Finally, a string identifies the drawdown and/or depletion methods requested for evaluating the responses. This allows the user to easily change the method for calculating responses. When this is done, additional inputs are often needed. These must be provided. If additional inputs are not provided, methods may fail indicating which inputs are missing.</p>
+</section>
+<section id="analysis-project">
+<h2>Analysis Project<a class="headerlink" href="#analysis-project" title="Permalink to this heading"></a></h2>
+<p>The <span class="xref std std-ref">well_object</span> section describes wrapping up functionality from the perspective of a single pumping well. An advantage of using the analytical solutions in <cite>pycap-dss</cite> is the underlying assumption that multiple wells can be superposed - both in time, as noted above, but also in accumulating the responses of multiple pumping wells on a single response location.  The Wisconsin Department of Natural Resources created the <cite>AnalysisProject</cite> class as an example of combining multiple wells and multiple responses into a single cohesive project with consistent reporting of results.</p>
+<p>The <a class="reference internal" href="examples/AnalysisProject_Demonstration.html"><span class="doc">AnalysisProject_Demonstration</span></a> notebook demonstrates the functionality of this class. The notebook starts by reading in a Microsoft Excel file <a class="reference download internal" download="" href="_downloads/73d94b404d101c703172c700a5359e00/test_run.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">test_run.xlsx</span></code></a> built from a template with data formatted specifically for the notebook. Next, the information is converted into nested dictionaries and written out to a <cite>yml</cite> configuration file. The Excel step is optional, and a user could, instead, start at the step of creating the <cite>yml</cite> configuration file from scratch. The <cite>yml</cite> file made by this example is <a class="reference download internal" download="" href="_downloads/7d579fca65a5aada2006b167ac4ec666/TestExample.yml"><code class="xref download docutils literal notranslate"><span class="pre">TestExample.yml</span></code></a>.</p>
+<p>The remainder of the notebook shows running <cite>pycap</cite> and reporting the results. Note that this is an example that does not explore all functionality of the <cite>AnalysisProject</cite> class and also certain protocols, particularly expectations of specific units, are required. This class, however, is built upon the solutions and <cite>Well</cite> object discussed above, so an interested user could create similar functionality.</p>
+</section>
 </section>
 
 
@@ -162,7 +176,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 16, 2025.
+      <span class="lastupdated">Last updated on May 19, 2025.
       </span></p>
   </div>
 

@@ -1,0 +1,3889 @@
+project_properties:
+  name: TestExample
+  T: 6000.0
+  S: 0.15
+  default_dd_days: 90.0
+  default_depletion_years: 5.0
+  default_pumping_days: 90.0
+well_1:
+  name: '1'
+  status: existing
+  loc:
+    x: 89.301241
+    y: 44.463364
+  Q: 69.0
+  pumping_days: 90
+  stream_apportionment158:
+    name: TomorrowRiver:1
+    apportionment: 0.2222599581251009
+  stream_response:
+  - TomorrowRiver:1
+  dd_response:
+  - LakeEmily
+well_2:
+  name: '2'
+  status: existing
+  loc:
+    x: 89.290945
+    y: 44.4615
+  Q: 52.0
+  pumping_days: 90
+  stream_apportionment168:
+    name: TomorrowRiver:2
+    apportionment: 0.14423496406402658
+  stream_response:
+  - TomorrowRiver:2
+  dd_response: []
+well_3:
+  name: '3'
+  status: pending
+  loc:
+    x: 89.298
+    y: 44.465700000000005
+  Q: 485.0
+  pumping_days: 90
+  stream_apportionment159:
+    name: TomorrowRiver:3
+    apportionment: 0.16096118707682489
+  stream_response:
+  - TomorrowRiver:3
+  dd_response: []
+well_4:
+  name: '4'
+  status: existing
+  loc:
+    x: 89.43967
+    y: 44.535151
+  Q: 637.0
+  pumping_days: 150
+  stream_apportionment43:
+    name: TomorrowRiver:4
+    apportionment: 0.7056321074435156
+  stream_response:
+  - TomorrowRiver:4
+  dd_response: []
+well_5:
+  name: '5'
+  status: existing
+  loc:
+    x: 89.3590668
+    y: 44.5576667
+  Q: 361.0
+  pumping_days: 90
+  stream_apportionment82:
+    name: TomorrowRiver:5
+    apportionment: 0.9
+  stream_response:
+  - TomorrowRiver:5
+  dd_response: []
+well_6:
+  name: '6'
+  status: existing
+  loc:
+    x: 89.27405
+    y: 44.5070667
+  Q: 361.0
+  pumping_days: 90
+  stream_apportionment138:
+    name: TomorrowRiver:6
+    apportionment: 0.47045184802191
+  stream_response:
+  - TomorrowRiver:6
+  dd_response: []
+well_7:
+  name: '7'
+  status: existing
+  loc:
+    x: 89.2899
+    y: 44.501000000000005
+  Q: 347.0
+  pumping_days: 90
+  stream_apportionment135:
+    name: TomorrowRiver:7
+    apportionment: 0.3435855121580108
+  stream_response:
+  - TomorrowRiver:7
+  dd_response: []
+well_8:
+  name: '8'
+  status: existing
+  loc:
+    x: 89.315206
+    y: 44.620694
+  Q: 327.0
+  pumping_days: 60
+  stream_apportionment69:
+    name: TomorrowRiver:8
+    apportionment: 0.5398427381571813
+  stream_response:
+  - TomorrowRiver:8
+  dd_response: []
+well_9:
+  name: '9'
+  status: existing
+  loc:
+    x: 89.2649333
+    y: 44.4394167
+  Q: 323.0
+  pumping_days: 150
+  stream_apportionment188:
+    name: TomorrowRiver:9
+    apportionment: 0.5040748908144476
+  stream_response:
+  - TomorrowRiver:9
+  dd_response: []
+well_10:
+  name: '10'
+  status: existing
+  loc:
+    x: 89.395337
+    y: 44.553729
+  Q: 306.0
+  pumping_days: 120
+  stream_apportionment49:
+    name: TomorrowRiver:10
+    apportionment: 0.2564304906539402
+  stream_response:
+  - TomorrowRiver:10
+  dd_response: []
+well_11:
+  name: '11'
+  status: existing
+  loc:
+    x: 89.2438833
+    y: 44.39955
+  Q: 296.0
+  pumping_days: 120
+  stream_apportionment189:
+    name: TomorrowRiver:11
+    apportionment: 0.4527956844033152
+  stream_response:
+  - TomorrowRiver:11
+  dd_response: []
+well_12:
+  name: '12'
+  status: existing
+  loc:
+    x: 89.314662
+    y: 44.610199
+  Q: 291.0
+  pumping_days: 60
+  stream_apportionment77:
+    name: TomorrowRiver:12
+    apportionment: 0.43762879957690504
+  stream_response:
+  - TomorrowRiver:12
+  dd_response: []
+well_13:
+  name: '13'
+  status: existing
+  loc:
+    x: 89.4089283
+    y: 44.54313
+  Q: 284.0
+  pumping_days: 60
+  stream_apportionment51:
+    name: TomorrowRiver:13
+    apportionment: 0.4275141847525885
+  stream_response:
+  - TomorrowRiver:13
+  dd_response: []
+well_14:
+  name: '14'
+  status: existing
+  loc:
+    x: 89.4515116
+    y: 44.5830467
+  Q: 270.0
+  pumping_days: 90
+  stream_apportionment0:
+    name: TomorrowRiver:14
+    apportionment: 0.7050128104223592
+  stream_response:
+  - TomorrowRiver:14
+  dd_response: []
+well_15:
+  name: '15'
+  status: existing
+  loc:
+    x: 89.3559
+    y: 44.3768
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment182:
+    name: TomorrowRiver:15
+    apportionment: 0.9124653598503204
+  stream_response:
+  - TomorrowRiver:15
+  dd_response: []
+well_16:
+  name: '16'
+  status: existing
+  loc:
+    x: 89.2701
+    y: 44.4876
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment161:
+    name: TomorrowRiver:16
+    apportionment: 0.794767406392953
+  stream_response:
+  - TomorrowRiver:16
+  dd_response: []
+well_17:
+  name: '17'
+  status: existing
+  loc:
+    x: 89.3197
+    y: 44.5186
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment108:
+    name: TomorrowRiver:17
+    apportionment: 0.16449710951387594
+  stream_response:
+  - TomorrowRiver:17
+  dd_response: []
+well_18:
+  name: '18'
+  status: existing
+  loc:
+    x: 89.21013
+    y: 44.460249999999995
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment191:
+    name: TomorrowRiver:18
+    apportionment: 0.8861569323896885
+  stream_response:
+  - TomorrowRiver:18
+  dd_response: []
+well_19:
+  name: '19'
+  status: existing
+  loc:
+    x: 89.31423
+    y: 44.51112
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment115:
+    name: TomorrowRiver:19
+    apportionment: 0.14982361702382177
+  stream_response:
+  - TomorrowRiver:19
+  dd_response: []
+well_20:
+  name: '20'
+  status: existing
+  loc:
+    x: 89.355394
+    y: 44.568296
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment78:
+    name: TomorrowRiver:20
+    apportionment: 0.2574271835718728
+  stream_response:
+  - TomorrowRiver:20
+  dd_response: []
+well_21:
+  name: '21'
+  status: existing
+  loc:
+    x: 89.3827
+    y: 44.444700000000005
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment166:
+    name: TomorrowRiver:21
+    apportionment: 0.7597270353122394
+  stream_response:
+  - TomorrowRiver:21
+  dd_response: []
+well_22:
+  name: '22'
+  status: existing
+  loc:
+    x: 89.34555
+    y: 44.6132667
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment74:
+    name: TomorrowRiver:22
+    apportionment: 0.2943548438414354
+  stream_response:
+  - TomorrowRiver:22
+  dd_response: []
+well_23:
+  name: '23'
+  status: existing
+  loc:
+    x: 89.31969
+    y: 44.45668
+  Q: 250.0
+  pumping_days: 90
+  stream_apportionment157:
+    name: TomorrowRiver:23
+    apportionment: 0.39525941171764756
+  stream_response:
+  - TomorrowRiver:23
+  dd_response: []
+well_24:
+  name: '24'
+  status: existing
+  loc:
+    x: 89.459565
+    y: 44.5780367
+  Q: 246.0
+  pumping_days: 60
+  stream_apportionment21:
+    name: TomorrowRiver:24
+    apportionment: 0.7408076778811047
+  stream_response:
+  - TomorrowRiver:24
+  dd_response: []
+well_25:
+  name: '25'
+  status: existing
+  loc:
+    x: 89.3148
+    y: 44.5070667
+  Q: 244.0
+  pumping_days: 90
+  stream_apportionment116:
+    name: TomorrowRiver:25
+    apportionment: 0.13257984909729456
+  stream_response:
+  - TomorrowRiver:25
+  dd_response: []
+well_26:
+  name: '26'
+  status: existing
+  loc:
+    x: 89.3882783
+    y: 44.5955283
+  Q: 241.0
+  pumping_days: 60
+  stream_apportionment58:
+    name: TomorrowRiver:26
+    apportionment: 0.323239480278181
+  stream_response:
+  - TomorrowRiver:26
+  dd_response: []
+well_27:
+  name: '27'
+  status: existing
+  loc:
+    x: 89.22115
+    y: 44.39745
+  Q: 229.0
+  pumping_days: 90
+  stream_apportionment202:
+    name: TomorrowRiver:27
+    apportionment: 0.822763032585383
+  stream_response:
+  - TomorrowRiver:27
+  dd_response: []
+well_28:
+  name: '28'
+  status: existing
+  loc:
+    x: 89.4487697
+    y: 44.5628156
+  Q: 225.0
+  pumping_days: 90
+  stream_apportionment26:
+    name: TomorrowRiver:28
+    apportionment: 0.6691783873969503
+  stream_response:
+  - TomorrowRiver:28
+  dd_response: []
+well_29:
+  name: '29'
+  status: existing
+  loc:
+    x: 89.4335
+    y: 44.536300000000004
+  Q: 225.0
+  pumping_days: 90
+  stream_apportionment47:
+    name: TomorrowRiver:29
+    apportionment: 0.6498687941638627
+  stream_response:
+  - TomorrowRiver:29
+  dd_response: []
+well_30:
+  name: '30'
+  status: existing
+  loc:
+    x: 89.280511
+    y: 44.472353
+  Q: 223.0
+  pumping_days: 90
+  stream_apportionment164:
+    name: TomorrowRiver:30
+    apportionment: 0.3512572469079524
+  stream_response:
+  - TomorrowRiver:30
+  dd_response: []
+well_31:
+  name: '31'
+  status: existing
+  loc:
+    x: 89.452978
+    y: 44.568290999999995
+  Q: 221.0
+  pumping_days: 90
+  stream_apportionment18:
+    name: TomorrowRiver:31
+    apportionment: 0.6731131980818446
+  stream_response:
+  - TomorrowRiver:31
+  dd_response: []
+well_32:
+  name: '32'
+  status: existing
+  loc:
+    x: 89.3173617
+    y: 44.3611167
+  Q: 213.0
+  pumping_days: 120
+  stream_apportionment184:
+    name: TomorrowRiver:32
+    apportionment: 0.4607195535425957
+  stream_response:
+  - TomorrowRiver:32
+  dd_response: []
+well_33:
+  name: '33'
+  status: existing
+  loc:
+    x: 89.3559166
+    y: 44.369
+  Q: 211.0
+  pumping_days: 90
+  stream_apportionment181:
+    name: TomorrowRiver:33
+    apportionment: 0.8348380254456285
+  stream_response:
+  - TomorrowRiver:33
+  dd_response: []
+well_34:
+  name: '34'
+  status: existing
+  loc:
+    x: 89.2813168
+    y: 44.4201883
+  Q: 210.0
+  pumping_days: 120
+  stream_apportionment187:
+    name: TomorrowRiver:34
+    apportionment: 0.3800113509581771
+  stream_response:
+  - TomorrowRiver:34
+  dd_response: []
+well_35:
+  name: '35'
+  status: existing
+  loc:
+    x: 89.4034
+    y: 44.5965
+  Q: 200.0
+  pumping_days: 90
+  stream_apportionment9:
+    name: TomorrowRiver:35
+    apportionment: 0.2974719040097579
+  stream_response:
+  - TomorrowRiver:35
+  dd_response: []
+well_36:
+  name: '36'
+  status: existing
+  loc:
+    x: 89.4007
+    y: 44.554100000000005
+  Q: 200.0
+  pumping_days: 90
+  stream_apportionment46:
+    name: TomorrowRiver:36
+    apportionment: 0.29363993471767325
+  stream_response:
+  - TomorrowRiver:36
+  dd_response: []
+well_37:
+  name: '37'
+  status: existing
+  loc:
+    x: 89.3684
+    y: 44.6407
+  Q: 200.0
+  pumping_days: 90
+  stream_apportionment12:
+    name: TomorrowRiver:37
+    apportionment: 0.5211637938870204
+  stream_response:
+  - TomorrowRiver:37
+  dd_response: []
+well_38:
+  name: '38'
+  status: existing
+  loc:
+    x: 89.2721458
+    y: 44.368775
+  Q: 199.0
+  pumping_days: 90
+  stream_apportionment193:
+    name: TomorrowRiver:38
+    apportionment: 0.7761286592168399
+  stream_response:
+  - TomorrowRiver:38
+  dd_response: []
+well_39:
+  name: '39'
+  status: existing
+  loc:
+    x: 89.33463
+    y: 44.48317
+  Q: 194.0
+  pumping_days: 90
+  stream_apportionment130:
+    name: TomorrowRiver:39
+    apportionment: 0.5771229514680462
+  stream_response:
+  - TomorrowRiver:39
+  dd_response: []
+well_40:
+  name: '40'
+  status: existing
+  loc:
+    x: 89.3003833
+    y: 44.49395
+  Q: 191.0
+  pumping_days: 120
+  stream_apportionment137:
+    name: TomorrowRiver:40
+    apportionment: 0.245422937246335
+  stream_response:
+  - TomorrowRiver:40
+  dd_response: []
+well_41:
+  name: '41'
+  status: existing
+  loc:
+    x: 89.3227
+    y: 44.600100000000005
+  Q: 188.0
+  pumping_days: 30
+  stream_apportionment63:
+    name: TomorrowRiver:41
+    apportionment: 0.4856376060885078
+  stream_response:
+  - TomorrowRiver:41
+  dd_response: []
+well_42:
+  name: '42'
+  status: existing
+  loc:
+    x: 89.2764696
+    y: 44.4266006
+  Q: 187.0
+  pumping_days: 120
+  stream_apportionment183:
+    name: TomorrowRiver:42
+    apportionment: 0.19829997364650417
+  stream_response:
+  - TomorrowRiver:42
+  dd_response: []
+well_43:
+  name: '43'
+  status: existing
+  loc:
+    x: 89.294
+    y: 44.5216
+  Q: 184.0
+  pumping_days: 90
+  stream_apportionment114:
+    name: TomorrowRiver:43
+    apportionment: 0.43000780590695464
+  stream_response:
+  - TomorrowRiver:43
+  dd_response: []
+well_44:
+  name: '44'
+  status: existing
+  loc:
+    x: 89.3377
+    y: 44.4555
+  Q: 182.0
+  pumping_days: 120
+  stream_apportionment155:
+    name: TomorrowRiver:44
+    apportionment: 0.5250422300318944
+  stream_response:
+  - TomorrowRiver:44
+  dd_response: []
+well_45:
+  name: '45'
+  status: existing
+  loc:
+    x: 89.4411
+    y: 44.54615
+  Q: 180.0
+  pumping_days: 120
+  stream_apportionment34:
+    name: TomorrowRiver:45
+    apportionment: 0.6876311479641919
+  stream_response:
+  - TomorrowRiver:45
+  dd_response: []
+well_46:
+  name: '46'
+  status: existing
+  loc:
+    x: 89.2760333
+    y: 44.4770167
+  Q: 178.0
+  pumping_days: 90
+  stream_apportionment163:
+    name: TomorrowRiver:46
+    apportionment: 0.6986683866116358
+  stream_response:
+  - TomorrowRiver:46
+  dd_response: []
+well_47:
+  name: '47'
+  status: existing
+  loc:
+    x: 89.451285
+    y: 44.547822
+  Q: 176.0
+  pumping_days: 150
+  stream_apportionment31:
+    name: TomorrowRiver:47
+    apportionment: 0.7720515971968154
+  stream_response:
+  - TomorrowRiver:47
+  dd_response: []
+well_48:
+  name: '48'
+  status: existing
+  loc:
+    x: 89.323426
+    y: 44.467347
+  Q: 169.0
+  pumping_days: 90
+  stream_apportionment147:
+    name: TomorrowRiver:48
+    apportionment: 0.33443255714689274
+  stream_response:
+  - TomorrowRiver:48
+  dd_response: []
+well_49:
+  name: '49'
+  status: existing
+  loc:
+    x: 89.440618
+    y: 44.559608
+  Q: 168.0
+  pumping_days: 90
+  stream_apportionment28:
+    name: TomorrowRiver:49
+    apportionment: 0.6099689268533881
+  stream_response:
+  - TomorrowRiver:49
+  dd_response: []
+well_50:
+  name: '50'
+  status: existing
+  loc:
+    x: 89.3295001
+    y: 44.4795283
+  Q: 166.0
+  pumping_days: 90
+  stream_apportionment139:
+    name: TomorrowRiver:50
+    apportionment: 0.5009040817443778
+  stream_response:
+  - TomorrowRiver:50
+  dd_response: []
+well_51:
+  name: '51'
+  status: existing
+  loc:
+    x: 89.435924
+    y: 44.556985999999995
+  Q: 166.0
+  pumping_days: 90
+  stream_apportionment35:
+    name: TomorrowRiver:51
+    apportionment: 0.5842767812457331
+  stream_response:
+  - TomorrowRiver:51
+  dd_response: []
+well_52:
+  name: '52'
+  status: existing
+  loc:
+    x: 89.245401
+    y: 44.366721
+  Q: 164.0
+  pumping_days: 120
+  stream_apportionment198:
+    name: TomorrowRiver:52
+    apportionment: 0.3932835030745014
+  stream_response:
+  - TomorrowRiver:52
+  dd_response: []
+well_53:
+  name: '53'
+  status: existing
+  loc:
+    x: 89.4386811
+    y: 44.576777
+  Q: 161.0
+  pumping_days: 120
+  stream_apportionment19:
+    name: TomorrowRiver:53
+    apportionment: 0.5684894849435572
+  stream_response:
+  - TomorrowRiver:53
+  dd_response: []
+well_54:
+  name: '54'
+  status: existing
+  loc:
+    x: 89.2455133
+    y: 44.36128
+  Q: 161.0
+  pumping_days: 120
+  stream_apportionment200:
+    name: TomorrowRiver:54
+    apportionment: 0.4609204194513789
+  stream_response:
+  - TomorrowRiver:54
+  dd_response: []
+well_55:
+  name: '55'
+  status: existing
+  loc:
+    x: 89.440357
+    y: 44.556729999999995
+  Q: 161.0
+  pumping_days: 90
+  stream_apportionment33:
+    name: TomorrowRiver:55
+    apportionment: 0.6234856946429955
+  stream_response:
+  - TomorrowRiver:55
+  dd_response: []
+well_56:
+  name: '56'
+  status: existing
+  loc:
+    x: 89.44373
+    y: 44.57158
+  Q: 157.0
+  pumping_days: 150
+  stream_apportionment15:
+    name: TomorrowRiver:56
+    apportionment: 0.5862014884095783
+  stream_response:
+  - TomorrowRiver:56
+  dd_response: []
+well_57:
+  name: '57'
+  status: existing
+  loc:
+    x: 89.4237
+    y: 44.4869333
+  Q: 155.0
+  pumping_days: 120
+  stream_apportionment93:
+    name: TomorrowRiver:57
+    apportionment: 0.41485812042629366
+  stream_response:
+  - TomorrowRiver:57
+  dd_response: []
+well_58:
+  name: '58'
+  status: existing
+  loc:
+    x: 89.430489
+    y: 44.617751999999996
+  Q: 151.0
+  pumping_days: 60
+  stream_apportionment2:
+    name: TomorrowRiver:58
+    apportionment: 0.7387706182604588
+  stream_response:
+  - TomorrowRiver:58
+  dd_response: []
+well_59:
+  name: '59'
+  status: existing
+  loc:
+    x: 89.4512001
+    y: 44.5358433
+  Q: 148.0
+  pumping_days: 120
+  stream_apportionment41:
+    name: TomorrowRiver:59
+    apportionment: 0.8040015908685522
+  stream_response:
+  - TomorrowRiver:59
+  dd_response: []
+well_60:
+  name: '60'
+  status: existing
+  loc:
+    x: 89.3551667
+    y: 44.4942667
+  Q: 143.0
+  pumping_days: 90
+  stream_apportionment105:
+    name: TomorrowRiver:60
+    apportionment: 0.8545344215380306
+  stream_response:
+  - TomorrowRiver:60
+  dd_response: []
+well_61:
+  name: '61'
+  status: existing
+  loc:
+    x: 89.4486378
+    y: 44.5302783
+  Q: 140.0
+  pumping_days: 150
+  stream_apportionment39:
+    name: TomorrowRiver:61
+    apportionment: 0.7930621672696007
+  stream_response:
+  - TomorrowRiver:61
+  dd_response: []
+well_62:
+  name: '62'
+  status: existing
+  loc:
+    x: 89.234007
+    y: 44.393664
+  Q: 138.0
+  pumping_days: 60
+  stream_apportionment201:
+    name: TomorrowRiver:62
+    apportionment: 0.48651294626986347
+  stream_response:
+  - TomorrowRiver:62
+  dd_response: []
+well_63:
+  name: '63'
+  status: existing
+  loc:
+    x: 89.3244783
+    y: 44.3775533
+  Q: 137.0
+  pumping_days: 90
+  stream_apportionment180:
+    name: TomorrowRiver:63
+    apportionment: 0.8017828849840649
+  stream_response:
+  - TomorrowRiver:63
+  dd_response: []
+well_64:
+  name: '64'
+  status: existing
+  loc:
+    x: 89.3506383
+    y: 44.4854167
+  Q: 133.0
+  pumping_days: 90
+  stream_apportionment124:
+    name: TomorrowRiver:64
+    apportionment: 0.7919343156205074
+  stream_response:
+  - TomorrowRiver:64
+  dd_response: []
+well_65:
+  name: '65'
+  status: existing
+  loc:
+    x: 89.2536167
+    y: 44.5036167
+  Q: 132.0
+  pumping_days: 120
+  stream_apportionment152:
+    name: TomorrowRiver:65
+    apportionment: 0.536131230833112
+  stream_response:
+  - TomorrowRiver:65
+  dd_response: []
+well_66:
+  name: '66'
+  status: existing
+  loc:
+    x: 89.412993
+    y: 44.565916
+  Q: 132.0
+  pumping_days: 90
+  stream_apportionment29:
+    name: TomorrowRiver:66
+    apportionment: 0.3389901534004636
+  stream_response:
+  - TomorrowRiver:66
+  dd_response: []
+well_67:
+  name: '67'
+  status: existing
+  loc:
+    x: 89.26984
+    y: 44.442766
+  Q: 131.0
+  pumping_days: 120
+  stream_apportionment167:
+    name: TomorrowRiver:67
+    apportionment: 0.8056872618971982
+  stream_response:
+  - TomorrowRiver:67
+  dd_response: []
+well_68:
+  name: '68'
+  status: existing
+  loc:
+    x: 89.3347167
+    y: 44.4977833
+  Q: 126.0
+  pumping_days: 120
+  stream_apportionment117:
+    name: TomorrowRiver:68
+    apportionment: 0.7041565881902148
+  stream_response:
+  - TomorrowRiver:68
+  dd_response: []
+well_69:
+  name: '69'
+  status: existing
+  loc:
+    x: 89.240574
+    y: 44.418538999999996
+  Q: 126.0
+  pumping_days: 60
+  stream_apportionment197:
+    name: TomorrowRiver:69
+    apportionment: 0.5773631339862085
+  stream_response:
+  - TomorrowRiver:69
+  dd_response: []
+well_70:
+  name: '70'
+  status: existing
+  loc:
+    x: 89.3226
+    y: 44.5099
+  Q: 125.0
+  pumping_days: 90
+  stream_apportionment109:
+    name: TomorrowRiver:70
+    apportionment: 0.04138973628620291
+  stream_response:
+  - TomorrowRiver:70
+  dd_response: []
+well_71:
+  name: '71'
+  status: existing
+  loc:
+    x: 89.456738
+    y: 44.578466
+  Q: 125.0
+  pumping_days: 90
+  stream_apportionment24:
+    name: TomorrowRiver:71
+    apportionment: 0.7234471066234542
+  stream_response:
+  - TomorrowRiver:71
+  dd_response: []
+well_72:
+  name: '72'
+  status: existing
+  loc:
+    x: 89.3710368
+    y: 44.473565
+  Q: 121.0
+  pumping_days: 90
+  stream_apportionment125:
+    name: TomorrowRiver:72
+    apportionment: 0.550761791743871
+  stream_response:
+  - TomorrowRiver:72
+  dd_response: []
+well_73:
+  name: '73'
+  status: existing
+  loc:
+    x: 89.314631
+    y: 44.60247
+  Q: 121.0
+  pumping_days: 120
+  stream_apportionment62:
+    name: TomorrowRiver:73
+    apportionment: 0.35164177642204664
+  stream_response:
+  - TomorrowRiver:73
+  dd_response: []
+well_74:
+  name: '74'
+  status: existing
+  loc:
+    x: 89.43619
+    y: 44.56397
+  Q: 119.0
+  pumping_days: 90
+  stream_apportionment25:
+    name: TomorrowRiver:74
+    apportionment: 0.5539351369787078
+  stream_response:
+  - TomorrowRiver:74
+  dd_response: []
+well_75:
+  name: '75'
+  status: existing
+  loc:
+    x: 89.304671
+    y: 44.444117999999996
+  Q: 117.0
+  pumping_days: 120
+  stream_apportionment165:
+    name: TomorrowRiver:75
+    apportionment: 0.5583464605850249
+  stream_response:
+  - TomorrowRiver:75
+  dd_response: []
+well_76:
+  name: '76'
+  status: existing
+  loc:
+    x: 89.2992
+    y: 44.5218
+  Q: 115.0
+  pumping_days: 120
+  stream_apportionment113:
+    name: TomorrowRiver:76
+    apportionment: 0.37320170895015625
+  stream_response:
+  - TomorrowRiver:76
+  dd_response: []
+well_77:
+  name: '77'
+  status: existing
+  loc:
+    x: 89.312333
+    y: 44.463241
+  Q: 113.0
+  pumping_days: 90
+  stream_apportionment156:
+    name: TomorrowRiver:77
+    apportionment: 0.280623415234293
+  stream_response:
+  - TomorrowRiver:77
+  dd_response: []
+well_78:
+  name: '78'
+  status: existing
+  loc:
+    x: 89.21426
+    y: 44.464729999999996
+  Q: 111.0
+  pumping_days: 90
+  stream_apportionment175:
+    name: TomorrowRiver:78
+    apportionment: 0.9607672999262685
+  stream_response:
+  - TomorrowRiver:78
+  dd_response: []
+well_79:
+  name: '79'
+  status: existing
+  loc:
+    x: 89.28086
+    y: 44.356241
+  Q: 110.0
+  pumping_days: 120
+  stream_apportionment192:
+    name: TomorrowRiver:79
+    apportionment: 0.6490577141247327
+  stream_response:
+  - TomorrowRiver:79
+  dd_response: []
+well_80:
+  name: '80'
+  status: existing
+  loc:
+    x: 89.28805
+    y: 44.49028
+  Q: 110.0
+  pumping_days: 90
+  stream_apportionment142:
+    name: TomorrowRiver:80
+    apportionment: 0.48790559206574774
+  stream_response:
+  - TomorrowRiver:80
+  dd_response: []
+well_81:
+  name: '81'
+  status: existing
+  loc:
+    x: 89.25395
+    y: 44.3673
+  Q: 107.0
+  pumping_days: 90
+  stream_apportionment194:
+    name: TomorrowRiver:81
+    apportionment: 0.5100600113092935
+  stream_response:
+  - TomorrowRiver:81
+  dd_response: []
+well_82:
+  name: '82'
+  status: existing
+  loc:
+    x: 89.34395
+    y: 44.6088
+  Q: 107.0
+  pumping_days: 30
+  stream_apportionment76:
+    name: TomorrowRiver:82
+    apportionment: 0.353877035324565
+  stream_response:
+  - TomorrowRiver:82
+  dd_response: []
+well_83:
+  name: '83'
+  status: existing
+  loc:
+    x: 89.343075
+    y: 44.62037
+  Q: 106.0
+  pumping_days: 120
+  stream_apportionment65:
+    name: TomorrowRiver:83
+    apportionment: 0.289022350803558
+  stream_response:
+  - TomorrowRiver:83
+  dd_response: []
+well_84:
+  name: '84'
+  status: existing
+  loc:
+    x: 89.218
+    y: 44.469300000000004
+  Q: 105.0
+  pumping_days: 90
+  stream_apportionment174:
+    name: TomorrowRiver:84
+    apportionment: 0.9837192828217557
+  stream_response:
+  - TomorrowRiver:84
+  dd_response: []
+well_85:
+  name: '85'
+  status: existing
+  loc:
+    x: 89.34489
+    y: 44.4864
+  Q: 104.0
+  pumping_days: 90
+  stream_apportionment127:
+    name: TomorrowRiver:85
+    apportionment: 0.7660039630154596
+  stream_response:
+  - TomorrowRiver:85
+  dd_response: []
+well_86:
+  name: '86'
+  status: existing
+  loc:
+    x: 89.319438
+    y: 44.613445
+  Q: 104.0
+  pumping_days: 120
+  stream_apportionment73:
+    name: TomorrowRiver:86
+    apportionment: 0.5016194777474411
+  stream_response:
+  - TomorrowRiver:86
+  dd_response: []
+well_87:
+  name: '87'
+  status: existing
+  loc:
+    x: 89.456558
+    y: 44.544284999999995
+  Q: 103.0
+  pumping_days: 120
+  stream_apportionment37:
+    name: TomorrowRiver:87
+    apportionment: 0.8380336271947841
+  stream_response:
+  - TomorrowRiver:87
+  dd_response: []
+well_88:
+  name: '88'
+  status: existing
+  loc:
+    x: 89.4611817
+    y: 44.52898
+  Q: 102.0
+  pumping_days: 120
+  stream_apportionment42:
+    name: TomorrowRiver:88
+    apportionment: 0.9018746238597686
+  stream_response:
+  - TomorrowRiver:88
+  dd_response: []
+well_89:
+  name: '89'
+  status: existing
+  loc:
+    x: 89.324652
+    y: 44.6062
+  Q: 101.0
+  pumping_days: 90
+  stream_apportionment75:
+    name: TomorrowRiver:89
+    apportionment: 0.6056233552375863
+  stream_response:
+  - TomorrowRiver:89
+  dd_response: []
+well_90:
+  name: '90'
+  status: existing
+  loc:
+    x: 89.2941
+    y: 44.5043
+  Q: 100.0
+  pumping_days: 120
+  stream_apportionment132:
+    name: TomorrowRiver:90
+    apportionment: 0.29808860251614017
+  stream_response:
+  - TomorrowRiver:90
+  dd_response: []
+well_91:
+  name: '91'
+  status: existing
+  loc:
+    x: 89.3278
+    y: 44.507000000000005
+  Q: 100.0
+  pumping_days: 90
+  stream_apportionment110:
+    name: TomorrowRiver:91
+    apportionment: 0.178606449377709
+  stream_response:
+  - TomorrowRiver:91
+  dd_response: []
+well_92:
+  name: '92'
+  status: existing
+  loc:
+    x: 89.352925
+    y: 44.481885
+  Q: 99.0
+  pumping_days: 90
+  stream_apportionment122:
+    name: TomorrowRiver:92
+    apportionment: 0.7650268447344618
+  stream_response:
+  - TomorrowRiver:92
+  dd_response: []
+well_93:
+  name: '93'
+  status: existing
+  loc:
+    x: 89.3226833
+    y: 44.3565167
+  Q: 98.0
+  pumping_days: 120
+  stream_apportionment186:
+    name: TomorrowRiver:93
+    apportionment: 0.4423174825260925
+  stream_response:
+  - TomorrowRiver:93
+  dd_response: []
+well_94:
+  name: '94'
+  status: existing
+  loc:
+    x: 89.450743
+    y: 44.557575
+  Q: 96.0
+  pumping_days: 120
+  stream_apportionment27:
+    name: TomorrowRiver:94
+    apportionment: 0.7097249092071231
+  stream_response:
+  - TomorrowRiver:94
+  dd_response: []
+well_95:
+  name: '95'
+  status: existing
+  loc:
+    x: 89.39497
+    y: 44.59009
+  Q: 96.0
+  pumping_days: 90
+  stream_apportionment54:
+    name: TomorrowRiver:95
+    apportionment: 0.3670097837741995
+  stream_response:
+  - TomorrowRiver:95
+  dd_response: []
+well_96:
+  name: '96'
+  status: existing
+  loc:
+    x: 89.25364
+    y: 44.45368
+  Q: 93.0
+  pumping_days: 90
+  stream_apportionment179:
+    name: TomorrowRiver:96
+    apportionment: 0.4592316438859223
+  stream_response:
+  - TomorrowRiver:96
+  dd_response: []
+well_97:
+  name: '97'
+  status: existing
+  loc:
+    x: 89.3118352
+    y: 44.5971055
+  Q: 93.0
+  pumping_days: 150
+  stream_apportionment61:
+    name: TomorrowRiver:97
+    apportionment: 0.3898096099720735
+  stream_response:
+  - TomorrowRiver:97
+  dd_response: []
+well_98:
+  name: '98'
+  status: existing
+  loc:
+    x: 89.4516667
+    y: 44.595
+  Q: 90.0
+  pumping_days: 30
+  stream_apportionment3:
+    name: TomorrowRiver:98
+    apportionment: 0.6990340690606307
+  stream_response:
+  - TomorrowRiver:98
+  dd_response: []
+well_99:
+  name: '99'
+  status: existing
+  loc:
+    x: 89.4607168
+    y: 44.5727633
+  Q: 90.0
+  pumping_days: 90
+  stream_apportionment16:
+    name: TomorrowRiver:99
+    apportionment: 0.7193108656562849
+  stream_response:
+  - TomorrowRiver:99
+  dd_response: []
+well_100:
+  name: '100'
+  status: existing
+  loc:
+    x: 89.3118
+    y: 44.502300000000005
+  Q: 90.0
+  pumping_days: 90
+  stream_apportionment128:
+    name: TomorrowRiver:100
+    apportionment: 0.13472590699312595
+  stream_response:
+  - TomorrowRiver:100
+  dd_response: []
+well_101:
+  name: '101'
+  status: existing
+  loc:
+    x: 89.3453883
+    y: 44.4873217
+  Q: 90.0
+  pumping_days: 90
+  stream_apportionment121:
+    name: TomorrowRiver:101
+    apportionment: 0.8056800499382628
+  stream_response:
+  - TomorrowRiver:101
+  dd_response: []
+well_102:
+  name: '102'
+  status: existing
+  loc:
+    x: 89.3272347
+    y: 44.622484
+  Q: 88.0
+  pumping_days: 90
+  stream_apportionment70:
+    name: TomorrowRiver:102
+    apportionment: 0.4112830981826941
+  stream_response:
+  - TomorrowRiver:102
+  dd_response: []
+well_103:
+  name: '103'
+  status: existing
+  loc:
+    x: 89.3919218
+    y: 44.467434999999995
+  Q: 87.0
+  pumping_days: 90
+  stream_apportionment119:
+    name: TomorrowRiver:103
+    apportionment: 0.4049037785934217
+  stream_response:
+  - TomorrowRiver:103
+  dd_response: []
+well_104:
+  name: '104'
+  status: existing
+  loc:
+    x: 89.446446
+    y: 44.553605
+  Q: 86.0
+  pumping_days: 150
+  stream_apportionment36:
+    name: TomorrowRiver:104
+    apportionment: 0.6941779484227062
+  stream_response:
+  - TomorrowRiver:104
+  dd_response: []
+well_105:
+  name: '105'
+  status: existing
+  loc:
+    x: 89.390554
+    y: 44.557204
+  Q: 85.0
+  pumping_days: 90
+  stream_apportionment50:
+    name: TomorrowRiver:105
+    apportionment: 0.19420413914642273
+  stream_response:
+  - TomorrowRiver:105
+  dd_response: []
+well_106:
+  name: '106'
+  status: existing
+  loc:
+    x: 89.3480603
+    y: 44.6259453
+  Q: 85.0
+  pumping_days: 120
+  stream_apportionment59:
+    name: TomorrowRiver:106
+    apportionment: 0.46087613808766564
+  stream_response:
+  - TomorrowRiver:106
+  dd_response: []
+well_107:
+  name: '107'
+  status: existing
+  loc:
+    x: 89.403635
+    y: 44.6409533
+  Q: 83.0
+  pumping_days: 90
+  stream_apportionment6:
+    name: TomorrowRiver:107
+    apportionment: 0.29900261004848816
+  stream_response:
+  - TomorrowRiver:107
+  dd_response: []
+well_108:
+  name: '108'
+  status: existing
+  loc:
+    x: 89.3883834
+    y: 44.447449999999996
+  Q: 82.0
+  pumping_days: 60
+  stream_apportionment150:
+    name: TomorrowRiver:108
+    apportionment: 0.6778795085770678
+  stream_response:
+  - TomorrowRiver:108
+  dd_response: []
+well_109:
+  name: '109'
+  status: existing
+  loc:
+    x: 89.459285
+    y: 44.565013
+  Q: 82.0
+  pumping_days: 90
+  stream_apportionment20:
+    name: TomorrowRiver:109
+    apportionment: 0.7397173602419435
+  stream_response:
+  - TomorrowRiver:109
+  dd_response: []
+well_110:
+  name: '110'
+  status: existing
+  loc:
+    x: 89.4487003
+    y: 44.5484194
+  Q: 80.0
+  pumping_days: 120
+  stream_apportionment30:
+    name: TomorrowRiver:110
+    apportionment: 0.7457786277395709
+  stream_response:
+  - TomorrowRiver:110
+  dd_response: []
+well_111:
+  name: '111'
+  status: existing
+  loc:
+    x: 89.455222
+    y: 44.574605999999996
+  Q: 80.0
+  pumping_days: 150
+  stream_apportionment22:
+    name: TomorrowRiver:111
+    apportionment: 0.6872909583761123
+  stream_response:
+  - TomorrowRiver:111
+  dd_response: []
+well_112:
+  name: '112'
+  status: existing
+  loc:
+    x: 89.4451833
+    y: 44.5745367
+  Q: 78.0
+  pumping_days: 120
+  stream_apportionment23:
+    name: TomorrowRiver:112
+    apportionment: 0.6115729222015599
+  stream_response:
+  - TomorrowRiver:112
+  dd_response: []
+well_113:
+  name: '113'
+  status: existing
+  loc:
+    x: 89.3754
+    y: 44.6506333
+  Q: 77.0
+  pumping_days: 90
+  stream_apportionment10:
+    name: TomorrowRiver:113
+    apportionment: 0.38940339823137593
+  stream_response:
+  - TomorrowRiver:113
+  dd_response: []
+well_114:
+  name: '114'
+  status: existing
+  loc:
+    x: 89.4508899
+    y: 44.5219167
+  Q: 76.0
+  pumping_days: 30
+  stream_apportionment48:
+    name: TomorrowRiver:114
+    apportionment: 0.8021198866741259
+  stream_response:
+  - TomorrowRiver:114
+  dd_response: []
+well_115:
+  name: '115'
+  status: existing
+  loc:
+    x: 89.4539046
+    y: 44.5813718
+  Q: 70.0
+  pumping_days: 90
+  stream_apportionment14:
+    name: TomorrowRiver:115
+    apportionment: 0.7193274576228881
+  stream_response:
+  - TomorrowRiver:115
+  dd_response: []
+well_116:
+  name: '116'
+  status: existing
+  loc:
+    x: 89.3629834
+    y: 44.4947667
+  Q: 66.0
+  pumping_days: 90
+  stream_apportionment97:
+    name: TomorrowRiver:116
+    apportionment: 0.7699435772761135
+  stream_response:
+  - TomorrowRiver:116
+  dd_response: []
+well_117:
+  name: '117'
+  status: existing
+  loc:
+    x: 89.241924
+    y: 44.354273
+  Q: 64.0
+  pumping_days: 90
+  stream_apportionment199:
+    name: TomorrowRiver:117
+    apportionment: 0.6404694907949315
+  stream_response:
+  - TomorrowRiver:117
+  dd_response: []
+well_118:
+  name: '118'
+  status: existing
+  loc:
+    x: 89.3099
+    y: 44.499300000000005
+  Q: 63.0
+  pumping_days: 60
+  stream_apportionment131:
+    name: TomorrowRiver:118
+    apportionment: 0.13850221085203882
+  stream_response:
+  - TomorrowRiver:118
+  dd_response: []
+well_119:
+  name: '119'
+  status: existing
+  loc:
+    x: 89.3507783
+    y: 44.5942783
+  Q: 61.0
+  pumping_days: 60
+  stream_apportionment60:
+    name: TomorrowRiver:119
+    apportionment: 0.6236294249834743
+  stream_response:
+  - TomorrowRiver:119
+  dd_response: []
+well_120:
+  name: '120'
+  status: existing
+  loc:
+    x: 89.4537432
+    y: 44.5377989
+  Q: 59.0
+  pumping_days: 120
+  stream_apportionment32:
+    name: TomorrowRiver:120
+    apportionment: 0.8221788525799453
+  stream_response:
+  - TomorrowRiver:120
+  dd_response: []
+well_121:
+  name: '121'
+  status: existing
+  loc:
+    x: 89.2663833
+    y: 44.4863833
+  Q: 59.0
+  pumping_days: 90
+  stream_apportionment160:
+    name: TomorrowRiver:121
+    apportionment: 0.8488370703738165
+  stream_response:
+  - TomorrowRiver:121
+  dd_response: []
+well_122:
+  name: '122'
+  status: existing
+  loc:
+    x: 89.2334667
+    y: 44.4054333
+  Q: 58.0
+  pumping_days: 90
+  stream_apportionment196:
+    name: TomorrowRiver:122
+    apportionment: 0.746927962890103
+  stream_response:
+  - TomorrowRiver:122
+  dd_response: []
+well_123:
+  name: '123'
+  status: existing
+  loc:
+    x: 89.31935
+    y: 44.524049999999995
+  Q: 55.0
+  pumping_days: 30
+  stream_apportionment89:
+    name: TomorrowRiver:123
+    apportionment: 0.20600612191573825
+  stream_response:
+  - TomorrowRiver:123
+  dd_response: []
+well_124:
+  name: '124'
+  status: existing
+  loc:
+    x: 89.3118333
+    y: 44.5238833
+  Q: 54.0
+  pumping_days: 90
+  stream_apportionment107:
+    name: TomorrowRiver:124
+    apportionment: 0.271114187003343
+  stream_response:
+  - TomorrowRiver:124
+  dd_response: []
+well_125:
+  name: '125'
+  status: existing
+  loc:
+    x: 89.3837
+    y: 44.5422
+  Q: 51.0
+  pumping_days: 60
+  stream_apportionment79:
+    name: TomorrowRiver:125
+    apportionment: 0.25274092244183755
+  stream_response:
+  - TomorrowRiver:125
+  dd_response: []
+well_126:
+  name: '126'
+  status: existing
+  loc:
+    x: 89.4085538
+    y: 44.4806706
+  Q: 50.0
+  pumping_days: 60
+  stream_apportionment95:
+    name: TomorrowRiver:126
+    apportionment: 0.4238644391124294
+  stream_response:
+  - TomorrowRiver:126
+  dd_response: []
+well_127:
+  name: '127'
+  status: existing
+  loc:
+    x: 89.3965
+    y: 44.545500000000004
+  Q: 50.0
+  pumping_days: 120
+  stream_apportionment52:
+    name: TomorrowRiver:127
+    apportionment: 0.3270740952318113
+  stream_response:
+  - TomorrowRiver:127
+  dd_response: []
+well_128:
+  name: '128'
+  status: existing
+  loc:
+    x: 89.4511469
+    y: 44.5286153
+  Q: 50.0
+  pumping_days: 120
+  stream_apportionment40:
+    name: TomorrowRiver:128
+    apportionment: 0.8155898608837879
+  stream_response:
+  - TomorrowRiver:128
+  dd_response: []
+well_129:
+  name: '129'
+  status: existing
+  loc:
+    x: 89.32765
+    y: 44.5226167
+  Q: 49.0
+  pumping_days: 90
+  stream_apportionment88:
+    name: TomorrowRiver:129
+    apportionment: 0.11766264350206573
+  stream_response:
+  - TomorrowRiver:129
+  dd_response: []
+well_130:
+  name: '130'
+  status: existing
+  loc:
+    x: 89.3079
+    y: 44.4759
+  Q: 49.0
+  pumping_days: 90
+  stream_apportionment151:
+    name: TomorrowRiver:130
+    apportionment: 0.2329748166455227
+  stream_response:
+  - TomorrowRiver:130
+  dd_response: []
+well_131:
+  name: '131'
+  status: existing
+  loc:
+    x: 89.3585
+    y: 44.64
+  Q: 49.0
+  pumping_days: 90
+  stream_apportionment13:
+    name: TomorrowRiver:131
+    apportionment: 0.7300186629178
+  stream_response:
+  - TomorrowRiver:131
+  dd_response: []
+well_132:
+  name: '132'
+  status: existing
+  loc:
+    x: 89.3480327
+    y: 44.6222853
+  Q: 48.0
+  pumping_days: 90
+  stream_apportionment64:
+    name: TomorrowRiver:132
+    apportionment: 0.3272514385602903
+  stream_response:
+  - TomorrowRiver:132
+  dd_response: []
+well_133:
+  name: '133'
+  status: existing
+  loc:
+    x: 89.2204667
+    y: 44.3937167
+  Q: 46.0
+  pumping_days: 210
+  stream_apportionment203:
+    name: TomorrowRiver:133
+    apportionment: 0.6433671539334995
+  stream_response:
+  - TomorrowRiver:133
+  dd_response: []
+well_134:
+  name: '134'
+  status: existing
+  loc:
+    x: 89.2838825
+    y: 44.4502198
+  Q: 46.0
+  pumping_days: 360
+  stream_apportionment172:
+    name: TomorrowRiver:134
+    apportionment: 0.01574453875205366
+  stream_response:
+  - TomorrowRiver:134
+  dd_response: []
+well_135:
+  name: '135'
+  status: existing
+  loc:
+    x: 89.3752168
+    y: 44.5109667
+  Q: 45.0
+  pumping_days: 90
+  stream_apportionment86:
+    name: TomorrowRiver:135
+    apportionment: 0.5201451489026153
+  stream_response:
+  - TomorrowRiver:135
+  dd_response: []
+well_136:
+  name: '136'
+  status: existing
+  loc:
+    x: 89.2916
+    y: 44.5038333
+  Q: 41.0
+  pumping_days: 360
+  stream_apportionment133:
+    name: TomorrowRiver:136
+    apportionment: 0.31209425944356606
+  stream_response:
+  - TomorrowRiver:136
+  dd_response: []
+well_137:
+  name: '137'
+  status: existing
+  loc:
+    x: 89.43211
+    y: 44.614045999999995
+  Q: 31.0
+  pumping_days: 30
+  stream_apportionment1:
+    name: TomorrowRiver:137
+    apportionment: 0.8169827010246108
+  stream_response:
+  - TomorrowRiver:137
+  dd_response: []
+well_138:
+  name: '138'
+  status: existing
+  loc:
+    x: 89.3121079
+    y: 44.4666573
+  Q: 28.0
+  pumping_days: 330
+  stream_apportionment153:
+    name: TomorrowRiver:138
+    apportionment: 0.27111722425284124
+  stream_response:
+  - TomorrowRiver:138
+  dd_response: []
+well_139:
+  name: '139'
+  status: existing
+  loc:
+    x: 89.2836234
+    y: 44.4504747
+  Q: 25.0
+  pumping_days: 360
+  stream_apportionment173:
+    name: TomorrowRiver:139
+    apportionment: 0.010687892454327465
+  stream_response:
+  - TomorrowRiver:139
+  dd_response: []
+well_140:
+  name: '140'
+  status: existing
+  loc:
+    x: 89.2258617
+    y: 44.4058
+  Q: 25.0
+  pumping_days: 90
+  stream_apportionment195:
+    name: TomorrowRiver:140
+    apportionment: 0.9619828932956822
+  stream_response:
+  - TomorrowRiver:140
+  dd_response: []
+well_141:
+  name: '141'
+  status: existing
+  loc:
+    x: 89.4134
+    y: 44.5861
+  Q: 23.0
+  pumping_days: 60
+  stream_apportionment53:
+    name: TomorrowRiver:141
+    apportionment: 0.37562097589956733
+  stream_response:
+  - TomorrowRiver:141
+  dd_response: []
+well_142:
+  name: '142'
+  status: existing
+  loc:
+    x: 89.44705
+    y: 44.5835333
+  Q: 23.0
+  pumping_days: 360
+  stream_apportionment4:
+    name: TomorrowRiver:142
+    apportionment: 0.6706400809041065
+  stream_response:
+  - TomorrowRiver:142
+  dd_response: []
+well_143:
+  name: '143'
+  status: existing
+  loc:
+    x: 89.3885
+    y: 44.653200000000005
+  Q: 22.0
+  pumping_days: 60
+  stream_apportionment7:
+    name: TomorrowRiver:143
+    apportionment: 0.35911078696251436
+  stream_response:
+  - TomorrowRiver:143
+  dd_response: []
+well_144:
+  name: '144'
+  status: existing
+  loc:
+    x: 89.2614547
+    y: 44.5130457
+  Q: 22.0
+  pumping_days: 60
+  stream_apportionment136:
+    name: TomorrowRiver:144
+    apportionment: 0.7825221501984603
+  stream_response:
+  - TomorrowRiver:144
+  dd_response: []
+well_145:
+  name: '145'
+  status: existing
+  loc:
+    x: 89.3013618
+    y: 44.5178883
+  Q: 21.0
+  pumping_days: 90
+  stream_apportionment111:
+    name: TomorrowRiver:145
+    apportionment: 0.3270812624587848
+  stream_response:
+  - TomorrowRiver:145
+  dd_response: []
+well_146:
+  name: '146'
+  status: existing
+  loc:
+    x: 89.3831776
+    y: 44.4610719
+  Q: 20.0
+  pumping_days: 60
+  stream_apportionment123:
+    name: TomorrowRiver:146
+    apportionment: 0.4538333321354465
+  stream_response:
+  - TomorrowRiver:146
+  dd_response: []
+well_147:
+  name: '147'
+  status: existing
+  loc:
+    x: 89.4075
+    y: 44.5013
+  Q: 15.0
+  pumping_days: 90
+  stream_apportionment92:
+    name: TomorrowRiver:147
+    apportionment: 0.410244836123831
+  stream_response:
+  - TomorrowRiver:147
+  dd_response: []
+well_148:
+  name: '148'
+  status: existing
+  loc:
+    x: 89.3884384
+    y: 44.6534062
+  Q: 15.0
+  pumping_days: 90
+  stream_apportionment8:
+    name: TomorrowRiver:148
+    apportionment: 0.3600459194303766
+  stream_response:
+  - TomorrowRiver:148
+  dd_response: []
+well_149:
+  name: '149'
+  status: existing
+  loc:
+    x: 89.2917167
+    y: 44.5037333
+  Q: 13.0
+  pumping_days: 360
+  stream_apportionment134:
+    name: TomorrowRiver:149
+    apportionment: 0.31224642179933215
+  stream_response:
+  - TomorrowRiver:149
+  dd_response: []
+well_150:
+  name: '150'
+  status: existing
+  loc:
+    x: 89.30175
+    y: 44.5182
+  Q: 13.0
+  pumping_days: 360
+  stream_apportionment112:
+    name: TomorrowRiver:150
+    apportionment: 0.32505834269069994
+  stream_response:
+  - TomorrowRiver:150
+  dd_response: []
+well_151:
+  name: '151'
+  status: existing
+  loc:
+    x: 89.3322
+    y: 44.4557
+  Q: 13.0
+  pumping_days: 360
+  stream_apportionment154:
+    name: TomorrowRiver:151
+    apportionment: 0.493652066142577
+  stream_response:
+  - TomorrowRiver:151
+  dd_response: []
+well_152:
+  name: '152'
+  status: existing
+  loc:
+    x: 89.3778333
+    y: 44.490300000000005
+  Q: 11.0
+  pumping_days: 300
+  stream_apportionment100:
+    name: TomorrowRiver:152
+    apportionment: 0.7202445995087606
+  stream_response:
+  - TomorrowRiver:152
+  dd_response: []
+well_153:
+  name: '153'
+  status: existing
+  loc:
+    x: 89.3372868
+    y: 44.4958067
+  Q: 10.0
+  pumping_days: 360
+  stream_apportionment118:
+    name: TomorrowRiver:153
+    apportionment: 0.8449417089939272
+  stream_response:
+  - TomorrowRiver:153
+  dd_response: []
+well_154:
+  name: '154'
+  status: existing
+  loc:
+    x: 89.28774
+    y: 44.45626
+  Q: 9.0
+  pumping_days: 90
+  stream_apportionment177:
+    name: TomorrowRiver:154
+    apportionment: 0.14291997583883412
+  stream_response:
+  - TomorrowRiver:154
+  dd_response: []
+well_155:
+  name: '155'
+  status: existing
+  loc:
+    x: 89.3651
+    y: 44.4958833
+  Q: 8.0
+  pumping_days: 360
+  stream_apportionment101:
+    name: TomorrowRiver:155
+    apportionment: 0.7352397422391214
+  stream_response:
+  - TomorrowRiver:155
+  dd_response: []
+well_156:
+  name: '156'
+  status: existing
+  loc:
+    x: 89.2790618
+    y: 44.4550759
+  Q: 8.0
+  pumping_days: 360
+  stream_apportionment178:
+    name: TomorrowRiver:156
+    apportionment: 0.04694907899902354
+  stream_response:
+  - TomorrowRiver:156
+  dd_response: []
+well_157:
+  name: '157'
+  status: existing
+  loc:
+    x: 89.4435
+    y: 44.54072
+  Q: 7.0
+  pumping_days: 120
+  stream_apportionment45:
+    name: TomorrowRiver:157
+    apportionment: 0.7267464202294153
+  stream_response:
+  - TomorrowRiver:157
+  dd_response: []
+well_158:
+  name: '158'
+  status: existing
+  loc:
+    x: 89.3566
+    y: 44.47596
+  Q: 7.0
+  pumping_days: 360
+  stream_apportionment126:
+    name: TomorrowRiver:158
+    apportionment: 0.6335493767154111
+  stream_response:
+  - TomorrowRiver:158
+  dd_response: []
+well_159:
+  name: '159'
+  status: existing
+  loc:
+    x: 89.42575
+    y: 44.4838333
+  Q: 7.0
+  pumping_days: 300
+  stream_apportionment94:
+    name: TomorrowRiver:159
+    apportionment: 0.4392094759874247
+  stream_response:
+  - TomorrowRiver:159
+  dd_response: []
+well_160:
+  name: '160'
+  status: existing
+  loc:
+    x: 89.4119
+    y: 44.5033
+  Q: 6.0
+  pumping_days: 210
+  stream_apportionment83:
+    name: TomorrowRiver:160
+    apportionment: 0.38873438211345845
+  stream_response:
+  - TomorrowRiver:160
+  dd_response: []
+well_161:
+  name: '161'
+  status: existing
+  loc:
+    x: 89.4467667
+    y: 44.5835833
+  Q: 6.0
+  pumping_days: 180
+  stream_apportionment5:
+    name: TomorrowRiver:161
+    apportionment: 0.6684415446430566
+  stream_response:
+  - TomorrowRiver:161
+  dd_response: []
+well_162:
+  name: '162'
+  status: existing
+  loc:
+    x: 89.28806
+    y: 44.457029999999996
+  Q: 6.0
+  pumping_days: 30
+  stream_apportionment176:
+    name: TomorrowRiver:162
+    apportionment: 0.14423605218236893
+  stream_response:
+  - TomorrowRiver:162
+  dd_response: []
+well_163:
+  name: '163'
+  status: existing
+  loc:
+    x: 89.3629747
+    y: 44.4964253
+  Q: 5.0
+  pumping_days: 360
+  stream_apportionment98:
+    name: TomorrowRiver:163
+    apportionment: 0.7386682145392007
+  stream_response:
+  - TomorrowRiver:163
+  dd_response: []
+well_164:
+  name: '164'
+  status: existing
+  loc:
+    x: 89.41097
+    y: 44.499700000000004
+  Q: 4.0
+  pumping_days: 210
+  stream_apportionment91:
+    name: TomorrowRiver:164
+    apportionment: 0.39926122331209135
+  stream_response:
+  - TomorrowRiver:164
+  dd_response: []
+well_165:
+  name: '165'
+  status: existing
+  loc:
+    x: 89.3435
+    y: 44.615700000000004
+  Q: 4.0
+  pumping_days: 150
+  stream_apportionment72:
+    name: TomorrowRiver:165
+    apportionment: 0.2860021220657034
+  stream_response:
+  - TomorrowRiver:165
+  dd_response: []
+well_166:
+  name: '166'
+  status: existing
+  loc:
+    x: 89.4182167
+    y: 44.5265833
+  Q: 3.0
+  pumping_days: 30
+  stream_apportionment81:
+    name: TomorrowRiver:166
+    apportionment: 0.5654245896810994
+  stream_response:
+  - TomorrowRiver:166
+  dd_response: []
+well_167:
+  name: '167'
+  status: existing
+  loc:
+    x: 89.3101783
+    y: 44.4744083
+  Q: 3.0
+  pumping_days: 90
+  stream_apportionment148:
+    name: TomorrowRiver:167
+    apportionment: 0.2704362836855318
+  stream_response:
+  - TomorrowRiver:167
+  dd_response: []
+well_168:
+  name: '168'
+  status: existing
+  loc:
+    x: 89.3116667
+    y: 44.6283333
+  Q: 3.0
+  pumping_days: 120
+  stream_apportionment71:
+    name: TomorrowRiver:168
+    apportionment: 0.8182573803319915
+  stream_response:
+  - TomorrowRiver:168
+  dd_response: []
+well_169:
+  name: '169'
+  status: existing
+  loc:
+    x: 89.3141345
+    y: 44.6299811
+  Q: 3.0
+  pumping_days: 360
+  stream_apportionment68:
+    name: TomorrowRiver:169
+    apportionment: 0.8577973715305987
+  stream_response:
+  - TomorrowRiver:169
+  dd_response: []
+well_170:
+  name: '170'
+  status: existing
+  loc:
+    x: 89.412283
+    y: 44.528599
+  Q: 2.0
+  pumping_days: 30
+  stream_apportionment80:
+    name: TomorrowRiver:170
+    apportionment: 0.5160845456608077
+  stream_response:
+  - TomorrowRiver:170
+  dd_response: []
+well_171:
+  name: '171'
+  status: existing
+  loc:
+    x: 89.3604167
+    y: 44.6557
+  Q: 2.0
+  pumping_days: 120
+  stream_apportionment11:
+    name: TomorrowRiver:171
+    apportionment: 0.5915443017575468
+  stream_response:
+  - TomorrowRiver:171
+  dd_response: []
+well_172:
+  name: '172'
+  status: existing
+  loc:
+    x: 89.3578831
+    y: 44.4853698
+  Q: 2.0
+  pumping_days: 360
+  stream_apportionment120:
+    name: TomorrowRiver:172
+    apportionment: 0.9576574059905282
+  stream_response:
+  - TomorrowRiver:172
+  dd_response: []
+well_173:
+  name: '173'
+  status: existing
+  loc:
+    x: 89.298195
+    y: 44.4643883
+  Q: 2.0
+  pumping_days: 360
+  stream_apportionment162:
+    name: TomorrowRiver:173
+    apportionment: 0.18582660940571324
+  stream_response:
+  - TomorrowRiver:173
+  dd_response: []
+well_174:
+  name: '174'
+  status: existing
+  loc:
+    x: 89.38805
+    y: 44.4490333
+  Q: 2.0
+  pumping_days: 360
+  stream_apportionment146:
+    name: TomorrowRiver:174
+    apportionment: 0.6523949125071283
+  stream_response:
+  - TomorrowRiver:174
+  dd_response: []
+well_175:
+  name: '175'
+  status: existing
+  loc:
+    x: 89.2751
+    y: 44.5413
+  Q: 2.0
+  pumping_days: 360
+  stream_apportionment103:
+    name: TomorrowRiver:175
+    apportionment: 0.3723592139488877
+  stream_response:
+  - TomorrowRiver:175
+  dd_response: []
+well_176:
+  name: '176'
+  status: existing
+  loc:
+    x: 89.277
+    y: 44.5417
+  Q: 2.0
+  pumping_days: 360
+  stream_apportionment104:
+    name: TomorrowRiver:176
+    apportionment: 0.36114370961359216
+  stream_response:
+  - TomorrowRiver:176
+  dd_response: []
+well_177:
+  name: '177'
+  status: existing
+  loc:
+    x: 89.3122318
+    y: 44.629773
+  Q: 2.0
+  pumping_days: 360
+  stream_apportionment66:
+    name: TomorrowRiver:177
+    apportionment: 0.8586113767552382
+  stream_response:
+  - TomorrowRiver:177
+  dd_response: []
+well_178:
+  name: '178'
+  status: existing
+  loc:
+    x: 89.4476501
+    y: 44.54455
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment38:
+    name: TomorrowRiver:178
+    apportionment: 0.7544640127404951
+  stream_response:
+  - TomorrowRiver:178
+  dd_response: []
+well_179:
+  name: '179'
+  status: existing
+  loc:
+    x: 89.4437439
+    y: 44.5697308
+  Q: 1.0
+  pumping_days: 120
+  stream_apportionment17:
+    name: TomorrowRiver:179
+    apportionment: 0.5946058547178497
+  stream_response:
+  - TomorrowRiver:179
+  dd_response: []
+well_180:
+  name: '180'
+  status: existing
+  loc:
+    x: 89.4444167
+    y: 44.5406667
+  Q: 1.0
+  pumping_days: 150
+  stream_apportionment44:
+    name: TomorrowRiver:180
+    apportionment: 0.7352640988347708
+  stream_response:
+  - TomorrowRiver:180
+  dd_response: []
+well_181:
+  name: '181'
+  status: existing
+  loc:
+    x: 89.3921468
+    y: 44.5944867
+  Q: 1.0
+  pumping_days: 60
+  stream_apportionment55:
+    name: TomorrowRiver:181
+    apportionment: 0.2978905263003942
+  stream_response:
+  - TomorrowRiver:181
+  dd_response: []
+well_182:
+  name: '182'
+  status: existing
+  loc:
+    x: 89.3905999
+    y: 44.5931
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment56:
+    name: TomorrowRiver:182
+    apportionment: 0.30474947705531275
+  stream_response:
+  - TomorrowRiver:182
+  dd_response: []
+well_183:
+  name: '183'
+  status: existing
+  loc:
+    x: 89.2546667
+    y: 44.4244833
+  Q: 1.0
+  pumping_days: 240
+  stream_apportionment190:
+    name: TomorrowRiver:183
+    apportionment: 0.10378133136498098
+  stream_response:
+  - TomorrowRiver:183
+  dd_response: []
+well_184:
+  name: '184'
+  status: existing
+  loc:
+    x: 89.4085538
+    y: 44.4806706
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment96:
+    name: TomorrowRiver:184
+    apportionment: 0.4238644391124294
+  stream_response:
+  - TomorrowRiver:184
+  dd_response: []
+well_185:
+  name: '185'
+  status: existing
+  loc:
+    x: 89.3629747
+    y: 44.4964253
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment99:
+    name: TomorrowRiver:185
+    apportionment: 0.7386682145392007
+  stream_response:
+  - TomorrowRiver:185
+  dd_response: []
+well_186:
+  name: '186'
+  status: existing
+  loc:
+    x: 89.3516
+    y: 44.6389
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment57:
+    name: TomorrowRiver:186
+    apportionment: 0.8426052631831504
+  stream_response:
+  - TomorrowRiver:186
+  dd_response: []
+well_187:
+  name: '187'
+  status: existing
+  loc:
+    x: 89.3262834
+    y: 44.5188833
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment106:
+    name: TomorrowRiver:187
+    apportionment: 0.11649607397110487
+  stream_response:
+  - TomorrowRiver:187
+  dd_response: []
+well_188:
+  name: '188'
+  status: existing
+  loc:
+    x: 89.3300383
+    y: 44.4676333
+  Q: 1.0
+  pumping_days: 180
+  stream_apportionment149:
+    name: TomorrowRiver:188
+    apportionment: 0.3518715694631669
+  stream_response:
+  - TomorrowRiver:188
+  dd_response: []
+well_189:
+  name: '189'
+  status: existing
+  loc:
+    x: 89.3335083
+    y: 44.473479999999995
+  Q: 1.0
+  pumping_days: 180
+  stream_apportionment141:
+    name: TomorrowRiver:189
+    apportionment: 0.4232649358047573
+  stream_response:
+  - TomorrowRiver:189
+  dd_response: []
+well_190:
+  name: '190'
+  status: existing
+  loc:
+    x: 89.3340367
+    y: 44.4746467
+  Q: 1.0
+  pumping_days: 180
+  stream_apportionment140:
+    name: TomorrowRiver:190
+    apportionment: 0.4386584699599541
+  stream_response:
+  - TomorrowRiver:190
+  dd_response: []
+well_191:
+  name: '191'
+  status: existing
+  loc:
+    x: 89.2753
+    y: 44.5426
+  Q: 1.0
+  pumping_days: 360
+  stream_apportionment102:
+    name: TomorrowRiver:191
+    apportionment: 0.35888813529144187
+  stream_response:
+  - TomorrowRiver:191
+  dd_response: []
+well_192:
+  name: '192'
+  status: existing
+  loc:
+    x: 89.31761
+    y: 44.3566933
+  Q: 0.0
+  pumping_days: 360
+  stream_apportionment185:
+    name: TomorrowRiver:192
+    apportionment: 0.43305496283606837
+  stream_response:
+  - TomorrowRiver:192
+  dd_response: []
+well_193:
+  name: '193'
+  status: existing
+  loc:
+    x: 89.4131
+    y: 44.5033
+  Q: 0.0
+  pumping_days: 330
+  stream_apportionment87:
+    name: TomorrowRiver:193
+    apportionment: 0.38420153655236267
+  stream_response:
+  - TomorrowRiver:193
+  dd_response: []
+well_194:
+  name: '194'
+  status: existing
+  loc:
+    x: 89.4133
+    y: 44.5041
+  Q: 0.0
+  pumping_days: 360
+  stream_apportionment84:
+    name: TomorrowRiver:194
+    apportionment: 0.3820036231454846
+  stream_response:
+  - TomorrowRiver:194
+  dd_response: []
+well_195:
+  name: '195'
+  status: existing
+  loc:
+    x: 89.4156
+    y: 44.5058
+  Q: 0.0
+  pumping_days: 360
+  stream_apportionment85:
+    name: TomorrowRiver:195
+    apportionment: 0.3708868586312497
+  stream_response:
+  - TomorrowRiver:195
+  dd_response: []
+well_196:
+  name: '196'
+  status: existing
+  loc:
+    x: 89.3101
+    y: 44.5048
+  Q: 0.0
+  pumping_days: 270
+  stream_apportionment129:
+    name: TomorrowRiver:196
+    apportionment: 0.178048157679927
+  stream_response:
+  - TomorrowRiver:196
+  dd_response: []
+well_197:
+  name: '197'
+  status: existing
+  loc:
+    x: 89.4237748
+    y: 44.4961561
+  Q: 0.0
+  pumping_days: 360
+  stream_apportionment90:
+    name: TomorrowRiver:197
+    apportionment: 0.3979118880852457
+  stream_response:
+  - TomorrowRiver:197
+  dd_response: []
+well_198:
+  name: '198'
+  status: existing
+  loc:
+    x: 89.30183
+    y: 44.4538
+  Q: 0.0
+  pumping_days: 300
+  stream_apportionment171:
+    name: TomorrowRiver:198
+    apportionment: 0.36086645144599194
+  stream_response:
+  - TomorrowRiver:198
+  dd_response: []
+well_199:
+  name: '199'
+  status: existing
+  loc:
+    x: 89.3025784
+    y: 44.4542483
+  Q: 0.0
+  pumping_days: 360
+  stream_apportionment169:
+    name: TomorrowRiver:199
+    apportionment: 0.36385649202302495
+  stream_response:
+  - TomorrowRiver:199
+  dd_response: []
+well_200:
+  name: '200'
+  status: existing
+  loc:
+    x: 89.3035221
+    y: 44.4548397
+  Q: 0.0
+  pumping_days: 360
+  stream_apportionment170:
+    name: TomorrowRiver:200
+    apportionment: 0.3664519323095964
+  stream_response:
+  - TomorrowRiver:200
+  dd_response: []
+well_201:
+  name: '201'
+  status: existing
+  loc:
+    x: 89.32543
+    y: 44.4714483
+  Q: 0.0
+  pumping_days: 180
+  stream_apportionment144:
+    name: TomorrowRiver:201
+    apportionment: 0.37984513976260564
+  stream_response:
+  - TomorrowRiver:201
+  dd_response: []
+well_202:
+  name: '202'
+  status: existing
+  loc:
+    x: 89.3313583
+    y: 44.4717533
+  Q: 0.0
+  pumping_days: 180
+  stream_apportionment143:
+    name: TomorrowRiver:202
+    apportionment: 0.40067024656517464
+  stream_response:
+  - TomorrowRiver:202
+  dd_response: []
+well_203:
+  name: '203'
+  status: existing
+  loc:
+    x: 89.3304734
+    y: 44.471125
+  Q: 0.0
+  pumping_days: 240
+  stream_apportionment145:
+    name: TomorrowRiver:203
+    apportionment: 0.3912908913166923
+  stream_response:
+  - TomorrowRiver:203
+  dd_response: []
+well_204:
+  name: '204'
+  status: existing
+  loc:
+    x: 89.3123038
+    y: 44.6296744
+  Q: 0.0
+  pumping_days: 0
+  stream_apportionment67:
+    name: TomorrowRiver:204
+    apportionment: 0.85282027209943
+  stream_response:
+  - TomorrowRiver:204
+  dd_response: []
+dd_response0:
+  name: LakeEmily
+  loc:
+    x: 89.33613
+    y: 44.47088
+stream_response0:
+  name: TomorrowRiver:14
+  loc:
+    x: 89.40341239
+    y: 44.6237957
+stream_response1:
+  name: TomorrowRiver:137
+  loc:
+    x: 89.40341239
+    y: 44.6237957
+stream_response2:
+  name: TomorrowRiver:58
+  loc:
+    x: 89.40341239
+    y: 44.6237957
+stream_response3:
+  name: TomorrowRiver:98
+  loc:
+    x: 89.40341239
+    y: 44.6237957
+stream_response4:
+  name: TomorrowRiver:142
+  loc:
+    x: 89.40341239
+    y: 44.6237957
+stream_response5:
+  name: TomorrowRiver:161
+  loc:
+    x: 89.40341239
+    y: 44.6237957
+stream_response6:
+  name: TomorrowRiver:107
+  loc:
+    x: 89.40085803
+    y: 44.62427384
+stream_response7:
+  name: TomorrowRiver:143
+  loc:
+    x: 89.39845111
+    y: 44.62404927
+stream_response8:
+  name: TomorrowRiver:148
+  loc:
+    x: 89.39845111
+    y: 44.62404927
+stream_response9:
+  name: TomorrowRiver:35
+  loc:
+    x: 89.39389761
+    y: 44.62157009
+stream_response10:
+  name: TomorrowRiver:113
+  loc:
+    x: 89.38030568
+    y: 44.62222998
+stream_response11:
+  name: TomorrowRiver:171
+  loc:
+    x: 89.37995193
+    y: 44.6221768
+stream_response12:
+  name: TomorrowRiver:37
+  loc:
+    x: 89.37995193
+    y: 44.6221768
+stream_response13:
+  name: TomorrowRiver:131
+  loc:
+    x: 89.37881182
+    y: 44.62176059
+stream_response14:
+  name: TomorrowRiver:115
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response15:
+  name: TomorrowRiver:56
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response16:
+  name: TomorrowRiver:99
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response17:
+  name: TomorrowRiver:179
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response18:
+  name: TomorrowRiver:31
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response19:
+  name: TomorrowRiver:53
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response20:
+  name: TomorrowRiver:109
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response21:
+  name: TomorrowRiver:24
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response22:
+  name: TomorrowRiver:111
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response23:
+  name: TomorrowRiver:112
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response24:
+  name: TomorrowRiver:71
+  loc:
+    x: 89.3779691
+    y: 44.5700192
+stream_response25:
+  name: TomorrowRiver:74
+  loc:
+    x: 89.377844
+    y: 44.56933874
+stream_response26:
+  name: TomorrowRiver:28
+  loc:
+    x: 89.377844
+    y: 44.56933874
+stream_response27:
+  name: TomorrowRiver:94
+  loc:
+    x: 89.377844
+    y: 44.56933874
+stream_response28:
+  name: TomorrowRiver:49
+  loc:
+    x: 89.377844
+    y: 44.56933874
+stream_response29:
+  name: TomorrowRiver:66
+  loc:
+    x: 89.377844
+    y: 44.56933874
+stream_response30:
+  name: TomorrowRiver:110
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response31:
+  name: TomorrowRiver:47
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response32:
+  name: TomorrowRiver:120
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response33:
+  name: TomorrowRiver:55
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response34:
+  name: TomorrowRiver:45
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response35:
+  name: TomorrowRiver:51
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response36:
+  name: TomorrowRiver:104
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response37:
+  name: TomorrowRiver:87
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response38:
+  name: TomorrowRiver:178
+  loc:
+    x: 89.37762415
+    y: 44.56872719
+stream_response39:
+  name: TomorrowRiver:61
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response40:
+  name: TomorrowRiver:128
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response41:
+  name: TomorrowRiver:59
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response42:
+  name: TomorrowRiver:88
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response43:
+  name: TomorrowRiver:4
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response44:
+  name: TomorrowRiver:180
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response45:
+  name: TomorrowRiver:157
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response46:
+  name: TomorrowRiver:36
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response47:
+  name: TomorrowRiver:29
+  loc:
+    x: 89.37755409
+    y: 44.56864006
+stream_response48:
+  name: TomorrowRiver:114
+  loc:
+    x: 89.37707479
+    y: 44.56824835
+stream_response49:
+  name: TomorrowRiver:10
+  loc:
+    x: 89.37707479
+    y: 44.56824835
+stream_response50:
+  name: TomorrowRiver:105
+  loc:
+    x: 89.37707479
+    y: 44.56824835
+stream_response51:
+  name: TomorrowRiver:13
+  loc:
+    x: 89.37707479
+    y: 44.56824835
+stream_response52:
+  name: TomorrowRiver:127
+  loc:
+    x: 89.3748045
+    y: 44.56694297
+stream_response53:
+  name: TomorrowRiver:141
+  loc:
+    x: 89.37286875
+    y: 44.57943819
+stream_response54:
+  name: TomorrowRiver:95
+  loc:
+    x: 89.37258586
+    y: 44.58019596
+stream_response55:
+  name: TomorrowRiver:181
+  loc:
+    x: 89.37049283
+    y: 44.58228744
+stream_response56:
+  name: TomorrowRiver:182
+  loc:
+    x: 89.37049283
+    y: 44.58228744
+stream_response57:
+  name: TomorrowRiver:186
+  loc:
+    x: 89.36473849
+    y: 44.61636878
+stream_response58:
+  name: TomorrowRiver:26
+  loc:
+    x: 89.36381945
+    y: 44.59561469
+stream_response59:
+  name: TomorrowRiver:106
+  loc:
+    x: 89.36258686
+    y: 44.61531506
+stream_response60:
+  name: TomorrowRiver:119
+  loc:
+    x: 89.36164311
+    y: 44.59163553
+stream_response61:
+  name: TomorrowRiver:97
+  loc:
+    x: 89.36005465
+    y: 44.600995
+stream_response62:
+  name: TomorrowRiver:73
+  loc:
+    x: 89.36005465
+    y: 44.600995
+stream_response63:
+  name: TomorrowRiver:41
+  loc:
+    x: 89.36005465
+    y: 44.600995
+stream_response64:
+  name: TomorrowRiver:132
+  loc:
+    x: 89.35989711
+    y: 44.61327308
+stream_response65:
+  name: TomorrowRiver:83
+  loc:
+    x: 89.35989711
+    y: 44.61327308
+stream_response66:
+  name: TomorrowRiver:177
+  loc:
+    x: 89.35965839
+    y: 44.61299013
+stream_response67:
+  name: TomorrowRiver:204
+  loc:
+    x: 89.35965839
+    y: 44.61299013
+stream_response68:
+  name: TomorrowRiver:169
+  loc:
+    x: 89.35965839
+    y: 44.61299013
+stream_response69:
+  name: TomorrowRiver:8
+  loc:
+    x: 89.35943593
+    y: 44.6126617
+stream_response70:
+  name: TomorrowRiver:102
+  loc:
+    x: 89.35943593
+    y: 44.6126617
+stream_response71:
+  name: TomorrowRiver:168
+  loc:
+    x: 89.35943593
+    y: 44.6126617
+stream_response72:
+  name: TomorrowRiver:165
+  loc:
+    x: 89.35943593
+    y: 44.6126617
+stream_response73:
+  name: TomorrowRiver:86
+  loc:
+    x: 89.35942791
+    y: 44.61260314
+stream_response74:
+  name: TomorrowRiver:22
+  loc:
+    x: 89.35942791
+    y: 44.61260314
+stream_response75:
+  name: TomorrowRiver:89
+  loc:
+    x: 89.35939615
+    y: 44.61147849
+stream_response76:
+  name: TomorrowRiver:82
+  loc:
+    x: 89.35939615
+    y: 44.61147849
+stream_response77:
+  name: TomorrowRiver:12
+  loc:
+    x: 89.35938856
+    y: 44.61152374
+stream_response78:
+  name: TomorrowRiver:20
+  loc:
+    x: 89.35645445
+    y: 44.56374055
+stream_response79:
+  name: TomorrowRiver:125
+  loc:
+    x: 89.35500775
+    y: 44.54842114
+stream_response80:
+  name: TomorrowRiver:170
+  loc:
+    x: 89.35497618
+    y: 44.54835878
+stream_response81:
+  name: TomorrowRiver:166
+  loc:
+    x: 89.35497618
+    y: 44.54835878
+stream_response82:
+  name: TomorrowRiver:5
+  loc:
+    x: 89.35421596
+    y: 44.55656241
+stream_response83:
+  name: TomorrowRiver:160
+  loc:
+    x: 89.338317
+    y: 44.52135618
+stream_response84:
+  name: TomorrowRiver:194
+  loc:
+    x: 89.338317
+    y: 44.52135618
+stream_response85:
+  name: TomorrowRiver:195
+  loc:
+    x: 89.338317
+    y: 44.52135618
+stream_response86:
+  name: TomorrowRiver:135
+  loc:
+    x: 89.338317
+    y: 44.52135618
+stream_response87:
+  name: TomorrowRiver:193
+  loc:
+    x: 89.338317
+    y: 44.52135618
+stream_response88:
+  name: TomorrowRiver:129
+  loc:
+    x: 89.33703718
+    y: 44.52318308
+stream_response89:
+  name: TomorrowRiver:123
+  loc:
+    x: 89.33702966
+    y: 44.52329107
+stream_response90:
+  name: TomorrowRiver:197
+  loc:
+    x: 89.33585393
+    y: 44.51600979
+stream_response91:
+  name: TomorrowRiver:164
+  loc:
+    x: 89.33585393
+    y: 44.51600979
+stream_response92:
+  name: TomorrowRiver:147
+  loc:
+    x: 89.33585393
+    y: 44.51600979
+stream_response93:
+  name: TomorrowRiver:57
+  loc:
+    x: 89.33542397
+    y: 44.51523081
+stream_response94:
+  name: TomorrowRiver:159
+  loc:
+    x: 89.33542397
+    y: 44.51523081
+stream_response95:
+  name: TomorrowRiver:126
+  loc:
+    x: 89.33534707
+    y: 44.51514681
+stream_response96:
+  name: TomorrowRiver:184
+  loc:
+    x: 89.33534707
+    y: 44.51514681
+stream_response97:
+  name: TomorrowRiver:116
+  loc:
+    x: 89.33488743
+    y: 44.5146971
+stream_response98:
+  name: TomorrowRiver:163
+  loc:
+    x: 89.33488743
+    y: 44.5146971
+stream_response99:
+  name: TomorrowRiver:185
+  loc:
+    x: 89.33488743
+    y: 44.5146971
+stream_response100:
+  name: TomorrowRiver:152
+  loc:
+    x: 89.33488743
+    y: 44.5146971
+stream_response101:
+  name: TomorrowRiver:155
+  loc:
+    x: 89.33488743
+    y: 44.5146971
+stream_response102:
+  name: TomorrowRiver:191
+  loc:
+    x: 89.33439054
+    y: 44.53694806
+stream_response103:
+  name: TomorrowRiver:175
+  loc:
+    x: 89.33439054
+    y: 44.53694806
+stream_response104:
+  name: TomorrowRiver:176
+  loc:
+    x: 89.33439054
+    y: 44.53694806
+stream_response105:
+  name: TomorrowRiver:60
+  loc:
+    x: 89.33330774
+    y: 44.51358172
+stream_response106:
+  name: TomorrowRiver:187
+  loc:
+    x: 89.33073083
+    y: 44.51317058
+stream_response107:
+  name: TomorrowRiver:124
+  loc:
+    x: 89.32912061
+    y: 44.51225836
+stream_response108:
+  name: TomorrowRiver:17
+  loc:
+    x: 89.32912061
+    y: 44.51225836
+stream_response109:
+  name: TomorrowRiver:70
+  loc:
+    x: 89.3243215
+    y: 44.50872361
+stream_response110:
+  name: TomorrowRiver:91
+  loc:
+    x: 89.32431034
+    y: 44.5060672
+stream_response111:
+  name: TomorrowRiver:145
+  loc:
+    x: 89.32426004
+    y: 44.50866642
+stream_response112:
+  name: TomorrowRiver:150
+  loc:
+    x: 89.32426004
+    y: 44.50866642
+stream_response113:
+  name: TomorrowRiver:76
+  loc:
+    x: 89.32426004
+    y: 44.50866642
+stream_response114:
+  name: TomorrowRiver:43
+  loc:
+    x: 89.32426004
+    y: 44.50866642
+stream_response115:
+  name: TomorrowRiver:19
+  loc:
+    x: 89.32421364
+    y: 44.50859975
+stream_response116:
+  name: TomorrowRiver:25
+  loc:
+    x: 89.32230276
+    y: 44.5051848
+stream_response117:
+  name: TomorrowRiver:68
+  loc:
+    x: 89.32101972
+    y: 44.50109808
+stream_response118:
+  name: TomorrowRiver:153
+  loc:
+    x: 89.32101972
+    y: 44.50109808
+stream_response119:
+  name: TomorrowRiver:103
+  loc:
+    x: 89.32080377
+    y: 44.50081558
+stream_response120:
+  name: TomorrowRiver:172
+  loc:
+    x: 89.32080377
+    y: 44.50081558
+stream_response121:
+  name: TomorrowRiver:101
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response122:
+  name: TomorrowRiver:92
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response123:
+  name: TomorrowRiver:146
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response124:
+  name: TomorrowRiver:64
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response125:
+  name: TomorrowRiver:72
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response126:
+  name: TomorrowRiver:158
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response127:
+  name: TomorrowRiver:85
+  loc:
+    x: 89.3193099
+    y: 44.49916911
+stream_response128:
+  name: TomorrowRiver:100
+  loc:
+    x: 89.31610417
+    y: 44.49865739
+stream_response129:
+  name: TomorrowRiver:196
+  loc:
+    x: 89.31610417
+    y: 44.49865739
+stream_response130:
+  name: TomorrowRiver:39
+  loc:
+    x: 89.3158429
+    y: 44.49675632
+stream_response131:
+  name: TomorrowRiver:118
+  loc:
+    x: 89.3157603
+    y: 44.4983599
+stream_response132:
+  name: TomorrowRiver:90
+  loc:
+    x: 89.30957759
+    y: 44.49311954
+stream_response133:
+  name: TomorrowRiver:136
+  loc:
+    x: 89.30957759
+    y: 44.49311954
+stream_response134:
+  name: TomorrowRiver:149
+  loc:
+    x: 89.30957759
+    y: 44.49311954
+stream_response135:
+  name: TomorrowRiver:7
+  loc:
+    x: 89.30939952
+    y: 44.49295277
+stream_response136:
+  name: TomorrowRiver:144
+  loc:
+    x: 89.30717686
+    y: 44.49053681
+stream_response137:
+  name: TomorrowRiver:40
+  loc:
+    x: 89.30717686
+    y: 44.49053681
+stream_response138:
+  name: TomorrowRiver:6
+  loc:
+    x: 89.30717686
+    y: 44.49053681
+stream_response139:
+  name: TomorrowRiver:50
+  loc:
+    x: 89.30701729
+    y: 44.48899938
+stream_response140:
+  name: TomorrowRiver:190
+  loc:
+    x: 89.30564161
+    y: 44.48746822
+stream_response141:
+  name: TomorrowRiver:189
+  loc:
+    x: 89.30476757
+    y: 44.48647649
+stream_response142:
+  name: TomorrowRiver:80
+  loc:
+    x: 89.30032633
+    y: 44.48430841
+stream_response143:
+  name: TomorrowRiver:202
+  loc:
+    x: 89.29982182
+    y: 44.47951409
+stream_response144:
+  name: TomorrowRiver:201
+  loc:
+    x: 89.29982182
+    y: 44.47951409
+stream_response145:
+  name: TomorrowRiver:203
+  loc:
+    x: 89.29982182
+    y: 44.47951409
+stream_response146:
+  name: TomorrowRiver:174
+  loc:
+    x: 89.29982182
+    y: 44.47951409
+stream_response147:
+  name: TomorrowRiver:48
+  loc:
+    x: 89.29975942
+    y: 44.4794228
+stream_response148:
+  name: TomorrowRiver:167
+  loc:
+    x: 89.29975942
+    y: 44.4794228
+stream_response149:
+  name: TomorrowRiver:188
+  loc:
+    x: 89.29975942
+    y: 44.4794228
+stream_response150:
+  name: TomorrowRiver:108
+  loc:
+    x: 89.29975942
+    y: 44.4794228
+stream_response151:
+  name: TomorrowRiver:130
+  loc:
+    x: 89.29975942
+    y: 44.4794228
+stream_response152:
+  name: TomorrowRiver:65
+  loc:
+    x: 89.29920032
+    y: 44.48316054
+stream_response153:
+  name: TomorrowRiver:138
+  loc:
+    x: 89.29524939
+    y: 44.47459481
+stream_response154:
+  name: TomorrowRiver:151
+  loc:
+    x: 89.29524939
+    y: 44.47459481
+stream_response155:
+  name: TomorrowRiver:44
+  loc:
+    x: 89.29524939
+    y: 44.47459481
+stream_response156:
+  name: TomorrowRiver:77
+  loc:
+    x: 89.29239081
+    y: 44.47158608
+stream_response157:
+  name: TomorrowRiver:23
+  loc:
+    x: 89.29239081
+    y: 44.47158608
+stream_response158:
+  name: TomorrowRiver:1
+  loc:
+    x: 89.29227131
+    y: 44.47149443
+stream_response159:
+  name: TomorrowRiver:3
+  loc:
+    x: 89.29227131
+    y: 44.47149443
+stream_response160:
+  name: TomorrowRiver:121
+  loc:
+    x: 89.28904188
+    y: 44.47160172
+stream_response161:
+  name: TomorrowRiver:16
+  loc:
+    x: 89.28904188
+    y: 44.47160172
+stream_response162:
+  name: TomorrowRiver:173
+  loc:
+    x: 89.2886697
+    y: 44.46905832
+stream_response163:
+  name: TomorrowRiver:46
+  loc:
+    x: 89.28820602
+    y: 44.47090557
+stream_response164:
+  name: TomorrowRiver:30
+  loc:
+    x: 89.28792497
+    y: 44.47052653
+stream_response165:
+  name: TomorrowRiver:75
+  loc:
+    x: 89.28712287
+    y: 44.44128303
+stream_response166:
+  name: TomorrowRiver:21
+  loc:
+    x: 89.28712287
+    y: 44.44128303
+stream_response167:
+  name: TomorrowRiver:67
+  loc:
+    x: 89.28529938
+    y: 44.44512196
+stream_response168:
+  name: TomorrowRiver:2
+  loc:
+    x: 89.28499107
+    y: 44.46463966
+stream_response169:
+  name: TomorrowRiver:199
+  loc:
+    x: 89.28383667
+    y: 44.449795
+stream_response170:
+  name: TomorrowRiver:200
+  loc:
+    x: 89.28383667
+    y: 44.449795
+stream_response171:
+  name: TomorrowRiver:198
+  loc:
+    x: 89.28383667
+    y: 44.449795
+stream_response172:
+  name: TomorrowRiver:134
+  loc:
+    x: 89.28360331
+    y: 44.45005336
+stream_response173:
+  name: TomorrowRiver:139
+  loc:
+    x: 89.28337552
+    y: 44.45045428
+stream_response174:
+  name: TomorrowRiver:84
+  loc:
+    x: 89.28292081
+    y: 44.46394031
+stream_response175:
+  name: TomorrowRiver:78
+  loc:
+    x: 89.28205443
+    y: 44.45824811
+stream_response176:
+  name: TomorrowRiver:162
+  loc:
+    x: 89.28197713
+    y: 44.45727904
+stream_response177:
+  name: TomorrowRiver:154
+  loc:
+    x: 89.28194854
+    y: 44.45627457
+stream_response178:
+  name: TomorrowRiver:156
+  loc:
+    x: 89.28181814
+    y: 44.45526459
+stream_response179:
+  name: TomorrowRiver:96
+  loc:
+    x: 89.28181814
+    y: 44.45526459
+stream_response180:
+  name: TomorrowRiver:63
+  loc:
+    x: 89.27844267
+    y: 44.39826674
+stream_response181:
+  name: TomorrowRiver:33
+  loc:
+    x: 89.27844267
+    y: 44.39826674
+stream_response182:
+  name: TomorrowRiver:15
+  loc:
+    x: 89.27844267
+    y: 44.39826674
+stream_response183:
+  name: TomorrowRiver:42
+  loc:
+    x: 89.27403049
+    y: 44.42818619
+stream_response184:
+  name: TomorrowRiver:32
+  loc:
+    x: 89.27313717
+    y: 44.39461552
+stream_response185:
+  name: TomorrowRiver:192
+  loc:
+    x: 89.27313717
+    y: 44.39461552
+stream_response186:
+  name: TomorrowRiver:93
+  loc:
+    x: 89.27313717
+    y: 44.39461552
+stream_response187:
+  name: TomorrowRiver:34
+  loc:
+    x: 89.27060387
+    y: 44.42189769
+stream_response188:
+  name: TomorrowRiver:9
+  loc:
+    x: 89.27050388
+    y: 44.43018667
+stream_response189:
+  name: TomorrowRiver:11
+  loc:
+    x: 89.25538608
+    y: 44.39097129
+stream_response190:
+  name: TomorrowRiver:183
+  loc:
+    x: 89.25516209
+    y: 44.42274194
+stream_response191:
+  name: TomorrowRiver:18
+  loc:
+    x: 89.25190701
+    y: 44.42190606
+stream_response192:
+  name: TomorrowRiver:79
+  loc:
+    x: 89.25151385
+    y: 44.38301584
+stream_response193:
+  name: TomorrowRiver:38
+  loc:
+    x: 89.25151385
+    y: 44.38301584
+stream_response194:
+  name: TomorrowRiver:81
+  loc:
+    x: 89.25129004
+    y: 44.38294073
+stream_response195:
+  name: TomorrowRiver:140
+  loc:
+    x: 89.25079464
+    y: 44.41548271
+stream_response196:
+  name: TomorrowRiver:122
+  loc:
+    x: 89.25079464
+    y: 44.41548271
+stream_response197:
+  name: TomorrowRiver:69
+  loc:
+    x: 89.25037236
+    y: 44.41711849
+stream_response198:
+  name: TomorrowRiver:52
+  loc:
+    x: 89.23590712
+    y: 44.37684168
+stream_response199:
+  name: TomorrowRiver:117
+  loc:
+    x: 89.23570727
+    y: 44.37676317
+stream_response200:
+  name: TomorrowRiver:54
+  loc:
+    x: 89.23570727
+    y: 44.37676317
+stream_response201:
+  name: TomorrowRiver:62
+  loc:
+    x: 89.22889937
+    y: 44.38281992
+stream_response202:
+  name: TomorrowRiver:27
+  loc:
+    x: 89.22604716
+    y: 44.38282383
+stream_response203:
+  name: TomorrowRiver:133
+  loc:
+    x: 89.22566082
+    y: 44.38273889

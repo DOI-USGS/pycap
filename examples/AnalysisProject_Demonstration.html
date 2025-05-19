@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis Project Demonstration &mdash; pycap-dss  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Release History" href="../release-history.html" />
+    <link rel="prev" title="Demonstration of Well Class" href="WellClass_Demonstration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> pycap-dss
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../philosophy.html">Philosophy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> More details on how to use the package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html"> Modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Solutions_Demonstration.html">Solution Demonstrations for <code class="docutils literal notranslate"><span class="pre">pycap</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="WellClass_Demonstration.html">Demonstration of Well Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Analysis Project Demonstration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Import-data-from-Spreadsheet-Template,-convert-data-from-the-spreedsheet-into-a-YML,-and-run-pycap">Import data from Spreadsheet Template, convert data from the spreedsheet into a YML, and run <code class="docutils literal notranslate"><span class="pre">pycap</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Libraries-you-will-need-to-run-this-script">Libraries you will need to run this script</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Path-to-your-.xlsx-template-spreadsheet">Path to your .xlsx template spreadsheet</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Also-provide-a-name-for-the-PyCap-run">Also provide a name for the PyCap run</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Convert-the-Excel-tabs-into-dataframes">Convert the Excel tabs into dataframes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Project-data,-with-default-data-for-T,-S,-t,-etc">Project data, with default data for T, S, t, etc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Well-data,-with-apportionment,-and-name-of-location-impacts-will-be-assessed">Well data, with apportionment, and name of location impacts will be assessed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Stream-Response-Locations">Stream Response Locations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Drawdown-Response-Locations">Drawdown Response Locations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Run-pycap-with-existing-YML-file">Run <code class="docutils literal notranslate"><span class="pre">pycap</span></code> with existing YML file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Libraries-you’ll-need-to-run-this-script">Libraries you’ll need to run this script</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Path-to-the-folder-and-the-name-of-the-.yml-file-you’ve-created.">Path to the folder and the name of the .yml file you’ve created.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Call-pycap.analysis_project-to-run-Python-tool">Call <code class="docutils literal notranslate"><span class="pre">pycap.analysis_project</span></code> to run Python tool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Now-Let’s-have-a-look-at-the-main-results-files">Now Let’s have a look at the main results files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Release history</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release-history.html"> Release History</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pycap-dss</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Analysis Project Demonstration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/AnalysisProject_Demonstration.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars and line breaks on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+    white-space: pre;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Analysis-Project-Demonstration">
+<h1>Analysis Project Demonstration<a class="headerlink" href="#Analysis-Project-Demonstration" title="Permalink to this heading"></a></h1>
+<section id="Import-data-from-Spreadsheet-Template,-convert-data-from-the-spreedsheet-into-a-YML,-and-run-pycap">
+<h2>Import data from Spreadsheet Template, convert data from the spreedsheet into a YML, and run <code class="docutils literal notranslate"><span class="pre">pycap</span></code><a class="headerlink" href="#Import-data-from-Spreadsheet-Template,-convert-data-from-the-spreedsheet-into-a-YML,-and-run-pycap" title="Permalink to this heading"></a></h2>
+<p>This demonstration starts with a spreadsheet template, reads it in, populates a nested dictionary, writes a <code class="docutils literal notranslate"><span class="pre">yml</span></code> file that the <code class="docutils literal notranslate"><span class="pre">AnalysisProject</span></code> class can read in, then executes the <code class="docutils literal notranslate"><span class="pre">AnalysisProject</span></code> functionality.</p>
+<p>This notebook doesn’t explain all functionality in the <code class="docutils literal notranslate"><span class="pre">AnalysisProject</span></code> class, but rather shows this example of how multiple <code class="docutils literal notranslate"><span class="pre">Well</span></code> objects and responses can be combined into a more comprehensive project representing all wells and responses in an area.</p>
+<section id="Libraries-you-will-need-to-run-this-script">
+<h3>Libraries you will need to run this script<a class="headerlink" href="#Libraries-you-will-need-to-run-this-script" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</pre></div>
+</div>
+</div>
+<section id="Path-to-your-.xlsx-template-spreadsheet">
+<h4>Path to your .xlsx template spreadsheet<a class="headerlink" href="#Path-to-your-.xlsx-template-spreadsheet" title="Permalink to this heading"></a></h4>
+</section>
+</section>
+<section id="Also-provide-a-name-for-the-PyCap-run">
+<h3>Also provide a name for the PyCap run<a class="headerlink" href="#Also-provide-a-name-for-the-PyCap-run" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pycap_inputs_excel</span> <span class="o">=</span> <span class="s2">&quot;./test_run.xlsx&quot;</span>
+<span class="n">pycap_run_name</span> <span class="o">=</span> <span class="s1">&#39;TestExample&#39;</span>
+</pre></div>
+</div>
+</div>
+<section id="Convert-the-Excel-tabs-into-dataframes">
+<h4>Convert the Excel tabs into dataframes<a class="headerlink" href="#Convert-the-Excel-tabs-into-dataframes" title="Permalink to this heading"></a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_global</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;Global_Inputs&#39;</span><span class="p">)</span>
+<span class="n">raw_hcw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;HCW_Inputs&#39;</span><span class="p">)</span>
+<span class="n">raw_dd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;Drawdown_Inputs&#39;</span><span class="p">)</span>
+<span class="n">raw_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span><span class="s1">&#39;Depletion_Inputs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Data-wrangling-to-get-Excel-information-readable-in-Python">
+<h5>Data wrangling to get Excel information readable in Python<a class="headerlink" href="#Data-wrangling-to-get-Excel-information-readable-in-Python" title="Permalink to this heading"></a></h5>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span>
+
+<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]]</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span><span class="n">hcw</span><span class="p">))</span> <span class="k">for</span> <span class="n">rn</span><span class="p">,</span><span class="n">hcw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">],</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">])]</span>
+
+<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]]</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span><span class="n">hcw</span><span class="p">))</span> <span class="k">for</span> <span class="n">rn</span><span class="p">,</span><span class="n">hcw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">],</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Create-nested-dictionaries-of-inputs-for-YML">
+<h5>Create nested dictionaries of inputs for YML<a class="headerlink" href="#Create-nested-dictionaries-of-inputs-for-YML" title="Permalink to this heading"></a></h5>
+</section>
+</section>
+</section>
+<section id="Project-data,-with-default-data-for-T,-S,-t,-etc">
+<h3>Project data, with default data for T, S, t, etc<a class="headerlink" href="#Project-data,-with-default-data-for-T,-S,-t,-etc" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">project_dict</span><span class="p">[</span><span class="s1">&#39;project_properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">pycap_run_name</span><span class="p">,</span>
+                                     <span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Transmissivity_ft2d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+                                     <span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Storage_Coeff&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+                                      <span class="s1">&#39;default_dd_days&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Default_dd_days&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+                                      <span class="s1">&#39;default_depletion_years&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Default_depletion_years&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                      <span class="s1">&#39;default_pumping_days&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Default_pumping_days&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                                     <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Well-data,-with-apportionment,-and-name-of-location-impacts-will-be-assessed">
+<h3>Well data, with apportionment, and name of location impacts will be assessed<a class="headerlink" href="#Well-data,-with-apportionment,-and-name-of-location-impacts-will-be-assessed" title="Permalink to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_depl</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Resource_Type</th>
+      <th>Resource_Name</th>
+      <th>Resource_Lat</th>
+      <th>Resource_Long</th>
+      <th>Fraction_Intercept</th>
+      <th>HCW</th>
+      <th>Comments</th>
+      <th>pycap_resource_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.623796</td>
+      <td>89.403412</td>
+      <td>0.705013</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.623796</td>
+      <td>89.403412</td>
+      <td>0.816983</td>
+      <td>137</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:137</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.623796</td>
+      <td>89.403412</td>
+      <td>0.738771</td>
+      <td>58</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:58</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.623796</td>
+      <td>89.403412</td>
+      <td>0.699034</td>
+      <td>98</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:98</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.623796</td>
+      <td>89.403412</td>
+      <td>0.670640</td>
+      <td>142</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:142</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.376763</td>
+      <td>89.235707</td>
+      <td>0.640469</td>
+      <td>117</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:117</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.376763</td>
+      <td>89.235707</td>
+      <td>0.460920</td>
+      <td>54</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:54</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.382820</td>
+      <td>89.228899</td>
+      <td>0.486513</td>
+      <td>62</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:62</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.382824</td>
+      <td>89.226047</td>
+      <td>0.822763</td>
+      <td>27</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:27</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>Stream</td>
+      <td>TomorrowRiver</td>
+      <td>44.382739</td>
+      <td>89.225661</td>
+      <td>0.643367</td>
+      <td>133</td>
+      <td>NaN</td>
+      <td>TomorrowRiver:133</td>
+    </tr>
+  </tbody>
+</table>
+<p>204 rows × 8 columns</p>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">i</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;HCW&#39;</span><span class="p">:</span> <span class="n">hcw</span><span class="p">,</span>
+        <span class="s1">&#39;stream_apportionment&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">pycap_resource_name</span><span class="p">,</span>
+            <span class="s1">&#39;apportionment&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">frac_intercept</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">hcw</span><span class="p">,</span><span class="n">pycap_resource_name</span><span class="p">,</span><span class="n">frac_intercept</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">)),</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Fraction_Intercept&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">i</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">hcw</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">well_stat</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">well_long</span><span class="p">),</span>
+            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">well_lat</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">Q_gpm</span><span class="p">),</span>
+        <span class="s2">&quot;pumping_days&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">pump_days</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">hcw</span><span class="p">,</span><span class="n">well_stat</span><span class="p">,</span><span class="n">well_long</span><span class="p">,</span><span class="n">well_lat</span><span class="p">,</span><span class="n">Q_gpm</span><span class="p">,</span><span class="n">pump_days</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_hcw</span><span class="p">)),</span>
+    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">],</span>
+    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Well_Status&#39;</span><span class="p">],</span>
+    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Well_Long&#39;</span><span class="p">],</span>
+    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Well_Lat&#39;</span><span class="p">],</span>
+
+    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Q_gpm&#39;</span><span class="p">],</span>
+    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Pumping_Days&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_dict_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">stream_dict</span><span class="p">,</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="n">stream_dict_df</span> <span class="o">=</span> <span class="n">stream_dict_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;stream_apportionment</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># rekey the well_dict dictionary using the names</span>
+<span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+    <span class="c1"># bring in the stream apportionment values</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="p">:</span>
+        <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stream_dict_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">stream_dict_df</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;stream_apportionment&#39;</span><span class="p">])</span>
+
+<span class="c1"># bring in the stream and drawdown response information</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="p">:</span>
+    <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;stream_response&#39;</span><span class="p">:(</span><span class="nb">list</span><span class="p">(</span><span class="n">raw_depl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]))})</span>
+    <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;dd_response&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">raw_dd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]))})</span>
+
+<span class="c1"># rename the keys again</span>
+<span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;well_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Stream-Response-Locations">
+<h3>Stream Response Locations<a class="headerlink" href="#Stream-Response-Locations" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">streamresp_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">f</span><span class="s2">&quot;stream_response</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">pycap_resource_name</span><span class="p">,</span>
+        <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_long</span><span class="p">),</span>
+            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_lat</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pycap_resource_name</span><span class="p">,</span><span class="n">res_long</span><span class="p">,</span><span class="n">res_lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">)),</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Long&#39;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Lat&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Drawdown-Response-Locations">
+<h3>Drawdown Response Locations<a class="headerlink" href="#Drawdown-Response-Locations" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dd_unique</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">ddresp_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">f</span><span class="s2">&quot;dd_response</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">ResName</span><span class="p">,</span>
+        <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_long</span><span class="p">),</span>
+            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_lat</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ResName</span><span class="p">,</span> <span class="n">res_long</span><span class="p">,</span><span class="n">res_lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_dd_unique</span><span class="p">)),</span>
+        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">],</span>
+        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s1">&#39;Resource_Long&#39;</span><span class="p">],</span>
+        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s1">&#39;Resource_Lat&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combdict</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">project_dict</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">well_dict</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">ddresp_dict</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">streamresp_dict</span>
+    <span class="p">}</span>
+<span class="n">yml_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">pycap_run_name</span><span class="o">+</span><span class="s1">&#39;.yml&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yml_name</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">combdict</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Run-pycap-with-existing-YML-file">
+<h2>Run <code class="docutils literal notranslate"><span class="pre">pycap</span></code> with existing YML file<a class="headerlink" href="#Run-pycap-with-existing-YML-file" title="Permalink to this heading"></a></h2>
+<section id="Libraries-you’ll-need-to-run-this-script">
+<h3>Libraries you’ll need to run this script<a class="headerlink" href="#Libraries-you’ll-need-to-run-this-script" title="Permalink to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycap.analysis_project</span> <span class="k">as</span> <span class="nn">ap</span>
+<span class="kn">from</span> <span class="nn">pycap.analysis_project</span> <span class="kn">import</span> <span class="n">Project</span>
+</pre></div>
+</div>
+</div>
+<section id="Path-to-the-folder-and-the-name-of-the-.yml-file-you’ve-created.">
+<h4>Path to the folder and the name of the .yml file you’ve created.<a class="headerlink" href="#Path-to-the-folder-and-the-name-of-the-.yml-file-you’ve-created." title="Permalink to this heading"></a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datapath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">yml_file</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;TestExample.yml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Call-pycap.analysis_project-to-run-Python-tool">
+<h4>Call <code class="docutils literal notranslate"><span class="pre">pycap.analysis_project</span></code> to run Python tool<a class="headerlink" href="#Call-pycap.analysis_project-to-run-Python-tool" title="Permalink to this heading"></a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ap</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">datapath</span><span class="o">/</span><span class="n">yml_file</span><span class="p">)</span>
+<span class="n">ap</span><span class="o">.</span><span class="n">report_responses</span><span class="p">()</span>
+<span class="n">ap</span><span class="o">.</span><span class="n">write_responses_csv</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Writing report to TestExample.yml.import_report
+
+
+
+Successfully parsed TestExample.yml (high five!)
+*************************
+Summary follows:
+
+WELLS:
+203 existing wells:
+        1
+        2
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+        11
+        12
+        13
+        14
+        15
+        16
+        17
+        18
+        19
+        20
+        21
+        22
+        23
+        24
+        25
+        26
+        27
+        28
+        29
+        30
+        31
+        32
+        33
+        34
+        35
+        36
+        37
+        38
+        39
+        40
+        41
+        42
+        43
+        44
+        45
+        46
+        47
+        48
+        49
+        50
+        51
+        52
+        53
+        54
+        55
+        56
+        57
+        58
+        59
+        60
+        61
+        62
+        63
+        64
+        65
+        66
+        67
+        68
+        69
+        70
+        71
+        72
+        73
+        74
+        75
+        76
+        77
+        78
+        79
+        80
+        81
+        82
+        83
+        84
+        85
+        86
+        87
+        88
+        89
+        90
+        91
+        92
+        93
+        94
+        95
+        96
+        97
+        98
+        99
+        100
+        101
+        102
+        103
+        104
+        105
+        106
+        107
+        108
+        109
+        110
+        111
+        112
+        113
+        114
+        115
+        116
+        117
+        118
+        119
+        120
+        121
+        122
+        123
+        124
+        125
+        126
+        127
+        128
+        129
+        130
+        131
+        132
+        133
+        134
+        135
+        136
+        137
+        138
+        139
+        140
+        141
+        142
+        143
+        144
+        145
+        146
+        147
+        148
+        149
+        150
+        151
+        152
+        153
+        154
+        155
+        156
+        157
+        158
+        159
+        160
+        161
+        162
+        163
+        164
+        165
+        166
+        167
+        168
+        169
+        170
+        171
+        172
+        173
+        174
+        175
+        176
+        177
+        178
+        179
+        180
+        181
+        182
+        183
+        184
+        185
+        186
+        187
+        188
+        189
+        190
+        191
+        192
+        193
+        194
+        195
+        196
+        197
+        198
+        199
+        200
+        201
+        202
+        203
+        204
+1 pending wells:
+        3
+
+STREAM RESPONSES:
+        TomorrowRiver:14
+        TomorrowRiver:137
+        TomorrowRiver:58
+        TomorrowRiver:98
+        TomorrowRiver:142
+        TomorrowRiver:161
+        TomorrowRiver:107
+        TomorrowRiver:143
+        TomorrowRiver:148
+        TomorrowRiver:35
+        TomorrowRiver:113
+        TomorrowRiver:171
+        TomorrowRiver:37
+        TomorrowRiver:131
+        TomorrowRiver:115
+        TomorrowRiver:56
+        TomorrowRiver:99
+        TomorrowRiver:179
+        TomorrowRiver:31
+        TomorrowRiver:53
+        TomorrowRiver:109
+        TomorrowRiver:24
+        TomorrowRiver:111
+        TomorrowRiver:112
+        TomorrowRiver:71
+        TomorrowRiver:74
+        TomorrowRiver:28
+        TomorrowRiver:94
+        TomorrowRiver:49
+        TomorrowRiver:66
+        TomorrowRiver:110
+        TomorrowRiver:47
+        TomorrowRiver:120
+        TomorrowRiver:55
+        TomorrowRiver:45
+        TomorrowRiver:51
+        TomorrowRiver:104
+        TomorrowRiver:87
+        TomorrowRiver:178
+        TomorrowRiver:61
+        TomorrowRiver:128
+        TomorrowRiver:59
+        TomorrowRiver:88
+        TomorrowRiver:4
+        TomorrowRiver:180
+        TomorrowRiver:157
+        TomorrowRiver:36
+        TomorrowRiver:29
+        TomorrowRiver:114
+        TomorrowRiver:10
+        TomorrowRiver:105
+        TomorrowRiver:13
+        TomorrowRiver:127
+        TomorrowRiver:141
+        TomorrowRiver:95
+        TomorrowRiver:181
+        TomorrowRiver:182
+        TomorrowRiver:186
+        TomorrowRiver:26
+        TomorrowRiver:106
+        TomorrowRiver:119
+        TomorrowRiver:97
+        TomorrowRiver:73
+        TomorrowRiver:41
+        TomorrowRiver:132
+        TomorrowRiver:83
+        TomorrowRiver:177
+        TomorrowRiver:204
+        TomorrowRiver:169
+        TomorrowRiver:8
+        TomorrowRiver:102
+        TomorrowRiver:168
+        TomorrowRiver:165
+        TomorrowRiver:86
+        TomorrowRiver:22
+        TomorrowRiver:89
+        TomorrowRiver:82
+        TomorrowRiver:12
+        TomorrowRiver:20
+        TomorrowRiver:125
+        TomorrowRiver:170
+        TomorrowRiver:166
+        TomorrowRiver:5
+        TomorrowRiver:160
+        TomorrowRiver:194
+        TomorrowRiver:195
+        TomorrowRiver:135
+        TomorrowRiver:193
+        TomorrowRiver:129
+        TomorrowRiver:123
+        TomorrowRiver:197
+        TomorrowRiver:164
+        TomorrowRiver:147
+        TomorrowRiver:57
+        TomorrowRiver:159
+        TomorrowRiver:126
+        TomorrowRiver:184
+        TomorrowRiver:116
+        TomorrowRiver:163
+        TomorrowRiver:185
+        TomorrowRiver:152
+        TomorrowRiver:155
+        TomorrowRiver:191
+        TomorrowRiver:175
+        TomorrowRiver:176
+        TomorrowRiver:60
+        TomorrowRiver:187
+        TomorrowRiver:124
+        TomorrowRiver:17
+        TomorrowRiver:70
+        TomorrowRiver:91
+        TomorrowRiver:145
+        TomorrowRiver:150
+        TomorrowRiver:76
+        TomorrowRiver:43
+        TomorrowRiver:19
+        TomorrowRiver:25
+        TomorrowRiver:68
+        TomorrowRiver:153
+        TomorrowRiver:103
+        TomorrowRiver:172
+        TomorrowRiver:101
+        TomorrowRiver:92
+        TomorrowRiver:146
+        TomorrowRiver:64
+        TomorrowRiver:72
+        TomorrowRiver:158
+        TomorrowRiver:85
+        TomorrowRiver:100
+        TomorrowRiver:196
+        TomorrowRiver:39
+        TomorrowRiver:118
+        TomorrowRiver:90
+        TomorrowRiver:136
+        TomorrowRiver:149
+        TomorrowRiver:7
+        TomorrowRiver:144
+        TomorrowRiver:40
+        TomorrowRiver:6
+        TomorrowRiver:50
+        TomorrowRiver:190
+        TomorrowRiver:189
+        TomorrowRiver:80
+        TomorrowRiver:202
+        TomorrowRiver:201
+        TomorrowRiver:203
+        TomorrowRiver:174
+        TomorrowRiver:48
+        TomorrowRiver:167
+        TomorrowRiver:188
+        TomorrowRiver:108
+        TomorrowRiver:130
+        TomorrowRiver:65
+        TomorrowRiver:138
+        TomorrowRiver:151
+        TomorrowRiver:44
+        TomorrowRiver:77
+        TomorrowRiver:23
+        TomorrowRiver:1
+        TomorrowRiver:3
+        TomorrowRiver:121
+        TomorrowRiver:16
+        TomorrowRiver:173
+        TomorrowRiver:46
+        TomorrowRiver:30
+        TomorrowRiver:75
+        TomorrowRiver:21
+        TomorrowRiver:67
+        TomorrowRiver:2
+        TomorrowRiver:199
+        TomorrowRiver:200
+        TomorrowRiver:198
+        TomorrowRiver:134
+        TomorrowRiver:139
+        TomorrowRiver:84
+        TomorrowRiver:78
+        TomorrowRiver:162
+        TomorrowRiver:154
+        TomorrowRiver:156
+        TomorrowRiver:96
+        TomorrowRiver:63
+        TomorrowRiver:33
+        TomorrowRiver:15
+        TomorrowRiver:42
+        TomorrowRiver:32
+        TomorrowRiver:192
+        TomorrowRiver:93
+        TomorrowRiver:34
+        TomorrowRiver:9
+        TomorrowRiver:11
+        TomorrowRiver:183
+        TomorrowRiver:18
+        TomorrowRiver:79
+        TomorrowRiver:38
+        TomorrowRiver:81
+        TomorrowRiver:140
+        TomorrowRiver:122
+        TomorrowRiver:69
+        TomorrowRiver:52
+        TomorrowRiver:117
+        TomorrowRiver:54
+        TomorrowRiver:62
+        TomorrowRiver:27
+        TomorrowRiver:133
+DRAWDOWN RESPONSES:
+        LakeEmily
+</pre></div></div>
+</div>
+</section>
+<section id="Now-Let’s-have-a-look-at-the-main-results-files">
+<h4>Now Let’s have a look at the main results files<a class="headerlink" href="#Now-Let’s-have-a-look-at-the-main-results-files" title="Permalink to this heading"></a></h4>
+<section id="First,-the-summary-base-depletion">
+<h5>First, the summary base depletion<a class="headerlink" href="#First,-the-summary-base-depletion" title="Permalink to this heading"></a></h5>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># first the summary, base depletion</span>
+<span class="n">depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/TestExample.table_report.base_stream_depletion.csv&#39;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">depl</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TomorrowRiver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>0.072980</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.009860</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.008878</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.042601</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.477394</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>total_proposed</th>
+      <td>0.072980</td>
+    </tr>
+    <tr>
+      <th>total_existing</th>
+      <td>2.974664</td>
+    </tr>
+    <tr>
+      <th>total_combined</th>
+      <td>3.045433</td>
+    </tr>
+  </tbody>
+</table>
+<p>207 rows × 1 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Combined-report-of-all-depletion-and-drawdown-calculations">
+<h5>Combined report of all depletion and drawdown calculations<a class="headerlink" href="#Combined-report-of-all-depletion-and-drawdown-calculations" title="Permalink to this heading"></a></h5>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tab_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/TestExample.table_report.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">tab_report</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LakeEmily:dd (ft)</th>
+      <th>TomorrowRiver:1:depl (cfs)</th>
+      <th>TomorrowRiver:2:depl (cfs)</th>
+      <th>TomorrowRiver:4:depl (cfs)</th>
+      <th>TomorrowRiver:5:depl (cfs)</th>
+      <th>TomorrowRiver:6:depl (cfs)</th>
+      <th>TomorrowRiver:7:depl (cfs)</th>
+      <th>TomorrowRiver:8:depl (cfs)</th>
+      <th>TomorrowRiver:9:depl (cfs)</th>
+      <th>TomorrowRiver:10:depl (cfs)</th>
+      <th>...</th>
+      <th>TomorrowRiver:196:depl (cfs)</th>
+      <th>TomorrowRiver:197:depl (cfs)</th>
+      <th>TomorrowRiver:198:depl (cfs)</th>
+      <th>TomorrowRiver:199:depl (cfs)</th>
+      <th>TomorrowRiver:200:depl (cfs)</th>
+      <th>TomorrowRiver:201:depl (cfs)</th>
+      <th>TomorrowRiver:202:depl (cfs)</th>
+      <th>TomorrowRiver:203:depl (cfs)</th>
+      <th>TomorrowRiver:204:depl (cfs)</th>
+      <th>TomorrowRiver:3:depl (cfs)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3: proposed</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.07298</td>
+    </tr>
+    <tr>
+      <th>1: existing</th>
+      <td>0.000048</td>
+      <td>0.00986</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2: existing</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.008878</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4: existing</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.042601</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5: existing</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.477394</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>203: existing</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>204: existing</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>total_proposed</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.07298</td>
+    </tr>
+    <tr>
+      <th>total_existing</th>
+      <td>0.000048</td>
+      <td>0.00986</td>
+      <td>0.008878</td>
+      <td>0.042601</td>
+      <td>0.477394</td>
+      <td>0.038422</td>
+      <td>0.049016</td>
+      <td>0.022823</td>
+      <td>0.160571</td>
+      <td>0.035432</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>total_combined</th>
+      <td>0.000048</td>
+      <td>0.00986</td>
+      <td>0.008878</td>
+      <td>0.042601</td>
+      <td>0.477394</td>
+      <td>0.038422</td>
+      <td>0.049016</td>
+      <td>0.022823</td>
+      <td>0.160571</td>
+      <td>0.035432</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.07298</td>
+    </tr>
+  </tbody>
+</table>
+<p>207 rows × 205 columns</p>
+</div></div>
+</div>
+</section>
+<section id="All-the-depletion-time-series-are-included-in-a-single-time-series">
+<h5>All the depletion time series are included in a single time series<a class="headerlink" href="#All-the-depletion-time-series-are-included-in-a-single-time-series" title="Permalink to this heading"></a></h5>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_time_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/TestExample.table_report.all_ts.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">all_time_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Axes: &gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_AnalysisProject_Demonstration_38_1.png" src="../_images/examples_AnalysisProject_Demonstration_38_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="WellClass_Demonstration.html" class="btn btn-neutral float-left" title="Demonstration of Well Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../release-history.html" class="btn btn-neutral float-right" title="Release History" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+      <span class="lastupdated">Last updated on May 19, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
