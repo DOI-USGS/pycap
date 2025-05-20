@@ -107,6 +107,34 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="check_nones"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.check_nones">[docs]</a><span class="k">def</span> <span class="nf">check_nones</span><span class="p">(</span><span class="n">all_vars</span><span class="p">,</span> <span class="n">var_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to check if any of the required parameters are</span>
+<span class="sd">        set to None (default) value. Call to this function</span>
+<span class="sd">        is added to all solutions that require parameters in </span>
+<span class="sd">        addition to T, S, time, dist and Q.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        all_vars: dictionary</span>
+<span class="sd">            dictionary of variable values passed from calling</span>
+<span class="sd">            routine, can be generated using locals()</span>
+<span class="sd">        var_dict: dictionary</span>
+<span class="sd">            key is the function name and value is a list of </span>
+<span class="sd">            required parameter names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fxn_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">var_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">nonevars</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> 
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">all_vars</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">var_dict</span><span class="p">[</span><span class="n">fxn_name</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonevars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The function: </span><span class="si">{</span><span class="n">fxn_name</span><span class="si">}</span><span class="s2"> requires the following&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;additional arguments which were missing&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in the function call:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nonevars</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span></div>
+
 
 <span class="c1"># define drawdown methods here</span>
 <div class="viewcode-block" id="theis"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.theis">[docs]</a><span class="k">def</span> <span class="nf">theis</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -166,7 +194,7 @@
 
 
 <div class="viewcode-block" id="hunt99ddwn"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99ddwn">[docs]</a><span class="k">def</span> <span class="nf">hunt99ddwn</span><span class="p">(</span>
-    <span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to calculate drawdown in an aquifer with a partially</span>
 <span class="sd">        penetrating stream including streambed resistance (Hunt, 1999).</span>
@@ -215,6 +243,7 @@
 <span class="sd">        (ntimes, meshgridxx, meshgridyy)</span>
 <span class="sd">        depending on input form of x, y, and ntimes [L]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_nones</span><span class="p">(</span><span class="nb">locals</span><span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;hunt99ddwn&#39;</span><span class="p">:[</span><span class="s1">&#39;streambed_conductance&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]})</span>
 
     <span class="c1"># turn lists into np.array so they get handled correctly,</span>
     <span class="c1"># check if time or space is an array</span>
@@ -286,7 +315,7 @@
                         <span class="mf">0.0</span><span class="p">,</span>
                         <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
                         <span class="n">args</span><span class="o">=</span><span class="p">(</span>
-                            <span class="n">l</span><span class="p">,</span>
+                            <span class="n">dist</span><span class="p">,</span>
                             <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">T</span><span class="p">,</span>
@@ -297,7 +326,7 @@
                     <span class="p">)</span>
                     <span class="n">drawdowns</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
                         <span class="n">_ddwn1</span><span class="p">(</span>
-                            <span class="n">l</span><span class="p">,</span>
+                            <span class="n">dist</span><span class="p">,</span>
                             <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                             <span class="n">T</span><span class="p">,</span>
@@ -362,15 +391,15 @@
     <span class="n">t</span><span class="p">,</span>
     <span class="n">dist</span><span class="p">,</span>
     <span class="n">Q</span><span class="p">,</span>
-    <span class="n">T2</span><span class="p">,</span>
-    <span class="n">S2</span><span class="p">,</span>
-    <span class="n">width</span><span class="p">,</span>
-    <span class="n">streambed_thick</span><span class="p">,</span>
-    <span class="n">streambed_K</span><span class="p">,</span>
-    <span class="n">aquitard_thick</span><span class="p">,</span>
-    <span class="n">aquitard_K</span><span class="p">,</span>
-    <span class="n">x</span><span class="p">,</span>
-    <span class="n">y</span><span class="p">,</span>
+    <span class="n">T2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">S2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">streambed_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">streambed_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">aquitard_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">aquitard_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">NSteh1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">NSteh2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
@@ -441,6 +470,16 @@
 <span class="sd">        stream width (b in paper) [L]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_nones</span><span class="p">(</span><span class="nb">locals</span><span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;WardLoughDrawdown&#39;</span><span class="p">:[</span><span class="s1">&#39;T2&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;S2&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;width&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;streambed_thick&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;streambed_K&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;aquitard_thick&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;aquitard_K&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;y&#39;</span><span class="p">]})</span>
+
     <span class="c1"># first nondimensionalize all the parameters</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span> <span class="o">=</span> <span class="n">_WardLoughNonDimensionalize</span><span class="p">(</span>
         <span class="n">T1</span><span class="p">,</span>
@@ -627,7 +666,7 @@
     <span class="k">return</span> <span class="n">ret_vals</span></div>
 
 
-<div class="viewcode-block" id="hunt99"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99">[docs]</a><span class="k">def</span> <span class="nf">hunt99</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="hunt99"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt99">[docs]</a><span class="k">def</span> <span class="nf">hunt99</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function for Hunt (1999) solution for streamflow depletion by a pumping well.</span>
 
 <span class="sd">        Computes streamflow depletion by a pumping well for a partially penetrating</span>
@@ -662,7 +701,7 @@
 <span class="sd">    streambed_conductance: float</span>
 <span class="sd">        streambed_conductance conductance [L/T] (lambda in the paper)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
+    <span class="n">check_nones</span><span class="p">(</span><span class="nb">locals</span><span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;hunt99&#39;</span><span class="p">:[</span><span class="s1">&#39;streambed_conductance&#39;</span><span class="p">]})</span>
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cannot have both time and distance as arrays&quot;</span><span class="p">)</span>
@@ -699,12 +738,12 @@
     <span class="n">time</span><span class="p">,</span>
     <span class="n">dist</span><span class="p">,</span>
     <span class="n">Q</span><span class="p">,</span>
-    <span class="n">Bprime</span><span class="p">,</span>
-    <span class="n">Bdouble</span><span class="p">,</span>
-    <span class="n">aquitard_K</span><span class="p">,</span>
-    <span class="n">sigma</span><span class="p">,</span>
-    <span class="n">width</span><span class="p">,</span>
-    <span class="n">streambed_conductance</span><span class="p">,</span>
+    <span class="n">Bprime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">Bdouble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">aquitard_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function for Hunt (2003) solution for streamflow depletion by a pumping well.</span>
@@ -755,6 +794,12 @@
 <span class="sd">        streambed conductance [L/T] (lambda in the paper),</span>
 <span class="sd">        only used if K is less than 1e-10</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_nones</span><span class="p">(</span><span class="nb">locals</span><span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;hunt2003&#39;</span><span class="p">:[</span><span class="s1">&#39;Bprime&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;Bdouble&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;aquitard_K&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;sigma&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;width&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;streambed_conductance&#39;</span><span class="p">]})</span>
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cannot have both time and distance as arrays&quot;</span><span class="p">)</span>
@@ -982,15 +1027,15 @@
     <span class="n">t</span><span class="p">,</span>
     <span class="n">dist</span><span class="p">,</span>
     <span class="n">Q</span><span class="p">,</span>
-    <span class="n">T2</span><span class="p">,</span>
-    <span class="n">S2</span><span class="p">,</span>
-    <span class="n">width</span><span class="p">,</span>
-    <span class="n">streambed_thick</span><span class="p">,</span>
-    <span class="n">streambed_K</span><span class="p">,</span>
-    <span class="n">aquitard_thick</span><span class="p">,</span>
-    <span class="n">aquitard_K</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">T2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">S2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">streambed_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">streambed_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">aquitard_thick</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">aquitard_K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">NSteh1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
@@ -1056,6 +1101,15 @@
 <span class="sd">        stream width (b in paper) [L]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_nones</span><span class="p">(</span><span class="nb">locals</span><span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;WardLoughDepletion&#39;</span><span class="p">:[</span><span class="s1">&#39;T2&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;S2&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;width&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;streambed_thick&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;streambed_K&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;aquitard_thick&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;aquitard_K&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;y&#39;</span><span class="p">]})</span>
     <span class="c1"># first nondimensionalize all the parameters</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span> <span class="o">=</span> <span class="n">_WardLoughNonDimensionalize</span><span class="p">(</span>
         <span class="n">T1</span><span class="p">,</span>
@@ -1290,7 +1344,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 19, 2025.
+      <span class="lastupdated">Last updated on May 20, 2025.
       </span></p>
   </div>
 
