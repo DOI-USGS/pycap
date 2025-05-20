@@ -91,7 +91,7 @@
              
   <h1>Source code for pycap.wells</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">pycap</span>
 
 
@@ -391,6 +391,9 @@
 <span class="sd">            Method to be used for depletion calculations. Defaults to &#39;Glover&#39;.</span>
 <span class="sd">        drawdown_method: string, optional</span>
 <span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;Theis&#39;.</span>
+<span class="sd">            Only &#39;theis&#39; is available right now in the Well() class, if</span>
+<span class="sd">            Hunt (1999) or Ward and Lough (2014) are desired, the function</span>
+<span class="sd">            must be called directly</span>
 <span class="sd">        streambed_conductance: float</span>
 <span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
 <span class="sd">            Defaults to None</span>
@@ -467,6 +470,10 @@
         <span class="c1"># &#39;new_approved&#39;, &#39;inactive&#39; }</span>
         <span class="c1"># make sure stream names consistent</span>
         <span class="c1"># between dist and apportionment</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;theis&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Theis must be used as drawdown method in Well Class.&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stream_apportionment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
                 <span class="nb">len</span><span class="p">(</span>

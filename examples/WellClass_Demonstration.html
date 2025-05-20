@@ -67,11 +67,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#Compute-apportionment">Compute apportionment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#set-aquifer-properties-and-streambed-conductances">set aquifer properties and streambed conductances</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#call-a-utility-to-convert-Q-to-a-series-with-appropriate-formatting">call a utility to convert Q to a series with appropriate formatting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Make-a-Well-object">Make a Well object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#need-to-convert-to-GPM-to-compare-results-to-Table-2">need to convert to GPM to compare results to Table 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Make-a-Well-object">Make a Well object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Depletion">Depletion</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#What-about-plotting?">What about plotting?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Change-depletion-method">Change depletion method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Intermittent-Pumping">Intermittent Pumping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Well-Class-is-restricted-to-Theis-drawdown">Well Class is restricted to Theis drawdown</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AnalysisProject_Demonstration.html">Analysis Project Demonstration</a></li>
@@ -616,17 +619,25 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drawdown</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_well</span><span class="o">.</span><span class="n">drawdown</span><span class="p">)</span>
-<span class="n">drawdown</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>look at drawdown, only one distance was specified. The timeseries is returned however.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drawdown</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -676,23 +687,23 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </table>
 </div></div>
 </div>
+<section id="Depletion">
+<h3>Depletion<a class="headerlink" href="#Depletion" title="Permalink to this heading"></a></h3>
+<p>The object gives the daily time series according to the pumping schedule. We can pull out the 5-year depletion to note that the final results match Table 2. Note that we need to convert to GPM to compare results to Table 2</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_well</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-</section>
-<section id="need-to-convert-to-GPM-to-compare-results-to-Table-2">
-<h2>need to convert to GPM to compare results to Table 2<a class="headerlink" href="#need-to-convert-to-GPM-to-compare-results-to-Table-2" title="Permalink to this heading"></a></h2>
-<p>The object get daily time series according to the pumping schedule. We can pull out the 5-year depletion to note that the final results match Table 2.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_depl</span> <span class="o">=</span> <span class="n">stream_depl</span> <span class="o">*</span> <span class="n">pycap</span><span class="o">.</span><span class="n">CFD2GPM</span>
+<span class="c1"># pull out row for days = 1824 and transpose matrix for ease of comparison to Table 2</span>
 <span class="n">five_year</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">stream_depl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1824</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="n">five_year</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">1824</span><span class="p">:</span> <span class="s1">&#39;Depletion&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">five_year</span>
@@ -700,7 +711,7 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -775,10 +786,11 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </div></div>
 </div>
 </section>
+</section>
 <section id="What-about-plotting?">
 <h2>What about plotting?<a class="headerlink" href="#What-about-plotting?" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -789,7 +801,7 @@ returned as arrays that may easily be converted to Pandas dataframes for ease of
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -801,11 +813,11 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_23_1.png" src="../_images/examples_WellClass_Demonstration_23_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_25_1.png" src="../_images/examples_WellClass_Demonstration_25_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -822,27 +834,27 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x14ca972d0&gt;
+&lt;matplotlib.legend.Legend at 0x250984cd790&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_24_1.png" src="../_images/examples_WellClass_Demonstration_24_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_26_1.png" src="../_images/examples_WellClass_Demonstration_26_1.png" />
 </div>
 </div>
 </section>
 <section id="Change-depletion-method">
 <h2>Change depletion method<a class="headerlink" href="#Change-depletion-method" title="Permalink to this heading"></a></h2>
-<p>Several depletion methods are available, see the solutions demonstation notebook for more information. The choice of depletion method is passed to the object as a parameter. Some solutions require additional parameters which need to be passed as named variables.</p>
+<p>Several depletion methods are available (see the solutions demonstation notebook for more information). The choice of depletion method is passed to the object as a parameter. Some solutions require additional parameters which need to be passed as named variables.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pycap</span><span class="o">.</span><span class="n">ALL_DEPL_METHODS</span>
@@ -850,20 +862,20 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 {&#39;glover&#39;: &lt;function pycap.solutions.glover(T, S, time, dist, Q, **kwargs)&gt;,
  &#39;walton&#39;: &lt;function pycap.solutions.walton(T, S, time, dist, Q, **kwargs)&gt;,
- &#39;hunt99&#39;: &lt;function pycap.solutions.hunt99(T, S, time, dist, Q, streambed_conductance, **kwargs)&gt;,
- &#39;hunt03&#39;: &lt;function pycap.solutions.hunt2003(T, S, time, dist, Q, Bprime, Bdouble, aquitard_K, sigma, width, streambed_conductance, **kwargs)&gt;,
- &#39;wardlough&#39;: &lt;function pycap.solutions.WardLoughDepletion(T1, S1, t, dist, Q, T2, S2, width, streambed_thick, streambed_K, aquitard_thick, aquitard_K, x=0, y=0, NSteh1=2, **kwargs)&gt;}
+ &#39;hunt99&#39;: &lt;function pycap.solutions.hunt99(T, S, time, dist, Q, streambed_conductance=None, **kwargs)&gt;,
+ &#39;hunt03&#39;: &lt;function pycap.solutions.hunt2003(T, S, time, dist, Q, Bprime=None, Bdouble=None, aquitard_K=None, sigma=None, width=None, streambed_conductance=None, **kwargs)&gt;,
+ &#39;wardlough&#39;: &lt;function pycap.solutions.WardLoughDepletion(T1, S1, t, dist, Q, T2=None, S2=None, width=None, streambed_thick=None, streambed_K=None, aquitard_thick=None, aquitard_K=None, x=None, y=None, NSteh1=2, **kwargs)&gt;}
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for example the Glover and Balmer solution for a stream assuming no streambed resistance. Note that</span>
@@ -880,7 +892,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glover_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_glover</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span>
@@ -889,10 +901,12 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the two solutions to compare depletion estimates</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">glover_depl</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">glover_depl</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Glover and Balmer estimate&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stream_depl</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">stream_depl</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hunt 1999 estimate&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;pumping in days&#39;</span><span class="p">)</span>
@@ -902,19 +916,19 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x14cc06590&gt;
+&lt;matplotlib.legend.Legend at 0x25098c80d90&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_29_1.png" src="../_images/examples_WellClass_Demonstration_29_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_31_1.png" src="../_images/examples_WellClass_Demonstration_31_1.png" />
 </div>
 </div>
 </section>
@@ -923,7 +937,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 <p>The <code class="docutils literal notranslate"><span class="pre">Well</span></code> Class accepts Q as a series of daily pumping rates and will use superposition to produce a timeseries of drawdown or depletion. The <code class="docutils literal notranslate"><span class="pre">Q2ts</span></code> helper function is one way to generate an input series, but the user can make an arbitrary series.</p>
 <p>Set up a series pumping 3 days a week during June, July, and August</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2020-10-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2025-09-30&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">))</span>
@@ -931,7 +945,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">Q_series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
@@ -943,7 +957,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -953,7 +967,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -965,12 +979,12 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_34_1.png" src="../_images/examples_WellClass_Demonstration_34_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_36_1.png" src="../_images/examples_WellClass_Demonstration_36_1.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Well</span></code> Class expects series index to be integer days</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_days</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">Q_series</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">Q_series</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
@@ -978,7 +992,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_days</span>
@@ -986,7 +1000,7 @@ Text(0, 0.5, &#39;drawdown in feet&#39;)
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1006,7 +1020,7 @@ Length: 1826, dtype: float64
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_intermittent</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">Well</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">,</span>
@@ -1022,7 +1036,7 @@ Length: 1826, dtype: float64
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermittent_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_intermittent</span><span class="o">.</span><span class="n">depletion</span><span class="p">)</span><span class="o">*</span><span class="n">pycap</span><span class="o">.</span><span class="n">CFD2GPM</span>
@@ -1030,7 +1044,7 @@ Length: 1826, dtype: float64
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -1047,24 +1061,24 @@ Length: 1826, dtype: float64
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x14cd40c10&gt;
+&lt;matplotlib.legend.Legend at 0x25099fada50&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_40_1.png" src="../_images/examples_WellClass_Demonstration_40_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_42_1.png" src="../_images/examples_WellClass_Demonstration_42_1.png" />
 </div>
 </div>
 <p>Recall from above that only a single drawdown location was passed to the <code class="docutils literal notranslate"><span class="pre">Well</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intermittent_drawdown</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_intermittent</span><span class="o">.</span><span class="n">drawdown</span><span class="p">)</span>
@@ -1072,7 +1086,7 @@ Length: 1826, dtype: float64
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -1084,20 +1098,69 @@ Length: 1826, dtype: float64
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x14bec5ad0&gt;
+&lt;matplotlib.legend.Legend at 0x2509a19dc90&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_WellClass_Demonstration_43_1.png" src="../_images/examples_WellClass_Demonstration_43_1.png" />
+<img alt="../_images/examples_WellClass_Demonstration_45_1.png" src="../_images/examples_WellClass_Demonstration_45_1.png" />
 </div>
+</div>
+</section>
+<section id="Well-Class-is-restricted-to-Theis-drawdown">
+<h2>Well Class is restricted to Theis drawdown<a class="headerlink" href="#Well-Class-is-restricted-to-Theis-drawdown" title="Permalink to this heading"></a></h2>
+<p>There are drawdown estimates using the Hunt (1999) and Ward and Lough (2011) solutions; but the Well Class is not currently set up to use these solutions. The user should call the functions directly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_intermittent</span> <span class="o">=</span> <span class="n">pycap</span><span class="o">.</span><span class="n">Well</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">,</span>
+                 <span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span>
+                 <span class="n">Q</span><span class="o">=</span><span class="n">Q_days</span><span class="p">,</span>
+                 <span class="n">depletion_years</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                 <span class="n">depl_method</span><span class="o">=</span><span class="s1">&#39;hunt99&#39;</span><span class="p">,</span>
+                 <span class="n">drawdown_dist</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;testlocation0&#39;</span><span class="p">:</span><span class="mf">50.</span><span class="p">},</span>  <span class="c1">#default method is Theis</span>
+                 <span class="n">drawdown_method</span><span class="o">=</span><span class="s1">&#39;hunt99ddwn&#39;</span><span class="p">,</span>
+                 <span class="n">streambed_conductance</span><span class="o">=</span><span class="n">cond</span><span class="p">,</span>
+                 <span class="n">stream_dist</span><span class="o">=</span><span class="n">distances</span><span class="p">,</span>
+                 <span class="n">stream_apportionment</span><span class="o">=</span><span class="n">apportion</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Theis must be used as drawdown method in Well Class.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+An exception has occurred, use %tb to see the full traceback.
+
+<span class="ansi-red-fg">SystemExit</span>
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+C:\Users\hwreeves\AppData\Local\miniforge3\envs\pycap\Lib\site-packages\IPython\core\interactiveshell.py:3678: UserWarning: To exit: use &#39;exit&#39;, &#39;quit&#39;, or Ctrl-D.
+  warn(&#34;To exit: use &#39;exit&#39;, &#39;quit&#39;, or Ctrl-D.&#34;, stacklevel=1)
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

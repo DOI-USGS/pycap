@@ -171,7 +171,10 @@ attributed to each. Defaults to None.</p>
 </dd>
 <dt><strong>depl_method: string, optional</strong></dt><dd><p>Method to be used for depletion calculations. Defaults to ‘Glover’.</p>
 </dd>
-<dt><strong>drawdown_method: string, optional</strong></dt><dd><p>Method to be used for drawdown calculations. Defaults to ‘Theis’.</p>
+<dt><strong>drawdown_method: string, optional</strong></dt><dd><p>Method to be used for drawdown calculations. Defaults to ‘Theis’.
+Only ‘theis’ is available right now in the Well() class, if
+Hunt (1999) or Ward and Lough (2014) are desired, the function
+must be called directly</p>
 </dd>
 <dt><strong>streambed_conductance: float</strong></dt><dd><p>Streambed conductance for the Hunt99 depletion method [L/T].
 Defaults to None</p>
