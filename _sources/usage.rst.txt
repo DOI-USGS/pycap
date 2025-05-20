@@ -20,7 +20,8 @@ Individual Solutions
 --------------------
 Individual solutions are low-level implementations of analytical solutions tested against the literature documenting them. They are available in `pycap-dss` mostly for use by the higher-level classes documented below, but are also available directly if users wish to use them that way. 
 
-The `Solutions_Demonstration <examples/Solutions_Demonstration.ipynb>`_ notebook demonstrates the use of individual analytical solutions in `pycap-dss`. These individual solutions typically require a pumping rate, time, aquifer properties, and relevant geometry (e.g. distance from a stream, or from a drawdown response location, or both). Each function can be accessed directly from the `pycap` module as.
+The `Solutions_Demonstration <examples/Solutions_Demonstration.ipynb>`_ notebook demonstrates the use of individual analytical solutions in `pycap-dss`. These individual solutions typically require a pumping rate, time, aquifer properties, and relevant geometry (e.g. distance from a stream, or from a drawdown response location, or both). Each function can be accessed directly from the `pycap` module as.  
+
 .. code-block:: python
 
     import pycap
