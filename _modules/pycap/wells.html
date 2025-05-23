@@ -90,8 +90,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pycap.wells</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="kn">import</span> <span class="nn">pycap</span>
 
 
@@ -471,8 +473,8 @@
         <span class="c1"># make sure stream names consistent</span>
         <span class="c1"># between dist and apportionment</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;theis&#39;</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Theis must be used as drawdown method in Well Class.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;theis&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Theis must be used as drawdown method in Well Class.&quot;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stream_apportionment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
@@ -580,7 +582,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 20, 2025.
+      <span class="lastupdated">Last updated on May 23, 2025.
       </span></p>
   </div>
 

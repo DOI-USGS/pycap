@@ -61,7 +61,6 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Solutions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.WardLoughDepletion"><code class="docutils literal notranslate"><span class="pre">WardLoughDepletion()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.WardLoughDrawdown"><code class="docutils literal notranslate"><span class="pre">WardLoughDrawdown()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.check_nones"><code class="docutils literal notranslate"><span class="pre">check_nones()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.glover"><code class="docutils literal notranslate"><span class="pre">glover()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt2003"><code class="docutils literal notranslate"><span class="pre">hunt2003()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt99"><code class="docutils literal notranslate"><span class="pre">hunt99()</span></code></a></li>
@@ -270,27 +269,6 @@ Defaults to 2.</p>
 Defaults to 2.</p>
 </dd>
 <dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.check_nones">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">check_nones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_vars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#check_nones"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.check_nones" title="Permalink to this definition"></a></dt>
-<dd><p>Function to check if any of the required parameters are
-set to None (default) value. Call to this function
-is added to all solutions that require parameters in 
-addition to T, S, time, dist and Q.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>all_vars: dictionary</strong></dt><dd><p>dictionary of variable values passed from calling
-routine, can be generated using locals()</p>
-</dd>
-<dt><strong>var_dict: dictionary</strong></dt><dd><p>key is the function name and value is a list of 
-required parameter names.</p>
 </dd>
 </dl>
 </dd>
@@ -599,7 +577,7 @@ is unit-specific, using feet and days as dimensions.</p>
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 20, 2025.
+      <span class="lastupdated">Last updated on May 23, 2025.
       </span></p>
   </div>
 
