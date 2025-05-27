@@ -28,7 +28,7 @@ as internal functions of the wells class using the
 underscore notation to indicate that these are typically
 called from within the class.  For example direct access
 to the Theis (1935) drawdown solution is provided by
-`wells.theis(T,S,time,dist,Q)` function.
+`wells.theis_drawdown(T,S,time,dist,Q)` function.
 
 
 What pycap-dss doesn't do

@@ -117,8 +117,8 @@
         <span class="n">dist</span><span class="p">,</span>
         <span class="n">Q</span><span class="p">,</span>
         <span class="n">stream_apportionment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">dd_method</span><span class="o">=</span><span class="s2">&quot;Theis&quot;</span><span class="p">,</span>
-        <span class="n">depl_method</span><span class="o">=</span><span class="s2">&quot;Glover&quot;</span><span class="p">,</span>
+        <span class="n">dd_method</span><span class="o">=</span><span class="s2">&quot;theis_drawdown&quot;</span><span class="p">,</span>
+        <span class="n">depl_method</span><span class="o">=</span><span class="s2">&quot;glover_depletion&quot;</span><span class="p">,</span>
         <span class="n">theis_time</span><span class="o">=-</span><span class="mi">9999</span><span class="p">,</span>
         <span class="n">depl_pump_time</span><span class="o">=-</span><span class="mi">99999</span><span class="p">,</span>
         <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -155,9 +155,9 @@
 <span class="sd">                Dictionary with stream responses and fraction of depletion</span>
 <span class="sd">                attributed to each. Defaults to None.</span>
 <span class="sd">        dd_method: string, optional</span>
-<span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;Theis&#39;.</span>
+<span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;theis_drawdown&#39;.</span>
 <span class="sd">        depl_method: string, optional</span>
-<span class="sd">            Method to be used for depletion calculations. Defaults to &#39;Glover&#39;.</span>
+<span class="sd">            Method to be used for depletion calculations. Defaults to &#39;glover_depletion&#39;.</span>
 <span class="sd">        theis_time: integer, optional</span>
 <span class="sd">            Time at which drawdown calculation should be made [T].</span>
 <span class="sd">            Defaults to -9999.</span>
@@ -166,7 +166,7 @@
 <span class="sd">            calculations [T]. Not used if pumping time series is used.</span>
 <span class="sd">            Defaults to -99999.</span>
 <span class="sd">        streambed_conductance: float</span>
-<span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
+<span class="sd">            Streambed conductance for the hunt_99_depletion depletion method [L/T].</span>
 <span class="sd">            Defaults to None</span>
 
 <span class="sd">        Additional Parameters Used by Hunt and Ward/Lough Solutions</span>
@@ -287,8 +287,8 @@
         <span class="n">idx</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">cQ</span> <span class="o">=</span> <span class="n">deltaQ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">ct</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">)))</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;walton&quot;</span><span class="p">:</span>
-            <span class="c1"># Walton method (only) needs these goofy units of gpd/dt for T</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;walton_depletion&quot;</span><span class="p">:</span>
+            <span class="c1"># walton_depletion method (only) needs these goofy units of gpd/dt for T</span>
             <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T_gpd_ft</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
@@ -344,8 +344,8 @@
         <span class="n">stream_dist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">drawdown_dist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">stream_apportionment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">depl_method</span><span class="o">=</span><span class="s2">&quot;walton&quot;</span><span class="p">,</span>
-        <span class="n">drawdown_method</span><span class="o">=</span><span class="s2">&quot;theis&quot;</span><span class="p">,</span>
+        <span class="n">depl_method</span><span class="o">=</span><span class="s2">&quot;walton_depletion&quot;</span><span class="p">,</span>
+        <span class="n">drawdown_method</span><span class="o">=</span><span class="s2">&quot;theis_drawdown&quot;</span><span class="p">,</span>
         <span class="n">streambed_conductance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">Bprime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">Bdouble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -390,14 +390,14 @@
 <span class="sd">                Dictionary with stream responses and fraction of depletion</span>
 <span class="sd">                attributed to each. Defaults to None.</span>
 <span class="sd">        depl_method: string, optional</span>
-<span class="sd">            Method to be used for depletion calculations. Defaults to &#39;Glover&#39;.</span>
+<span class="sd">            Method to be used for depletion calculations. Defaults to &#39;glover_depletion&#39;.</span>
 <span class="sd">        drawdown_method: string, optional</span>
-<span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;Theis&#39;.</span>
-<span class="sd">            Only &#39;theis&#39; is available right now in the Well() class, if</span>
+<span class="sd">            Method to be used for drawdown calculations. Defaults to &#39;theis_drawdown&#39;.</span>
+<span class="sd">            Only &#39;theis_drawdown&#39; is available right now in the Well() class, if</span>
 <span class="sd">            Hunt (1999) or Ward and Lough (2014) are desired, the function</span>
 <span class="sd">            must be called directly</span>
 <span class="sd">        streambed_conductance: float</span>
-<span class="sd">            Streambed conductance for the Hunt99 depletion method [L/T].</span>
+<span class="sd">            Streambed conductance for the hunt_99_depletion depletion method [L/T].</span>
 <span class="sd">            Defaults to None</span>
 
 <span class="sd">        Additional Parameters Used by Hunt and Ward/Lough Solutions</span>
@@ -473,8 +473,10 @@
         <span class="c1"># make sure stream names consistent</span>
         <span class="c1"># between dist and apportionment</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;theis&quot;</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Theis must be used as drawdown method in Well Class.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawdown_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;theis_drawdown&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;theis_drawdown&#39; must be used as drawdown method in Well Class.&quot;</span>
+            <span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">stream_dist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">stream_apportionment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
@@ -582,7 +584,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 23, 2025.
+      <span class="lastupdated">Last updated on May 27, 2025.
       </span></p>
   </div>
 

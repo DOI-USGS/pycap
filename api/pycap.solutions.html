@@ -59,15 +59,15 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#classes">Classes</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html#analytical-solutions">Analytical Solutions</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Solutions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.WardLoughDepletion"><code class="docutils literal notranslate"><span class="pre">WardLoughDepletion()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.WardLoughDrawdown"><code class="docutils literal notranslate"><span class="pre">WardLoughDrawdown()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.glover"><code class="docutils literal notranslate"><span class="pre">glover()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt2003"><code class="docutils literal notranslate"><span class="pre">hunt2003()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt99"><code class="docutils literal notranslate"><span class="pre">hunt99()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt99ddwn"><code class="docutils literal notranslate"><span class="pre">hunt99ddwn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.glover_depletion"><code class="docutils literal notranslate"><span class="pre">glover_depletion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt_03_depletion"><code class="docutils literal notranslate"><span class="pre">hunt_03_depletion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt_99_depletion"><code class="docutils literal notranslate"><span class="pre">hunt_99_depletion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.hunt_99_drawdown"><code class="docutils literal notranslate"><span class="pre">hunt_99_drawdown()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.sdf"><code class="docutils literal notranslate"><span class="pre">sdf()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.theis"><code class="docutils literal notranslate"><span class="pre">theis()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.walton"><code class="docutils literal notranslate"><span class="pre">walton()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.theis_drawdown"><code class="docutils literal notranslate"><span class="pre">theis_drawdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.walton_depletion"><code class="docutils literal notranslate"><span class="pre">walton_depletion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.ward_lough_depletion"><code class="docutils literal notranslate"><span class="pre">ward_lough_depletion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycap.solutions.ward_lough_drawdown"><code class="docutils literal notranslate"><span class="pre">ward_lough_drawdown()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -143,141 +143,8 @@ a pumping well near a stream.  Multiple solutions for both drawdown and depletio
 are included. Some solutions assume a single aquifer and others account for streambed
 resistance or two aquifers vertically separated by an aquitard.</p>
 <span class="target" id="module-pycap.solutions"></span><dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.WardLoughDepletion">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">WardLoughDepletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#WardLoughDepletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.WardLoughDepletion" title="Permalink to this definition"></a></dt>
-<dd><p>Compute streamflow depletion using Ward and Lough (2011) solution</p>
-<p>Ward and Lough (2011) presented a solution for streamflow depletion
-by a pumping well in a layered aquifer system.  The stream
-is in the upper aquifer, and the pumping well is in a lower
-aquifer that is separated from the upper aquifer by a
-semi-confining aquitard layer.</p>
-<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a
-semiconfined aquifer in a two-layer leaky aquifer system (techical note):
-Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
-<a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
-</dd>
-<dt><strong>storage [unitless]</strong></dt><dd><p>specific yield in the upper q aquifer</p>
-</dd>
-<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
-</dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
-</dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
-</dd>
-<dt><strong>**kwargs: included to all depletion methods for extra values required in some calls</strong></dt><dd></dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list
-depending on input of time and dist [L**3/T]</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-odd">Other Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of deeper system</p>
-</dd>
-<dt><strong>S2: float</strong></dt><dd><p>Storativity of</p>
-</dd>
-<dt><strong>streambed_thick: float</strong></dt><dd><p>thickness of streambed</p>
-</dd>
-<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, [L/T]</p>
-</dd>
-<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, [L]</p>
-</dd>
-<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, [L/T]</p>
-</dd>
-<dt><strong>NSteh1: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
-Defaults to 2.</p>
-</dd>
-<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.WardLoughDrawdown">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">WardLoughDrawdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#WardLoughDrawdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.WardLoughDrawdown" title="Permalink to this definition"></a></dt>
-<dd><p>Compute drawdown using Ward and Lough (2011) solution</p>
-<blockquote>
-<div><p>Ward and Lough (2011) presented a solution for streamflow depletion
-by a pumping well in a layered aquifer system.  The stream
-is in the upper aquifer, and the pumping well is in a lower
-aquifer that is separated from the upper aquifer by a
-semi-confining aquitard layer.</p>
-<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a
-semiconfined aquifer in a two-layer leaky aquifer system (technical note):
-Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
-<a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>T: float</strong></dt><dd><p>Transmissivity  in the upper aquifer [L**2/T]
-(K*D or T1 in the original paper)</p>
-</dd>
-<dt><strong>S: float</strong></dt><dd><p>Specific yield for upper aquifer [unitless]
-(S1 in the original paper)</p>
-</dd>
-<dt><strong>t: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
-</dd>
-<dt><strong>dist: Distance between pumping well and stream [L]</strong></dt><dd><p>(L in the original paper)</p>
-</dd>
-<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
-</dd>
-<dt><strong>**kwargs:  included to all drawdown methods for extra values required</strong></dt><dd><p>in some calls</p>
-</dd>
-<dt><strong>Returns</strong></dt><dd></dd>
-<dt><strong>——-</strong></dt><dd></dd>
-<dt><strong>ddwn float, 2-column ndarray</strong></dt><dd><p>drawdown at specified location [L]
-in the shallow aquifer (column 0)
-and the deeper aquifer (column 1)</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Other Parameters</dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of deeper system</p>
-</dd>
-<dt><strong>S2: float</strong></dt><dd><p>Storativity of</p>
-</dd>
-<dt><strong>streambed_thick: float</strong></dt><dd><p>thickness of streambed</p>
-</dd>
-<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, [L/T]</p>
-</dd>
-<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, [L]</p>
-</dd>
-<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, [L/T]</p>
-</dd>
-<dt><strong>x: float</strong></dt><dd><p>x-coordinate of drawdown location
-(with origin being x=0 at stream location) [L]</p>
-</dd>
-<dt><strong>y: float</strong></dt><dd><p>y-coordinate of drawdown location
-(with origin being y=0 at pumping well location) [L]</p>
-</dd>
-<dt><strong>NSteh1: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
-Defaults to 2.</p>
-</dd>
-<dt><strong>NStehl2: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
-Defaults to 2.</p>
-</dd>
-<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.glover">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">glover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#glover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.glover" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycap.solutions.glover_depletion">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">glover_depletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#glover_depletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.glover_depletion" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate Glover and Balmer (1954) solution for stream depletion</p>
 <p>Depletion solution for a well near a river where the river fully
 penetrates the aquifer and there is no streambed resistance.</p>
@@ -310,8 +177,8 @@ v. 35, no. 3, pg. 468-470, <a class="reference external" href="https://doi.org/1
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.hunt2003">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt2003</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bprime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bdouble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt2003"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt2003" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycap.solutions.hunt_03_depletion">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt_03_depletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bprime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bdouble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt_03_depletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt_03_depletion" title="Permalink to this definition"></a></dt>
 <dd><p>Function for Hunt (2003) solution for streamflow depletion by a pumping well.</p>
 <blockquote>
 <div><p>Computes streamflow depletion by a pumping well in a semiconfined aquifer
@@ -366,8 +233,8 @@ only used if K is less than 1e-10</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.hunt99">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt99</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt99"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt99" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycap.solutions.hunt_99_depletion">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt_99_depletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt_99_depletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt_99_depletion" title="Permalink to this definition"></a></dt>
 <dd><p>Function for Hunt (1999) solution for streamflow depletion by a pumping well.</p>
 <blockquote>
 <div><p>Computes streamflow depletion by a pumping well for a partially penetrating
@@ -409,8 +276,8 @@ depending on input of time and dist [L**3/T]</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.hunt99ddwn">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt99ddwn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt99ddwn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt99ddwn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycap.solutions.hunt_99_drawdown">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">hunt_99_drawdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_conductance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#hunt_99_drawdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.hunt_99_drawdown" title="Permalink to this definition"></a></dt>
 <dd><dl>
 <dt>Function to calculate drawdown in an aquifer with a partially</dt><dd><p>penetrating stream including streambed resistance (Hunt, 1999).
 Units are not specified, but should be consistent length and time.</p>
@@ -494,8 +361,8 @@ Investigations, Chapter D1, Book 4, <a class="reference external" href="https://
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.theis">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">theis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#theis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.theis" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycap.solutions.theis_drawdown">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">theis_drawdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#theis_drawdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.theis_drawdown" title="Permalink to this definition"></a></dt>
 <dd><dl>
 <dt>Function to calculate Theis drawdown. Units are not specified, but</dt><dd><p>should be consistent length and time.</p>
 <p>Calculates the Theis drawdown solution at specified times
@@ -530,8 +397,8 @@ or distances from a pumping well.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pycap.solutions.walton">
-<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">walton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#walton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.walton" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycap.solutions.walton_depletion">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">walton_depletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#walton_depletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.walton_depletion" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate depletion using Walton (1987) PT-8 BASIC program logic</p>
 <p>Provides the Glover and Balmer (Jenkins) solution.</p>
 <p>Walton, W.C., Groundwater Pumping Tests:  Lewis Publishers, Chelsea,
@@ -563,6 +430,139 @@ is unit-specific, using feet and days as dimensions.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pycap.solutions.ward_lough_depletion">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">ward_lough_depletion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#ward_lough_depletion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.ward_lough_depletion" title="Permalink to this definition"></a></dt>
+<dd><p>Compute streamflow depletion using Ward and Lough (2011) solution</p>
+<p>Ward and Lough (2011) presented a solution for streamflow depletion
+by a pumping well in a layered aquifer system.  The stream
+is in the upper aquifer, and the pumping well is in a lower
+aquifer that is separated from the upper aquifer by a
+semi-confining aquitard layer.</p>
+<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a
+semiconfined aquifer in a two-layer leaky aquifer system (techical note):
+Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
+<a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T: float</strong></dt><dd><p>transmissivity [L**2/T]</p>
+</dd>
+<dt><strong>storage [unitless]</strong></dt><dd><p>specific yield in the upper q aquifer</p>
+</dd>
+<dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
+</dd>
+<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
+</dd>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
+</dd>
+<dt><strong>**kwargs: included to all depletion methods for extra values required in some calls</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Qs: float</dt><dd><p>streamflow depletion rate, optionally np.array or list
+depending on input of time and dist [L**3/T]</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Other Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of deeper system</p>
+</dd>
+<dt><strong>S2: float</strong></dt><dd><p>Storativity of</p>
+</dd>
+<dt><strong>streambed_thick: float</strong></dt><dd><p>thickness of streambed</p>
+</dd>
+<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, [L/T]</p>
+</dd>
+<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, [L]</p>
+</dd>
+<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, [L/T]</p>
+</dd>
+<dt><strong>NSteh1: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
+Defaults to 2.</p>
+</dd>
+<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycap.solutions.ward_lough_drawdown">
+<span class="sig-prename descclassname"><span class="pre">pycap.solutions.</span></span><span class="sig-name descname"><span class="pre">ward_lough_drawdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streambed_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_thick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aquitard_K</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NSteh2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycap/solutions.html#ward_lough_drawdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycap.solutions.ward_lough_drawdown" title="Permalink to this definition"></a></dt>
+<dd><p>Compute drawdown using Ward and Lough (2011) solution</p>
+<blockquote>
+<div><p>Ward and Lough (2011) presented a solution for streamflow depletion
+by a pumping well in a layered aquifer system.  The stream
+is in the upper aquifer, and the pumping well is in a lower
+aquifer that is separated from the upper aquifer by a
+semi-confining aquitard layer.</p>
+<p>Ward, N.D.,and Lough, H., 2011, Stream depletion from pumping a
+semiconfined aquifer in a two-layer leaky aquifer system (technical note):
+Journal of Hydrologic Engineering ASCE, v. 16, no. 11, pgs. 955-959,
+<a class="reference external" href="https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382">https://doi.org/10.1061/(ASCE)HE.1943-5584.0000382</a>.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T: float</strong></dt><dd><p>Transmissivity  in the upper aquifer [L**2/T]
+(K*D or T1 in the original paper)</p>
+</dd>
+<dt><strong>S: float</strong></dt><dd><p>Specific yield for upper aquifer [unitless]
+(S1 in the original paper)</p>
+</dd>
+<dt><strong>t: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
+</dd>
+<dt><strong>dist: Distance between pumping well and stream [L]</strong></dt><dd><p>(L in the original paper)</p>
+</dd>
+<dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
+</dd>
+<dt><strong>**kwargs:  included to all drawdown methods for extra values required</strong></dt><dd><p>in some calls</p>
+</dd>
+<dt><strong>Returns</strong></dt><dd></dd>
+<dt><strong>——-</strong></dt><dd></dd>
+<dt><strong>ddwn float, 2-column ndarray</strong></dt><dd><p>drawdown at specified location [L]
+in the shallow aquifer (column 0)
+and the deeper aquifer (column 1)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T2: float</strong></dt><dd><p>Transmissivity of deeper system</p>
+</dd>
+<dt><strong>S2: float</strong></dt><dd><p>Storativity of</p>
+</dd>
+<dt><strong>streambed_thick: float</strong></dt><dd><p>thickness of streambed</p>
+</dd>
+<dt><strong>streambed_K: float</strong></dt><dd><p>hydraulic conductivity of streambed, [L/T]</p>
+</dd>
+<dt><strong>aquitard_thick: float</strong></dt><dd><p>thickness of intervening leaky aquitard, [L]</p>
+</dd>
+<dt><strong>aquitard_K: float</strong></dt><dd><p>hydraulic conductivity of intervening leaky aquifer, [L/T]</p>
+</dd>
+<dt><strong>x: float</strong></dt><dd><p>x-coordinate of drawdown location
+(with origin being x=0 at stream location) [L]</p>
+</dd>
+<dt><strong>y: float</strong></dt><dd><p>y-coordinate of drawdown location
+(with origin being y=0 at pumping well location) [L]</p>
+</dd>
+<dt><strong>NSteh1: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
+Defaults to 2.</p>
+</dd>
+<dt><strong>NStehl2: int</strong></dt><dd><p>Number of Stehfest series levels - algorithmic tuning parameter.
+Defaults to 2.</p>
+</dd>
+<dt><strong>width: float</strong></dt><dd><p>stream width (b in paper) [L]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -577,7 +577,7 @@ is unit-specific, using feet and days as dimensions.</p>
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 23, 2025.
+      <span class="lastupdated">Last updated on May 27, 2025.
       </span></p>
   </div>
 

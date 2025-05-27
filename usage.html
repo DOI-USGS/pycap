@@ -141,12 +141,12 @@
 <p>Individual solutions are low-level implementations of analytical solutions tested against the literature documenting them. They are available in <cite>pycap-dss</cite> mostly for use by the higher-level classes documented below, but are also available directly if users wish to use them that way.</p>
 <p>The <a class="reference internal" href="examples/Solutions_Demonstration.html"><span class="doc">Solutions_Demonstration</span></a> notebook demonstrates the use of individual analytical solutions in <cite>pycap-dss</cite>. These individual solutions typically require a pumping rate, time, aquifer properties, and relevant geometry (e.g. distance from a stream, or from a drawdown response location, or both). Each function can be accessed directly from the <cite>pycap</cite> module as.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycap</span>
-<span class="c1"># use the glover function for stream depletion</span>
-<span class="n">pycap</span><span class="o">.</span><span class="n">glover</span>
+<span class="c1"># use the glover_depletion function for stream depletion</span>
+<span class="n">pycap</span><span class="o">.</span><span class="n">glover_depletion</span>
 </pre></div>
 </div>
 <p>The documentation for these functions specifies exactly which parameters are required and what is returned. Time and spatial coordinate parameters can broadcast to multiple values, but only for one or the other - not both.</p>
-<p>A note on units. For most functions, the concept is for units to be self-similar. In other words, a consistent length unit and time unit is assumed, and all properties, geometry, and times must be self consistent. An exception to this is the <cite>walton</cite> stream-depletion function. This special case assumes specific units for inputs.</p>
+<p>A note on units. For most functions, the concept is for units to be self-similar. In other words, a consistent length unit and time unit is assumed, and all properties, geometry, and times must be self consistent. An exception to this is the <cite>walton_depletion</cite> stream-depletion function. This special case assumes specific units for inputs.</p>
 </section>
 <section id="id1">
 <h2>Well Object<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
@@ -175,7 +175,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 23, 2025.
+      <span class="lastupdated">Last updated on May 27, 2025.
       </span></p>
   </div>
 

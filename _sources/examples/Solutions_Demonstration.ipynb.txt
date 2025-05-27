@@ -20,15 +20,21 @@
    "cell_type": "code",
    "execution_count": 1,
    "id": "5cb2ece2-f25f-4a00-a64b-fd3524e5a2d2",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:02.109995Z",
+     "iopub.status.busy": "2025-05-27T20:24:02.109855Z",
+     "iopub.status.idle": "2025-05-27T20:24:02.415970Z",
+     "shell.execute_reply": "2025-05-27T20:24:02.415705Z"
+    }
+   },
    "outputs": [],
    "source": [
     "import sys\n",
-    "sys.path.insert(1, '../../')\n",
-    "import pycap\n",
+    "\n",
+    "sys.path.insert(1, \"../../\")\n",
     "import matplotlib.pyplot as plt\n",
-    "import numpy as np\n",
-    "import pandas as pd"
+    "import numpy as np"
    ]
   },
   {
@@ -51,14 +57,21 @@
    "cell_type": "code",
    "execution_count": 2,
    "id": "9bdaa684-3a74-482f-a80d-d5b4e91e6db4",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:02.417630Z",
+     "iopub.status.busy": "2025-05-27T20:24:02.417518Z",
+     "iopub.status.idle": "2025-05-27T20:24:02.419511Z",
+     "shell.execute_reply": "2025-05-27T20:24:02.419281Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "T = 1000    # Transmissivity [m/day]\n",
-    "S = 3e-6   # Storativity [unitless]\n",
-    "dist = 500 # distance [m]\n",
-    "time = np.logspace(.1,2.5,150) # time [day]\n",
-    "Q = 4000   # pumping rate [m**3/day]\n"
+    "T = 1000  # Transmissivity [m/day]\n",
+    "S = 3e-6  # Storativity [unitless]\n",
+    "dist = 500  # distance [m]\n",
+    "time = np.logspace(0.1, 2.5, 150)  # time [day]\n",
+    "Q = 4000  # pumping rate [m**3/day]"
    ]
   },
   {
@@ -73,27 +86,48 @@
    "cell_type": "code",
    "execution_count": 3,
    "id": "8569e137-7717-4805-a001-e45d45148a80",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:02.420761Z",
+     "iopub.status.busy": "2025-05-27T20:24:02.420686Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.000948Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.000552Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "from pycap.solutions import theis"
+    "from pycap.solutions import theis_drawdown"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 4,
    "id": "bacdeae3-5cb5-4ec6-918a-961415502472",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.002583Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.002431Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.004244Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.004017Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "s_theis = theis(T,S,time,dist,Q)"
+    "s_theis = theis_drawdown(T, S, time, dist, Q)"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 5,
    "id": "ed6967f4-a781-49be-a36a-2f47ae44dd99",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.005419Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.005342Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.065029Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.064796Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -117,9 +151,9 @@
     }
    ],
    "source": [
-    "plt.plot(time,s_theis)\n",
-    "plt.xlabel('time')\n",
-    "plt.ylabel('drawdown')"
+    "plt.plot(time, s_theis)\n",
+    "plt.xlabel(\"time\")\n",
+    "plt.ylabel(\"drawdown\")"
    ]
   },
   {
@@ -142,53 +176,90 @@
    "cell_type": "code",
    "execution_count": 6,
    "id": "424354d1-081e-4ecf-86e7-3d1b1481eafd",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.066411Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.066326Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.068412Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.068188Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "T2 = 1400 # Deep aquifer Transmissivity [m/day]\n",
-    "S2 = 1e-4 # Deep aquifer Storativity [unitless]\n",
-    "width = 10 # stream width [m]\n",
-    "streambed_thick = 20 # stream sediment thickness [m]\n",
-    "streambed_K = 250 # streambed hydraulic conductivity \n",
-    "aquitard_thick = 1 # aquitard thickness [m]\n",
-    "aquitard_K = 50 # aquitard hydraulic conductivity\n",
-    "x = 20      # x-location at which to calculate drawdown \n",
-    "            # (x=0 is at the stream)\n",
-    "y = 5       # x-location at which to calculate drawdown \n",
-    "            # (y=0 is the along-stream location of the pumping well)"
+    "T2 = 1400  # Deep aquifer Transmissivity [m/day]\n",
+    "S2 = 1e-4  # Deep aquifer Storativity [unitless]\n",
+    "width = 10  # stream width [m]\n",
+    "streambed_thick = 20  # stream sediment thickness [m]\n",
+    "streambed_K = 250  # streambed hydraulic conductivity\n",
+    "aquitard_thick = 1  # aquitard thickness [m]\n",
+    "aquitard_K = 50  # aquitard hydraulic conductivity\n",
+    "x = 20  # x-location at which to calculate drawdown\n",
+    "# (x=0 is at the stream)\n",
+    "y = 5  # x-location at which to calculate drawdown\n",
+    "# (y=0 is the along-stream location of the pumping well)"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 7,
    "id": "dc80916d-3498-4156-97bf-2d570d0d8e81",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.069599Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.069525Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.071047Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.070816Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "from pycap.solutions import WardLoughDrawdown"
+    "from pycap.solutions import ward_lough_drawdown"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 8,
    "id": "2ed9b694-c630-4dbd-8136-b2bbe9c821ed",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.072136Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.072058Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.515487Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.515134Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "s_wl= WardLoughDrawdown(T,S, time, dist, Q,\n",
-    "                        width=width, \n",
-    "                        T2=T2,S2=S2,streambed_thick=streambed_thick, \n",
-    "                        streambed_K=streambed_K,\n",
-    "                        aquitard_thick=aquitard_thick, \n",
-    "                        aquitard_K=aquitard_K,\n",
-    "                        x=x,y=y)"
+    "s_wl = ward_lough_drawdown(\n",
+    "    T,\n",
+    "    S,\n",
+    "    time,\n",
+    "    dist,\n",
+    "    Q,\n",
+    "    width=width,\n",
+    "    T2=T2,\n",
+    "    S2=S2,\n",
+    "    streambed_thick=streambed_thick,\n",
+    "    streambed_K=streambed_K,\n",
+    "    aquitard_thick=aquitard_thick,\n",
+    "    aquitard_K=aquitard_K,\n",
+    "    x=x,\n",
+    "    y=y,\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 9,
    "id": "2c67fba7-ad30-46dc-a43f-ef104347e7d3",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.516920Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.516833Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.649310Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.649060Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -212,12 +283,12 @@
     }
    ],
    "source": [
-    "plt.plot(time,s_wl[:,0], label='shallow s')\n",
-    "plt.plot(time,s_wl[:,1], label='deep s')\n",
+    "plt.plot(time, s_wl[:, 0], label=\"shallow s\")\n",
+    "plt.plot(time, s_wl[:, 1], label=\"deep s\")\n",
     "plt.legend()\n",
-    "plt.xscale('log')\n",
-    "plt.xlabel('log time')\n",
-    "plt.ylabel('drawdown')"
+    "plt.xscale(\"log\")\n",
+    "plt.xlabel(\"log time\")\n",
+    "plt.ylabel(\"drawdown\")"
    ]
   },
   {
@@ -234,27 +305,48 @@
    "cell_type": "code",
    "execution_count": 10,
    "id": "0271b736-7fb1-4d9f-b602-980d7c7e044b",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.650657Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.650578Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.652296Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.652096Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "from pycap.solutions import walton"
+    "from pycap.solutions import walton_depletion"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 11,
    "id": "d5ad810e-d069-402f-a73f-26327c761dfe",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.653469Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.653398Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.655120Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.654921Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "qd = walton(T*.3048,S,time,dist,Q*(.3048**3))"
+    "qd = walton_depletion(T * 0.3048, S, time, dist, Q * (0.3048**3))"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 12,
    "id": "c5ffd493-43f6-41e7-94d3-a8feb9943d0e",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.656201Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.656127Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.701841Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.701583Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -278,9 +370,9 @@
     }
    ],
    "source": [
-    "plt.plot(time,qd)\n",
-    "plt.xlabel('time')\n",
-    "plt.ylabel('depletion')"
+    "plt.plot(time, qd)\n",
+    "plt.xlabel(\"time\")\n",
+    "plt.ylabel(\"depletion\")"
    ]
   },
   {
@@ -295,27 +387,48 @@
    "cell_type": "code",
    "execution_count": 13,
    "id": "67ab47d2-7407-4af4-b323-9ea3687d3b29",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.703136Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.703054Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.704793Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.704582Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "from pycap.solutions import glover"
+    "from pycap.solutions import glover_depletion"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 14,
    "id": "99d37a27-729e-4829-81b5-4c3ffabb2bf0",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.705883Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.705808Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.707495Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.707277Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "qd = glover(T,S,time,dist,Q)"
+    "qd = glover_depletion(T, S, time, dist, Q)"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 15,
    "id": "e613c576-e726-42f1-9a95-bc1c3b47f898",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.708623Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.708552Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.748948Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.748742Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -339,9 +452,9 @@
     }
    ],
    "source": [
-    "plt.plot(time,qd)\n",
-    "plt.xlabel('time')\n",
-    "plt.ylabel('depletion')"
+    "plt.plot(time, qd)\n",
+    "plt.xlabel(\"time\")\n",
+    "plt.ylabel(\"depletion\")"
    ]
   },
   {
@@ -356,60 +469,63 @@
    "cell_type": "code",
    "execution_count": 16,
    "id": "f74a2766-8a67-42c7-a29c-1739c3629c3e",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.750188Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.750102Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.751705Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.751489Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "from pycap.solutions import WardLoughDepletion"
+    "from pycap.solutions import ward_lough_depletion"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 17,
    "id": "a65d20d2-b57d-41db-807e-701919b83e02",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "The function: WardLoughDepletion requires the following\n",
-      "additional arguments which were missing\n",
-      "in the function call:\n",
-      "x, y\n"
-     ]
-    },
-    {
-     "ename": "SystemExit",
-     "evalue": "",
-     "output_type": "error",
-     "traceback": [
-      "An exception has occurred, use %tb to see the full traceback.\n",
-      "\u001b[31mSystemExit\u001b[39m\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "C:\\Users\\hwreeves\\AppData\\Local\\miniforge3\\envs\\pycap\\Lib\\site-packages\\IPython\\core\\interactiveshell.py:3678: UserWarning: To exit: use 'exit', 'quit', or Ctrl-D.\n",
-      "  warn(\"To exit: use 'exit', 'quit', or Ctrl-D.\", stacklevel=1)\n"
-     ]
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.752829Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.752756Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.754912Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.754699Z"
     }
-   ],
+   },
+   "outputs": [],
    "source": [
-    "qd_wl = WardLoughDepletion(T,S, time, dist, Q, \n",
-    "                            T2=T2,S2=S2,width=width,\n",
-    "                            streambed_thick=streambed_thick,\n",
-    "                            streambed_K=streambed_K,\n",
-    "                            aquitard_thick=aquitard_thick,\n",
-    "                            aquitard_K=aquitard_K)\n"
+    "qd_wl = ward_lough_depletion(\n",
+    "    T,\n",
+    "    S,\n",
+    "    time,\n",
+    "    dist,\n",
+    "    Q,\n",
+    "    T2=T2,\n",
+    "    S2=S2,\n",
+    "    width=width,\n",
+    "    streambed_thick=streambed_thick,\n",
+    "    streambed_K=streambed_K,\n",
+    "    aquitard_thick=aquitard_thick,\n",
+    "    aquitard_K=aquitard_K,\n",
+    "    x=0,\n",
+    "    y=5,\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 18,
    "id": "c437d7fc-915f-46d6-8f91-6517d5b4fd25",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:24:03.755986Z",
+     "iopub.status.busy": "2025-05-27T20:24:03.755913Z",
+     "iopub.status.idle": "2025-05-27T20:24:03.800357Z",
+     "shell.execute_reply": "2025-05-27T20:24:03.800115Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -417,7 +533,7 @@
        "Text(0, 0.5, 'depletion')"
       ]
      },
-     "execution_count": 26,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
     },
@@ -433,9 +549,9 @@
     }
    ],
    "source": [
-    "plt.plot(time,qd_wl)\n",
-    "plt.xlabel('time')\n",
-    "plt.ylabel('depletion')"
+    "plt.plot(time, qd_wl)\n",
+    "plt.xlabel(\"time\")\n",
+    "plt.ylabel(\"depletion\")"
    ]
   },
   {
@@ -449,7 +565,7 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
+   "display_name": "pycap",
    "language": "python",
    "name": "python3"
   },

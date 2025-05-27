@@ -400,11 +400,10 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../../&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pycap</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;../../&quot;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
@@ -417,12 +416,12 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># Transmissivity [m/day]</span>
-<span class="n">S</span> <span class="o">=</span> <span class="mf">3e-6</span>   <span class="c1"># Storativity [unitless]</span>
-<span class="n">dist</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1"># distance [m]</span>
-<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mf">.1</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">150</span><span class="p">)</span> <span class="c1"># time [day]</span>
-<span class="n">Q</span> <span class="o">=</span> <span class="mi">4000</span>   <span class="c1"># pumping rate [m**3/day]</span>
-<br/></pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Transmissivity [m/day]</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mf">3e-6</span>  <span class="c1"># Storativity [unitless]</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># distance [m]</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>  <span class="c1"># time [day]</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">4000</span>  <span class="c1"># pumping rate [m**3/day]</span>
+</pre></div>
 </div>
 </div>
 </section>
@@ -433,7 +432,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">theis</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">theis_drawdown</span>
 </pre></div>
 </div>
 </div>
@@ -441,7 +440,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_theis</span> <span class="o">=</span> <span class="n">theis</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">time</span><span class="p">,</span><span class="n">dist</span><span class="p">,</span><span class="n">Q</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_theis</span> <span class="o">=</span> <span class="n">theis_drawdown</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -449,9 +448,9 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">s_theis</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;drawdown&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">s_theis</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;drawdown&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -480,17 +479,17 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T2</span> <span class="o">=</span> <span class="mi">1400</span> <span class="c1"># Deep aquifer Transmissivity [m/day]</span>
-<span class="n">S2</span> <span class="o">=</span> <span class="mf">1e-4</span> <span class="c1"># Deep aquifer Storativity [unitless]</span>
-<span class="n">width</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># stream width [m]</span>
-<span class="n">streambed_thick</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># stream sediment thickness [m]</span>
-<span class="n">streambed_K</span> <span class="o">=</span> <span class="mi">250</span> <span class="c1"># streambed hydraulic conductivity</span>
-<span class="n">aquitard_thick</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># aquitard thickness [m]</span>
-<span class="n">aquitard_K</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># aquitard hydraulic conductivity</span>
-<span class="n">x</span> <span class="o">=</span> <span class="mi">20</span>      <span class="c1"># x-location at which to calculate drawdown</span>
-            <span class="c1"># (x=0 is at the stream)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>       <span class="c1"># x-location at which to calculate drawdown</span>
-            <span class="c1"># (y=0 is the along-stream location of the pumping well)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T2</span> <span class="o">=</span> <span class="mi">1400</span>  <span class="c1"># Deep aquifer Transmissivity [m/day]</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># Deep aquifer Storativity [unitless]</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># stream width [m]</span>
+<span class="n">streambed_thick</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># stream sediment thickness [m]</span>
+<span class="n">streambed_K</span> <span class="o">=</span> <span class="mi">250</span>  <span class="c1"># streambed hydraulic conductivity</span>
+<span class="n">aquitard_thick</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># aquitard thickness [m]</span>
+<span class="n">aquitard_K</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># aquitard hydraulic conductivity</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># x-location at which to calculate drawdown</span>
+<span class="c1"># (x=0 is at the stream)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># x-location at which to calculate drawdown</span>
+<span class="c1"># (y=0 is the along-stream location of the pumping well)</span>
 </pre></div>
 </div>
 </div>
@@ -498,7 +497,7 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">WardLoughDrawdown</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">ward_lough_drawdown</span>
 </pre></div>
 </div>
 </div>
@@ -506,13 +505,22 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_wl</span><span class="o">=</span> <span class="n">WardLoughDrawdown</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span>
-                        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
-                        <span class="n">T2</span><span class="o">=</span><span class="n">T2</span><span class="p">,</span><span class="n">S2</span><span class="o">=</span><span class="n">S2</span><span class="p">,</span><span class="n">streambed_thick</span><span class="o">=</span><span class="n">streambed_thick</span><span class="p">,</span>
-                        <span class="n">streambed_K</span><span class="o">=</span><span class="n">streambed_K</span><span class="p">,</span>
-                        <span class="n">aquitard_thick</span><span class="o">=</span><span class="n">aquitard_thick</span><span class="p">,</span>
-                        <span class="n">aquitard_K</span><span class="o">=</span><span class="n">aquitard_K</span><span class="p">,</span>
-                        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_wl</span> <span class="o">=</span> <span class="n">ward_lough_drawdown</span><span class="p">(</span>
+    <span class="n">T</span><span class="p">,</span>
+    <span class="n">S</span><span class="p">,</span>
+    <span class="n">time</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">,</span>
+    <span class="n">Q</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+    <span class="n">T2</span><span class="o">=</span><span class="n">T2</span><span class="p">,</span>
+    <span class="n">S2</span><span class="o">=</span><span class="n">S2</span><span class="p">,</span>
+    <span class="n">streambed_thick</span><span class="o">=</span><span class="n">streambed_thick</span><span class="p">,</span>
+    <span class="n">streambed_K</span><span class="o">=</span><span class="n">streambed_K</span><span class="p">,</span>
+    <span class="n">aquitard_thick</span><span class="o">=</span><span class="n">aquitard_thick</span><span class="p">,</span>
+    <span class="n">aquitard_K</span><span class="o">=</span><span class="n">aquitard_K</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -520,12 +528,12 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">s_wl</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;shallow s&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">s_wl</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;deep s&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">s_wl</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;shallow s&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">s_wl</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;deep s&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;log time&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;drawdown&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;drawdown&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -555,7 +563,7 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">walton</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">walton_depletion</span>
 </pre></div>
 </div>
 </div>
@@ -563,7 +571,7 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qd</span> <span class="o">=</span> <span class="n">walton</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="mf">.3048</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">time</span><span class="p">,</span><span class="n">dist</span><span class="p">,</span><span class="n">Q</span><span class="o">*</span><span class="p">(</span><span class="mf">.3048</span><span class="o">**</span><span class="mi">3</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qd</span> <span class="o">=</span> <span class="n">walton_depletion</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span> <span class="mf">0.3048</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.3048</span><span class="o">**</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -571,9 +579,9 @@ Text(0, 0.5, &#39;drawdown&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">qd</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;depletion&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">qd</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depletion&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -601,7 +609,7 @@ Text(0, 0.5, &#39;depletion&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">glover</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">glover_depletion</span>
 </pre></div>
 </div>
 </div>
@@ -609,7 +617,7 @@ Text(0, 0.5, &#39;depletion&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qd</span> <span class="o">=</span> <span class="n">glover</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">time</span><span class="p">,</span><span class="n">dist</span><span class="p">,</span><span class="n">Q</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qd</span> <span class="o">=</span> <span class="n">glover_depletion</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -617,9 +625,9 @@ Text(0, 0.5, &#39;depletion&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">qd</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;depletion&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">qd</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depletion&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -646,66 +654,45 @@ Text(0, 0.5, &#39;depletion&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">WardLoughDepletion</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycap.solutions</span> <span class="kn">import</span> <span class="n">ward_lough_depletion</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qd_wl</span> <span class="o">=</span> <span class="n">ward_lough_depletion</span><span class="p">(</span>
+    <span class="n">T</span><span class="p">,</span>
+    <span class="n">S</span><span class="p">,</span>
+    <span class="n">time</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">,</span>
+    <span class="n">Q</span><span class="p">,</span>
+    <span class="n">T2</span><span class="o">=</span><span class="n">T2</span><span class="p">,</span>
+    <span class="n">S2</span><span class="o">=</span><span class="n">S2</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+    <span class="n">streambed_thick</span><span class="o">=</span><span class="n">streambed_thick</span><span class="p">,</span>
+    <span class="n">streambed_K</span><span class="o">=</span><span class="n">streambed_K</span><span class="p">,</span>
+    <span class="n">aquitard_thick</span><span class="o">=</span><span class="n">aquitard_thick</span><span class="p">,</span>
+    <span class="n">aquitard_K</span><span class="o">=</span><span class="n">aquitard_K</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qd_wl</span> <span class="o">=</span> <span class="n">WardLoughDepletion</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">S</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span>
-                            <span class="n">T2</span><span class="o">=</span><span class="n">T2</span><span class="p">,</span><span class="n">S2</span><span class="o">=</span><span class="n">S2</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
-                            <span class="n">streambed_thick</span><span class="o">=</span><span class="n">streambed_thick</span><span class="p">,</span>
-                            <span class="n">streambed_K</span><span class="o">=</span><span class="n">streambed_K</span><span class="p">,</span>
-                            <span class="n">aquitard_thick</span><span class="o">=</span><span class="n">aquitard_thick</span><span class="p">,</span>
-                            <span class="n">aquitard_K</span><span class="o">=</span><span class="n">aquitard_K</span><span class="p">)</span>
-<br/></pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-The function: WardLoughDepletion requires the following
-additional arguments which were missing
-in the function call:
-x, y
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-An exception has occurred, use %tb to see the full traceback.
-
-<span class="ansi-red-fg">SystemExit</span>
-
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\hwreeves\AppData\Local\miniforge3\envs\pycap\Lib\site-packages\IPython\core\interactiveshell.py:3678: UserWarning: To exit: use &#39;exit&#39;, &#39;quit&#39;, or Ctrl-D.
-  warn(&#34;To exit: use &#39;exit&#39;, &#39;quit&#39;, or Ctrl-D.&#34;, stacklevel=1)
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">qd_wl</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;depletion&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">qd_wl</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depletion&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -743,7 +730,7 @@ Text(0, 0.5, &#39;depletion&#39;)
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 23, 2025.
+      <span class="lastupdated">Last updated on May 27, 2025.
       </span></p>
   </div>
 

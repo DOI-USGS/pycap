@@ -413,7 +413,6 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 </pre></div>
 </div>
@@ -429,7 +428,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pycap_inputs_excel</span> <span class="o">=</span> <span class="s2">&quot;./test_run.xlsx&quot;</span>
-<span class="n">pycap_run_name</span> <span class="o">=</span> <span class="s1">&#39;TestExample&#39;</span>
+<span class="n">pycap_run_name</span> <span class="o">=</span> <span class="s2">&quot;TestExample&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -439,10 +438,10 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_global</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;Global_Inputs&#39;</span><span class="p">)</span>
-<span class="n">raw_hcw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;HCW_Inputs&#39;</span><span class="p">)</span>
-<span class="n">raw_dd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;Drawdown_Inputs&#39;</span><span class="p">)</span>
-<span class="n">raw_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span><span class="s1">&#39;Depletion_Inputs&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_global</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Global_Inputs&quot;</span><span class="p">)</span>
+<span class="n">raw_hcw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;HCW_Inputs&quot;</span><span class="p">)</span>
+<span class="n">raw_dd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Drawdown_Inputs&quot;</span><span class="p">)</span>
+<span class="n">raw_depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">pycap_inputs_excel</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Depletion_Inputs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -452,17 +451,21 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span>
-<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]</span>
 
-<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]]</span>
-<span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span><span class="n">hcw</span><span class="p">))</span> <span class="k">for</span> <span class="n">rn</span><span class="p">,</span><span class="n">hcw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">],</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">])]</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]]</span>
+<span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">hcw</span><span class="p">))</span> <span class="k">for</span> <span class="n">rn</span><span class="p">,</span> <span class="n">hcw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">],</span> <span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">])</span>
+<span class="p">]</span>
 
-<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]]</span>
-<span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span><span class="n">hcw</span><span class="p">))</span> <span class="k">for</span> <span class="n">rn</span><span class="p">,</span><span class="n">hcw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">],</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">])]</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]]</span>
+<span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">rn</span><span class="p">,</span> <span class="n">hcw</span><span class="p">))</span> <span class="k">for</span> <span class="n">rn</span><span class="p">,</span> <span class="n">hcw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">],</span> <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">])</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -479,13 +482,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">project_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<span class="n">project_dict</span><span class="p">[</span><span class="s1">&#39;project_properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">pycap_run_name</span><span class="p">,</span>
-                                     <span class="s1">&#39;T&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Transmissivity_ft2d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
-                                     <span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Storage_Coeff&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
-                                      <span class="s1">&#39;default_dd_days&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Default_dd_days&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
-                                      <span class="s1">&#39;default_depletion_years&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Default_depletion_years&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-                                      <span class="s1">&#39;default_pumping_days&#39;</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s1">&#39;Default_pumping_days&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                                     <span class="p">}</span>
+<span class="n">project_dict</span><span class="p">[</span><span class="s2">&quot;project_properties&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">pycap_run_name</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s2">&quot;Transmissivity_ft2d&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s2">&quot;Storage_Coeff&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="s2">&quot;default_dd_days&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s2">&quot;Default_dd_days&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="s2">&quot;default_depletion_years&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s2">&quot;Default_depletion_years&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="s2">&quot;default_pumping_days&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_global</span><span class="p">[</span><span class="s2">&quot;Default_pumping_days&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -666,17 +670,17 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">i</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;HCW&#39;</span><span class="p">:</span> <span class="n">hcw</span><span class="p">,</span>
-        <span class="s1">&#39;stream_apportionment&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="n">pycap_resource_name</span><span class="p">,</span>
-            <span class="s1">&#39;apportionment&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">frac_intercept</span><span class="p">)</span>
-        <span class="p">}</span>
+        <span class="s2">&quot;HCW&quot;</span><span class="p">:</span> <span class="n">hcw</span><span class="p">,</span>
+        <span class="s2">&quot;stream_apportionment&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">pycap_resource_name</span><span class="p">,</span>
+            <span class="s2">&quot;apportionment&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">frac_intercept</span><span class="p">),</span>
+        <span class="p">},</span>
     <span class="p">}</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">hcw</span><span class="p">,</span><span class="n">pycap_resource_name</span><span class="p">,</span><span class="n">frac_intercept</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">hcw</span><span class="p">,</span> <span class="n">pycap_resource_name</span><span class="p">,</span> <span class="n">frac_intercept</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
         <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">)),</span>
-        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">],</span>
-        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">],</span>
-        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Fraction_Intercept&#39;</span><span class="p">]</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Fraction_Intercept&quot;</span><span class="p">],</span>
     <span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -688,24 +692,23 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">i</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">hcw</span><span class="p">,</span>
-        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">well_stat</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">hcw</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">well_stat</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
         <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">well_long</span><span class="p">),</span>
             <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">well_lat</span><span class="p">),</span>
         <span class="p">},</span>
         <span class="s2">&quot;Q&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">Q_gpm</span><span class="p">),</span>
-        <span class="s2">&quot;pumping_days&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">pump_days</span><span class="p">)</span>
+        <span class="s2">&quot;pumping_days&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">pump_days</span><span class="p">),</span>
     <span class="p">}</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">hcw</span><span class="p">,</span><span class="n">well_stat</span><span class="p">,</span><span class="n">well_long</span><span class="p">,</span><span class="n">well_lat</span><span class="p">,</span><span class="n">Q_gpm</span><span class="p">,</span><span class="n">pump_days</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_hcw</span><span class="p">)),</span>
-    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">],</span>
-    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Well_Status&#39;</span><span class="p">],</span>
-    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Well_Long&#39;</span><span class="p">],</span>
-    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Well_Lat&#39;</span><span class="p">],</span>
-
-    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Q_gpm&#39;</span><span class="p">],</span>
-    <span class="n">raw_hcw</span><span class="p">[</span><span class="s1">&#39;Pumping_Days&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">hcw</span><span class="p">,</span> <span class="n">well_stat</span><span class="p">,</span> <span class="n">well_long</span><span class="p">,</span> <span class="n">well_lat</span><span class="p">,</span> <span class="n">Q_gpm</span><span class="p">,</span> <span class="n">pump_days</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_hcw</span><span class="p">)),</span>
+        <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">],</span>
+        <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;Well_Status&quot;</span><span class="p">],</span>
+        <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;Well_Long&quot;</span><span class="p">],</span>
+        <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;Well_Lat&quot;</span><span class="p">],</span>
+        <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;Q_gpm&quot;</span><span class="p">],</span>
+        <span class="n">raw_hcw</span><span class="p">[</span><span class="s2">&quot;Pumping_Days&quot;</span><span class="p">],</span>
     <span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -715,8 +718,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_dict_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">stream_dict</span><span class="p">,</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
-<span class="n">stream_dict_df</span> <span class="o">=</span> <span class="n">stream_dict_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;stream_apportionment</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stream_dict_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">stream_dict</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+<span class="n">stream_dict_df</span> <span class="o">=</span> <span class="n">stream_dict_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;stream_apportionment</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -725,7 +728,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># rekey the well_dict dictionary using the names</span>
-<span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 </pre></div>
 </div>
 </div>
@@ -733,19 +736,29 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
     <span class="c1"># bring in the stream apportionment values</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="p">:</span>
-        <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stream_dict_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">stream_dict_df</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;stream_apportionment&#39;</span><span class="p">])</span>
+        <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">stream_dict_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">stream_dict_df</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span><span class="p">][</span><span class="s2">&quot;stream_apportionment&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
 
 <span class="c1"># bring in the stream and drawdown response information</span>
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="p">:</span>
-    <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;stream_response&#39;</span><span class="p">:(</span><span class="nb">list</span><span class="p">(</span><span class="n">raw_depl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">]))})</span>
-    <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;dd_response&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">raw_dd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">raw_dd</span><span class="p">[</span><span class="s1">&#39;HCW&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">][</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">]))})</span>
+    <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;stream_response&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">raw_depl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span><span class="p">][</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">])</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">well_dict</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;dd_response&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">raw_dd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">raw_dd</span><span class="p">[</span><span class="s2">&quot;HCW&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span><span class="p">][</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">]))}</span>
+    <span class="p">)</span>
 
 <span class="c1"># rename the keys again</span>
-<span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;well_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-<br/></pre></div>
+<span class="n">well_dict</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;well_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">well_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
 </div>
 </div>
 </section>
@@ -761,13 +774,13 @@ div.rendered_html tbody tr:hover {
         <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_long</span><span class="p">),</span>
             <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_lat</span><span class="p">),</span>
-        <span class="p">}</span>
+        <span class="p">},</span>
     <span class="p">}</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pycap_resource_name</span><span class="p">,</span><span class="n">res_long</span><span class="p">,</span><span class="n">res_lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pycap_resource_name</span><span class="p">,</span> <span class="n">res_long</span><span class="p">,</span> <span class="n">res_lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
         <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_depl</span><span class="p">)),</span>
-        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;pycap_resource_name&#39;</span><span class="p">],</span>
-        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Long&#39;</span><span class="p">],</span>
-        <span class="n">raw_depl</span><span class="p">[</span><span class="s1">&#39;Resource_Lat&#39;</span><span class="p">]</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;pycap_resource_name&quot;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Resource_Long&quot;</span><span class="p">],</span>
+        <span class="n">raw_depl</span><span class="p">[</span><span class="s2">&quot;Resource_Lat&quot;</span><span class="p">],</span>
     <span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -780,7 +793,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dd_unique</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dd_unique</span> <span class="o">=</span> <span class="n">raw_dd</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
 <span class="n">ddresp_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="sa">f</span><span class="s2">&quot;dd_response</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -788,13 +801,13 @@ div.rendered_html tbody tr:hover {
         <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_long</span><span class="p">),</span>
             <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">res_lat</span><span class="p">),</span>
-        <span class="p">}</span>
+        <span class="p">},</span>
     <span class="p">}</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ResName</span><span class="p">,</span> <span class="n">res_long</span><span class="p">,</span><span class="n">res_lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ResName</span><span class="p">,</span> <span class="n">res_long</span><span class="p">,</span> <span class="n">res_lat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
         <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_dd_unique</span><span class="p">)),</span>
-        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s1">&#39;Resource_Name&#39;</span><span class="p">],</span>
-        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s1">&#39;Resource_Long&#39;</span><span class="p">],</span>
-        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s1">&#39;Resource_Lat&#39;</span><span class="p">]</span>
+        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s2">&quot;Resource_Name&quot;</span><span class="p">],</span>
+        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s2">&quot;Resource_Long&quot;</span><span class="p">],</span>
+        <span class="n">raw_dd_unique</span><span class="p">[</span><span class="s2">&quot;Resource_Lat&quot;</span><span class="p">],</span>
     <span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -804,15 +817,11 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combdict</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">project_dict</span><span class="p">,</span>
-          <span class="o">**</span><span class="n">well_dict</span><span class="p">,</span>
-          <span class="o">**</span><span class="n">ddresp_dict</span><span class="p">,</span>
-          <span class="o">**</span><span class="n">streamresp_dict</span>
-    <span class="p">}</span>
-<span class="n">yml_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">pycap_run_name</span><span class="o">+</span><span class="s1">&#39;.yml&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combdict</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">project_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">well_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">ddresp_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">streamresp_dict</span><span class="p">}</span>
+<span class="n">yml_name</span> <span class="o">=</span> <span class="n">pycap_run_name</span> <span class="o">+</span> <span class="s2">&quot;.yml&quot;</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yml_name</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">documents</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">combdict</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yml_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">combdict</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -827,8 +836,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../../&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">pycap.analysis_project</span> <span class="k">as</span> <span class="nn">ap</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;../../&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pycap.analysis_project</span> <span class="kn">import</span> <span class="n">Project</span>
 </pre></div>
 </div>
@@ -839,8 +848,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datapath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="n">yml_file</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;TestExample.yml&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datapath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">yml_file</span> <span class="o">=</span> <span class="s2">&quot;TestExample.yml&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -851,7 +860,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ap</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">datapath</span><span class="o">/</span><span class="n">yml_file</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ap</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">datapath</span> <span class="o">/</span> <span class="n">yml_file</span><span class="p">)</span>
 <span class="n">ap</span><span class="o">.</span><span class="n">report_responses</span><span class="p">()</span>
 <span class="n">ap</span><span class="o">.</span><span class="n">write_responses_csv</span><span class="p">()</span>
 </pre></div>
@@ -1297,7 +1306,9 @@ DRAWDOWN RESPONSES:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># first the summary, base depletion</span>
-<span class="n">depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/TestExample.table_report.base_stream_depletion.csv&#39;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">depl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;output/TestExample.table_report.base_stream_depletion.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
 <span class="n">depl</span>
 </pre></div>
 </div>
@@ -1385,7 +1396,7 @@ DRAWDOWN RESPONSES:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tab_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/TestExample.table_report.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tab_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/TestExample.table_report.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">tab_report</span>
 </pre></div>
 </div>
@@ -1713,7 +1724,7 @@ DRAWDOWN RESPONSES:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_time_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;output/TestExample.table_report.all_ts.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_time_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/TestExample.table_report.all_ts.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">all_time_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1738,7 +1749,7 @@ DRAWDOWN RESPONSES:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1760,7 +1771,7 @@ DRAWDOWN RESPONSES:
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 23, 2025.
+      <span class="lastupdated">Last updated on May 27, 2025.
       </span></p>
   </div>
 

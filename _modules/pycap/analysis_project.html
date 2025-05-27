@@ -236,7 +236,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">existing_well_categories</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;existing&quot;</span><span class="p">,</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span> <span class="s2">&quot;new_approved&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">existing_wells</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">proposed_wells</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="s2">&quot;Walton&quot;</span>  <span class="c1"># default, can specify in the yml file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depl_method</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;walton_depletion&quot;</span>  <span class="c1"># default, can specify in the yml file</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ts_len</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dd_responses</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__stream_responses</span> <span class="o">=</span> <span class="kc">None</span>
@@ -937,7 +939,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on May 23, 2025.
+      <span class="lastupdated">Last updated on May 27, 2025.
       </span></p>
   </div>
 

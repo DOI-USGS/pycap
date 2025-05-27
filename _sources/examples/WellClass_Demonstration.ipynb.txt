@@ -16,11 +16,19 @@
    "cell_type": "code",
    "execution_count": 1,
    "id": "95dbea60-dd79-408f-bb66-6bb84386187c",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.027200Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.027066Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.901494Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.901161Z"
+    }
+   },
    "outputs": [],
    "source": [
     "import sys\n",
-    "sys.path.insert(1, '../../')\n",
+    "\n",
+    "sys.path.insert(1, \"../../\")\n",
     "import pycap\n",
     "import matplotlib.pyplot as plt\n",
     "import numpy as np\n",
@@ -46,21 +54,31 @@
    "cell_type": "code",
    "execution_count": 2,
    "id": "4d858624-c165-413d-bcc4-3e74f5b6362b",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.903100Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.902964Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.905641Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.905389Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "stream_table = pd.DataFrame(({'id': 8, 'distance': 14802},\n",
-    "                            {'id': 9, 'distance': 12609.2},\n",
-    "                            {'id': 11, 'distance': 15750.5},\n",
-    "                            {'id': 27, 'distance': 22567.6},\n",
-    "                            {'id': 9741, 'distance': 27565.2},\n",
-    "                            {'id': 10532, 'distance': 33059.5},\n",
-    "                            {'id': 11967, 'distance': 14846.3},\n",
-    "                            {'id': 12515, 'distance': 17042.55},\n",
-    "                            {'id': 12573, 'distance': 11959.5},\n",
-    "                            {'id': 12941, 'distance': 19070.8},\n",
-    "                            {'id': 13925, 'distance': 10028.9}))\n",
-    "\n"
+    "stream_table = pd.DataFrame(\n",
+    "    (\n",
+    "        {\"id\": 8, \"distance\": 14802},\n",
+    "        {\"id\": 9, \"distance\": 12609.2},\n",
+    "        {\"id\": 11, \"distance\": 15750.5},\n",
+    "        {\"id\": 27, \"distance\": 22567.6},\n",
+    "        {\"id\": 9741, \"distance\": 27565.2},\n",
+    "        {\"id\": 10532, \"distance\": 33059.5},\n",
+    "        {\"id\": 11967, \"distance\": 14846.3},\n",
+    "        {\"id\": 12515, \"distance\": 17042.55},\n",
+    "        {\"id\": 12573, \"distance\": 11959.5},\n",
+    "        {\"id\": 12941, \"distance\": 19070.8},\n",
+    "        {\"id\": 13925, \"distance\": 10028.9},\n",
+    "    )\n",
+    ")"
    ]
   },
   {
@@ -79,11 +97,18 @@
    "cell_type": "code",
    "execution_count": 3,
    "id": "cd49a471-83e2-403a-9695-5b315eedbcd2",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.906839Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.906760Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.909062Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.908873Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "invers =np.array([1/x for x in stream_table['distance']])\n",
-    "stream_table['apportionment'] = (1./stream_table['distance'])/np.sum(invers)"
+    "invers = np.array([1 / x for x in stream_table[\"distance\"]])\n",
+    "stream_table[\"apportionment\"] = (1.0 / stream_table[\"distance\"]) / np.sum(invers)"
    ]
   },
   {
@@ -98,14 +123,21 @@
    "cell_type": "code",
    "execution_count": 4,
    "id": "6de231c4-280f-4351-a6c5-d4dc939b9777",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.910228Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.910152Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.912013Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.911791Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "T= 7211.  # ft^2/day\n",
-    "S= 0.01\n",
+    "T = 7211.0  # ft^2/day\n",
+    "S = 0.01\n",
     "Q = 70  # 70 gpm --> must convert to cubic feet per day\n",
-    "pumpdays = int(5. * 365)\n",
-    "stream_table['conductance'] = 7.11855  # example uses constant streambed_conductance"
+    "pumpdays = int(5.0 * 365)\n",
+    "stream_table[\"conductance\"] = 7.11855  # example uses constant streambed_conductance"
    ]
   },
   {
@@ -125,7 +157,14 @@
    "cell_type": "code",
    "execution_count": 5,
    "id": "00d5ddce-a8e5-4343-b35a-e9fc73c58520",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.913095Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.913022Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.914953Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.914738Z"
+    }
+   },
    "outputs": [],
    "source": [
     "Q = pycap.Q2ts(pumpdays, 5, Q) * pycap.GPM2CFD"
@@ -135,7 +174,14 @@
    "cell_type": "code",
    "execution_count": 6,
    "id": "0686c301-9569-436e-8e9d-fea657deae7f",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.916023Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.915947Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.919296Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.919083Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -167,7 +213,14 @@
    "cell_type": "code",
    "execution_count": 7,
    "id": "c4d10dca-be43-4292-b3d5-3705669a7975",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.920386Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.920315Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.924673Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.924458Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -266,7 +319,14 @@
    "cell_type": "code",
    "execution_count": 8,
    "id": "060425be-8fef-4fdb-ada6-f08cfcfd9c98",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.925811Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.925737Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.927358Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.927133Z"
+    }
+   },
    "outputs": [],
    "source": [
     "distances = dict(zip(stream_table.id.values, stream_table.distance.values))"
@@ -276,7 +336,14 @@
    "cell_type": "code",
    "execution_count": 9,
    "id": "eabbb8d3-9263-4cc6-9195-1c89ce5c8557",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.928447Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.928378Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.929947Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.929722Z"
+    }
+   },
    "outputs": [],
    "source": [
     "apportion = dict(zip(stream_table.id.values, stream_table.apportionment.values))"
@@ -286,7 +353,14 @@
    "cell_type": "code",
    "execution_count": 10,
    "id": "8e925f15-7afe-4a7e-bf52-65aa41149de7",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.931052Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.930958Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.932529Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.932326Z"
+    }
+   },
    "outputs": [],
    "source": [
     "cond = dict(zip(stream_table.id.values, stream_table.conductance.values))"
@@ -314,25 +388,41 @@
    "cell_type": "code",
    "execution_count": 11,
    "id": "8ba31012-76ab-4c1e-9e16-be545dce05b2",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.933660Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.933589Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.935510Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.935308Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "test_well = pycap.Well(T=T,\n",
-    "                 S=S,\n",
-    "                 Q=Q,\n",
-    "                 depletion_years=5,\n",
-    "                 depl_method='hunt99',\n",
-    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
-    "                 streambed_conductance=cond,\n",
-    "                 stream_dist=distances,\n",
-    "                 stream_apportionment=apportion)"
+    "test_well = pycap.Well(\n",
+    "    T=T,\n",
+    "    S=S,\n",
+    "    Q=Q,\n",
+    "    depletion_years=5,\n",
+    "    depl_method=\"hunt_99_depletion\",\n",
+    "    drawdown_dist={\"testlocation0\": 50.0},  # default method is Theis\n",
+    "    streambed_conductance=cond,\n",
+    "    stream_dist=distances,\n",
+    "    stream_apportionment=apportion,\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 12,
    "id": "84ad8495-19bd-4b22-a67e-b3440c0af154",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.936523Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.936456Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.938476Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.938282Z"
+    }
+   },
    "outputs": [],
    "source": [
     "drawdown = pd.DataFrame(test_well.drawdown)"
@@ -350,7 +440,14 @@
    "cell_type": "code",
    "execution_count": 13,
    "id": "8c30946b-537f-4455-8746-c8b746bfd32a",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.939642Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.939571Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.942160Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.941926Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -436,7 +533,14 @@
    "cell_type": "code",
    "execution_count": 14,
    "id": "45c8ee4e-0a96-4812-8503-0fab8a99b54f",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.944249Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.944157Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.948836Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.948633Z"
+    }
+   },
    "outputs": [],
    "source": [
     "stream_depl = pd.DataFrame(test_well.depletion)"
@@ -446,7 +550,14 @@
    "cell_type": "code",
    "execution_count": 15,
    "id": "79602e05-ab9d-46b8-88be-7feaf90eb98f",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.949962Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.949889Z",
+     "iopub.status.idle": "2025-05-27T20:23:57.953358Z",
+     "shell.execute_reply": "2025-05-27T20:23:57.953148Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -544,8 +655,8 @@
    "source": [
     "stream_depl = stream_depl * pycap.CFD2GPM\n",
     "# pull out row for days = 1824 and transpose matrix for ease of comparison to Table 2\n",
-    "five_year= pd.DataFrame(stream_depl.loc[1824].T)  \n",
-    "five_year.rename(columns={1824: 'Depletion'}, inplace=True)\n",
+    "five_year = pd.DataFrame(stream_depl.loc[1824].T)\n",
+    "five_year.rename(columns={1824: \"Depletion\"}, inplace=True)\n",
     "five_year"
    ]
   },
@@ -561,7 +672,14 @@
    "cell_type": "code",
    "execution_count": 16,
    "id": "42bdf026-21c5-4194-ac20-ea78afe218bb",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:57.954448Z",
+     "iopub.status.busy": "2025-05-27T20:23:57.954372Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.025269Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.025027Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -587,20 +705,27 @@
    "source": [
     "fig, ax = plt.subplots()\n",
     "drawdown.plot(ax=ax)\n",
-    "ax.set_xlabel('pumping in days')\n",
-    "ax.set_ylabel('drawdown in feet')"
+    "ax.set_xlabel(\"pumping in days\")\n",
+    "ax.set_ylabel(\"drawdown in feet\")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 17,
    "id": "b63019e3-06c3-40bf-823b-6d65d5f9d072",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.026541Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.026461Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.115716Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.115447Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x250984cd790>"
+       "<matplotlib.legend.Legend at 0x161b83d90>"
       ]
      },
      "execution_count": 17,
@@ -621,14 +746,16 @@
    "source": [
     "fig, ax = plt.subplots()\n",
     "stream_depl.plot(ax=ax)\n",
-    "ax.set_xlabel('pumping in days')\n",
-    "ax.set_ylabel('depletion in GPM')\n",
-    "ax.legend(title='Explanation', \n",
-    "        bbox_to_anchor=(0, 0.9, 1, 0.9), \n",
-    "        bbox_transform=fig.transFigure, \n",
-    "        ncols=5,\n",
-    "        mode='expand',\n",
-    "        loc='lower left')\n"
+    "ax.set_xlabel(\"pumping in days\")\n",
+    "ax.set_ylabel(\"depletion in GPM\")\n",
+    "ax.legend(\n",
+    "    title=\"Explanation\",\n",
+    "    bbox_to_anchor=(0, 0.9, 1, 0.9),\n",
+    "    bbox_transform=fig.transFigure,\n",
+    "    ncols=5,\n",
+    "    mode=\"expand\",\n",
+    "    loc=\"lower left\",\n",
+    ")"
    ]
   },
   {
@@ -647,16 +774,23 @@
    "cell_type": "code",
    "execution_count": 18,
    "id": "ce28600d-f090-42ea-88d4-a570f0f20c5c",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.117221Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.117103Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.119443Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.119201Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "{'glover': <function pycap.solutions.glover(T, S, time, dist, Q, **kwargs)>,\n",
-       " 'walton': <function pycap.solutions.walton(T, S, time, dist, Q, **kwargs)>,\n",
-       " 'hunt99': <function pycap.solutions.hunt99(T, S, time, dist, Q, streambed_conductance=None, **kwargs)>,\n",
-       " 'hunt03': <function pycap.solutions.hunt2003(T, S, time, dist, Q, Bprime=None, Bdouble=None, aquitard_K=None, sigma=None, width=None, streambed_conductance=None, **kwargs)>,\n",
-       " 'wardlough': <function pycap.solutions.WardLoughDepletion(T1, S1, t, dist, Q, T2=None, S2=None, width=None, streambed_thick=None, streambed_K=None, aquitard_thick=None, aquitard_K=None, x=None, y=None, NSteh1=2, **kwargs)>}"
+       "{'glover_depletion': <function pycap.solutions.glover_depletion(T, S, time, dist, Q, **kwargs)>,\n",
+       " 'walton_depletion': <function pycap.solutions.walton_depletion(T, S, time, dist, Q, **kwargs)>,\n",
+       " 'hunt_99_depletion': <function pycap.solutions.hunt_99_depletion(T, S, time, dist, Q, streambed_conductance=None, **kwargs)>,\n",
+       " 'hunt_03_depletion': <function pycap.solutions.hunt_03_depletion(T, S, time, dist, Q, Bprime=None, Bdouble=None, aquitard_K=None, sigma=None, width=None, streambed_conductance=None, **kwargs)>,\n",
+       " 'ward_lough_depletion': <function pycap.solutions.ward_lough_depletion(T1, S1, t, dist, Q, T2=None, S2=None, width=None, streambed_thick=None, streambed_K=None, aquitard_thick=None, aquitard_K=None, NSteh1=2, **kwargs)>}"
       ]
      },
      "execution_count": 18,
@@ -672,42 +806,65 @@
    "cell_type": "code",
    "execution_count": 19,
    "id": "8775a985-cd08-445c-b777-9a6501a5aa9c",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.120720Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.120622Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.122537Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.122314Z"
+    }
+   },
    "outputs": [],
    "source": [
     "# for example the Glover and Balmer solution for a stream assuming no streambed resistance. Note that\n",
     "# the streambed_conductance parameter can be dropped from the call.\n",
-    "test_glover = pycap.Well(T=T,\n",
-    "                 S=S,\n",
-    "                 Q=Q,\n",
-    "                 depletion_years=5,\n",
-    "                 depl_method='glover',\n",
-    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
-    "                 stream_dist=distances,\n",
-    "                 stream_apportionment=apportion)"
+    "test_glover = pycap.Well(\n",
+    "    T=T,\n",
+    "    S=S,\n",
+    "    Q=Q,\n",
+    "    depletion_years=5,\n",
+    "    depl_method=\"glover_depletion\",\n",
+    "    drawdown_dist={\"testlocation0\": 50.0},  # default method is Theis\n",
+    "    stream_dist=distances,\n",
+    "    stream_apportionment=apportion,\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 20,
    "id": "c722f2a9-0d21-4c3d-8c8b-f34ec490555b",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.123646Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.123555Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.128852Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.128529Z"
+    }
+   },
    "outputs": [],
    "source": [
     "glover_depl = pd.DataFrame(test_glover.depletion)\n",
-    "glover_depl = glover_depl*pycap.CFD2GPM"
+    "glover_depl = glover_depl * pycap.CFD2GPM"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 21,
    "id": "98e59450-a1c8-45c2-a235-492487bffdd9",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.130071Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.129986Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.184712Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.184444Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x25098c80d90>"
+       "<matplotlib.legend.Legend at 0x161bd94d0>"
       ]
      },
      "execution_count": 21,
@@ -729,11 +886,18 @@
     "# plot the two solutions to compare depletion estimates\n",
     "\n",
     "fig, ax = plt.subplots()\n",
-    "ax.plot(glover_depl.index.values, glover_depl[8].values, 'g-', label='Glover and Balmer estimate')\n",
-    "ax.plot(stream_depl.index.values, stream_depl[8].values, 'b-', label='Hunt 1999 estimate')\n",
-    "ax.set_xlabel('pumping in days')\n",
-    "ax.set_ylabel('depletion in GPM')\n",
-    "ax.legend(loc='lower right')"
+    "ax.plot(\n",
+    "    glover_depl.index.values,\n",
+    "    glover_depl[8].values,\n",
+    "    \"g-\",\n",
+    "    label=\"Glover and Balmer estimate\",\n",
+    ")\n",
+    "ax.plot(\n",
+    "    stream_depl.index.values, stream_depl[8].values, \"b-\", label=\"Hunt 1999 estimate\"\n",
+    ")\n",
+    "ax.set_xlabel(\"pumping in days\")\n",
+    "ax.set_ylabel(\"depletion in GPM\")\n",
+    "ax.legend(loc=\"lower right\")"
    ]
   },
   {
@@ -760,23 +924,39 @@
    "cell_type": "code",
    "execution_count": 22,
    "id": "c11703a1-341d-4242-a278-c93478acc07d",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.186147Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.186031Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.188155Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.187921Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "Q_series = pd.Series(index=pd.period_range(start='2020-10-01', end='2025-09-30', freq='D'))"
+    "Q_series = pd.Series(\n",
+    "    index=pd.period_range(start=\"2020-10-01\", end=\"2025-09-30\", freq=\"D\")\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 23,
    "id": "53a11fbf-817d-45ef-b690-7d7277344888",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.189324Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.189231Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.202397Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.202163Z"
+    }
+   },
    "outputs": [],
    "source": [
     "for d in Q_series.index.values:\n",
-    "    Q_series[d]= 0.0\n",
-    "    if d.month in range(6,9):\n",
-    "        if d.dayofweek in range(3,6):\n",
+    "    Q_series[d] = 0.0\n",
+    "    if d.month in range(6, 9):\n",
+    "        if d.dayofweek in range(3, 6):\n",
     "            Q_series[d] = 70 * pycap.GPM2CFD"
    ]
   },
@@ -784,7 +964,14 @@
    "cell_type": "code",
    "execution_count": 24,
    "id": "504e8360-156e-4102-9e7e-91034a9d87a5",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.203493Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.203418Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.260459Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.260229Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -810,7 +997,7 @@
    "source": [
     "fig, ax = plt.subplots()\n",
     "Q_series.plot(ax=ax)\n",
-    "ax.set_xlim('2021-06-01', '2021-09-01')"
+    "ax.set_xlim(\"2021-06-01\", \"2021-09-01\")"
    ]
   },
   {
@@ -825,17 +1012,31 @@
    "cell_type": "code",
    "execution_count": 25,
    "id": "9fd1ed67-42ae-464d-b827-6e58a8b423eb",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.261758Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.261674Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.263535Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.263322Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "Q_days = pd.Series(Q_series.values, index=range(1, len(Q_series)+1))"
+    "Q_days = pd.Series(Q_series.values, index=range(1, len(Q_series) + 1))"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 26,
    "id": "4d097a81-1051-4fb7-be84-da9e9c288cc9",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.264646Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.264571Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.267062Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.266848Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -867,40 +1068,63 @@
    "cell_type": "code",
    "execution_count": 27,
    "id": "257a4726-d059-4e91-a86c-0715eb63ddc1",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.268188Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.268110Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.270101Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.269884Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "test_intermittent = pycap.Well(T=T,\n",
-    "                 S=S,\n",
-    "                 Q=Q_days,\n",
-    "                 depletion_years=5,\n",
-    "                 depl_method='hunt99',\n",
-    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
-    "                 streambed_conductance=cond,\n",
-    "                 stream_dist=distances,\n",
-    "                 stream_apportionment=apportion)"
+    "test_intermittent = pycap.Well(\n",
+    "    T=T,\n",
+    "    S=S,\n",
+    "    Q=Q_days,\n",
+    "    depletion_years=5,\n",
+    "    depl_method=\"hunt_99_depletion\",\n",
+    "    drawdown_dist={\"testlocation0\": 50.0},  # default method is Theis\n",
+    "    streambed_conductance=cond,\n",
+    "    stream_dist=distances,\n",
+    "    stream_apportionment=apportion,\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 28,
    "id": "caaed89e-dc90-4000-b302-da4a28e5e63d",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.271247Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.271173Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.352766Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.352420Z"
+    }
+   },
    "outputs": [],
    "source": [
-    "intermittent_depl = pd.DataFrame(test_intermittent.depletion)*pycap.CFD2GPM"
+    "intermittent_depl = pd.DataFrame(test_intermittent.depletion) * pycap.CFD2GPM"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 29,
    "id": "aed97702-c809-47d1-b1a6-233a93cd42af",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.354071Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.353991Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.444267Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.444018Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x25099fada50>"
+       "<matplotlib.legend.Legend at 0x1619e1350>"
       ]
      },
      "execution_count": 29,
@@ -921,14 +1145,16 @@
    "source": [
     "fig, ax = plt.subplots()\n",
     "intermittent_depl.plot(ax=ax)\n",
-    "ax.set_xlabel('pumping in days')\n",
-    "ax.set_ylabel('depletion in GPM')\n",
-    "ax.legend(title='Explanation', \n",
-    "          bbox_to_anchor=(0, 0.9, 1, 0.9), \n",
-    "          bbox_transform=fig.transFigure, \n",
-    "          ncols=5,\n",
-    "          mode='expand',\n",
-    "          loc='lower left')"
+    "ax.set_xlabel(\"pumping in days\")\n",
+    "ax.set_ylabel(\"depletion in GPM\")\n",
+    "ax.legend(\n",
+    "    title=\"Explanation\",\n",
+    "    bbox_to_anchor=(0, 0.9, 1, 0.9),\n",
+    "    bbox_transform=fig.transFigure,\n",
+    "    ncols=5,\n",
+    "    mode=\"expand\",\n",
+    "    loc=\"lower left\",\n",
+    ")"
    ]
   },
   {
@@ -943,7 +1169,14 @@
    "cell_type": "code",
    "execution_count": 30,
    "id": "9dfe440a-d9ba-4a75-a172-f7c0c0ab27c1",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.445596Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.445503Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.453359Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.453133Z"
+    }
+   },
    "outputs": [],
    "source": [
     "intermittent_drawdown = pd.DataFrame(test_intermittent.drawdown)"
@@ -953,12 +1186,19 @@
    "cell_type": "code",
    "execution_count": 31,
    "id": "b077de02-da63-4541-bb51-fcf49aa61020",
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.454529Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.454456Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.508679Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.508455Z"
+    }
+   },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<matplotlib.legend.Legend at 0x2509a19dc90>"
+       "<matplotlib.legend.Legend at 0x161de9ed0>"
       ]
      },
      "execution_count": 31,
@@ -979,9 +1219,9 @@
    "source": [
     "fig, ax = plt.subplots()\n",
     "intermittent_drawdown.plot(ax=ax)\n",
-    "ax.set_xlabel('pumping in days')\n",
-    "ax.set_ylabel('drawdown in feet')\n",
-    "ax.legend(loc='upper left')"
+    "ax.set_xlabel(\"pumping in days\")\n",
+    "ax.set_ylabel(\"drawdown in feet\")\n",
+    "ax.legend(loc=\"upper left\")"
    ]
   },
   {
@@ -994,51 +1234,35 @@
     "There are drawdown estimates using the Hunt (1999) and \n",
     "Ward and Lough (2011) solutions; but the Well Class is not \n",
     "currently set up to use these solutions.  The user should\n",
-    "call the functions directly."
+    "call the functions directly.\n",
+    "\n",
+    "Uncomment the following block and run it to see the error in trying to use other drawdown functions."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 33,
+   "execution_count": 32,
    "id": "74d6763c-69db-4cb6-9ae7-eb903134d163",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "Theis must be used as drawdown method in Well Class.\n"
-     ]
-    },
-    {
-     "ename": "SystemExit",
-     "evalue": "",
-     "output_type": "error",
-     "traceback": [
-      "An exception has occurred, use %tb to see the full traceback.\n",
-      "\u001b[31mSystemExit\u001b[39m\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "C:\\Users\\hwreeves\\AppData\\Local\\miniforge3\\envs\\pycap\\Lib\\site-packages\\IPython\\core\\interactiveshell.py:3678: UserWarning: To exit: use 'exit', 'quit', or Ctrl-D.\n",
-      "  warn(\"To exit: use 'exit', 'quit', or Ctrl-D.\", stacklevel=1)\n"
-     ]
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-05-27T20:23:58.509951Z",
+     "iopub.status.busy": "2025-05-27T20:23:58.509871Z",
+     "iopub.status.idle": "2025-05-27T20:23:58.511555Z",
+     "shell.execute_reply": "2025-05-27T20:23:58.511326Z"
     }
-   ],
+   },
+   "outputs": [],
    "source": [
-    "test_intermittent = pycap.Well(T=T,\n",
-    "                 S=S,\n",
-    "                 Q=Q_days,\n",
-    "                 depletion_years=5,\n",
-    "                 depl_method='hunt99',\n",
-    "                 drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
-    "                 drawdown_method='hunt99ddwn',\n",
-    "                 streambed_conductance=cond,\n",
-    "                 stream_dist=distances,\n",
-    "                 stream_apportionment=apportion)"
+    "# test_intermittent = pycap.Well(T=T,\n",
+    "#                  S=S,\n",
+    "#                  Q=Q_days,\n",
+    "#                  depletion_years=5,\n",
+    "#                  depl_method='hunt_99_depletion',\n",
+    "#                  drawdown_dist={'testlocation0':50.},  #default method is Theis\n",
+    "#                  drawdown_method='hunt_99_drawdown',\n",
+    "#                  streambed_conductance=cond,\n",
+    "#                  stream_dist=distances,\n",
+    "#                  stream_apportionment=apportion)"
    ]
   },
   {
@@ -1052,7 +1276,7 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
+   "display_name": "pycap",
    "language": "python",
    "name": "python3"
   },

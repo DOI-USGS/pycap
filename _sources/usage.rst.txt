@@ -25,12 +25,12 @@ The `Solutions_Demonstration <examples/Solutions_Demonstration.ipynb>`_ notebook
 .. code-block:: python
 
     import pycap
-    # use the glover function for stream depletion
-    pycap.glover 
+    # use the glover_depletion function for stream depletion
+    pycap.glover_depletion 
 
 The documentation for these functions specifies exactly which parameters are required and what is returned. Time and spatial coordinate parameters can broadcast to multiple values, but only for one or the other - not both. 
 
-A note on units. For most functions, the concept is for units to be self-similar. In other words, a consistent length unit and time unit is assumed, and all properties, geometry, and times must be self consistent. An exception to this is the `walton` stream-depletion function. This special case assumes specific units for inputs. 
+A note on units. For most functions, the concept is for units to be self-similar. In other words, a consistent length unit and time unit is assumed, and all properties, geometry, and times must be self consistent. An exception to this is the `walton_depletion` stream-depletion function. This special case assumes specific units for inputs. 
 
 .. _well_object:
 Well Object

@@ -30,17 +30,16 @@
    "execution_count": 1,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:01.250116Z",
-     "iopub.status.busy": "2025-05-20T19:45:01.250116Z",
-     "iopub.status.idle": "2025-05-20T19:45:01.774982Z",
-     "shell.execute_reply": "2025-05-20T19:45:01.774982Z"
+     "iopub.execute_input": "2025-05-27T20:24:07.605623Z",
+     "iopub.status.busy": "2025-05-27T20:24:07.605414Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.024642Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.024320Z"
     }
    },
    "outputs": [],
    "source": [
     "import yaml\n",
     "import pandas as pd\n",
-    "import numpy as np\n",
     "from pathlib import Path"
    ]
   },
@@ -57,16 +56,16 @@
    "execution_count": 2,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:01.776996Z",
-     "iopub.status.busy": "2025-05-20T19:45:01.776996Z",
-     "iopub.status.idle": "2025-05-20T19:45:01.779391Z",
-     "shell.execute_reply": "2025-05-20T19:45:01.779391Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.026385Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.026256Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.028203Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.027949Z"
     }
    },
    "outputs": [],
    "source": [
     "pycap_inputs_excel = \"./test_run.xlsx\"\n",
-    "pycap_run_name = 'TestExample'"
+    "pycap_run_name = \"TestExample\""
    ]
   },
   {
@@ -81,18 +80,18 @@
    "execution_count": 3,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:01.781405Z",
-     "iopub.status.busy": "2025-05-20T19:45:01.780406Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.061298Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.061298Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.029798Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.029642Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.270253Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.269923Z"
     }
    },
    "outputs": [],
    "source": [
-    "raw_global = pd.read_excel(pycap_inputs_excel, sheet_name = 'Global_Inputs')\n",
-    "raw_hcw = pd.read_excel(pycap_inputs_excel, sheet_name = 'HCW_Inputs')\n",
-    "raw_dd = pd.read_excel(pycap_inputs_excel, sheet_name = 'Drawdown_Inputs')\n",
-    "raw_depl = pd.read_excel(pycap_inputs_excel, sheet_name ='Depletion_Inputs')"
+    "raw_global = pd.read_excel(pycap_inputs_excel, sheet_name=\"Global_Inputs\")\n",
+    "raw_hcw = pd.read_excel(pycap_inputs_excel, sheet_name=\"HCW_Inputs\")\n",
+    "raw_dd = pd.read_excel(pycap_inputs_excel, sheet_name=\"Drawdown_Inputs\")\n",
+    "raw_depl = pd.read_excel(pycap_inputs_excel, sheet_name=\"Depletion_Inputs\")"
    ]
   },
   {
@@ -107,25 +106,29 @@
    "execution_count": 4,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.063328Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.063328Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.069333Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.069333Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.272066Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.271951Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.276507Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.276196Z"
     }
    },
    "outputs": [],
    "source": [
-    "raw_hcw['HCW'] = raw_hcw['HCW'].astype(str)\n",
-    "raw_dd['HCW'] = raw_dd['HCW'].astype(str)\n",
-    "raw_depl['HCW'] = raw_depl['HCW'].astype(str)\n",
-    "raw_dd['pycap_resource_name'] = raw_dd['Resource_Name']\n",
-    "raw_depl['pycap_resource_name'] = raw_depl['Resource_Name']\n",
+    "raw_hcw[\"HCW\"] = raw_hcw[\"HCW\"].astype(str)\n",
+    "raw_dd[\"HCW\"] = raw_dd[\"HCW\"].astype(str)\n",
+    "raw_depl[\"HCW\"] = raw_depl[\"HCW\"].astype(str)\n",
+    "raw_dd[\"pycap_resource_name\"] = raw_dd[\"Resource_Name\"]\n",
+    "raw_depl[\"pycap_resource_name\"] = raw_depl[\"Resource_Name\"]\n",
     "\n",
-    "raw_dd['Resource_Name'] = [i.replace(\" \",\"\")for i in raw_dd['Resource_Name']]\n",
-    "raw_dd['pycap_resource_name'] = [\":\".join((rn,hcw)) for rn,hcw in zip(raw_dd['Resource_Name'], raw_dd['HCW'])]\n",
+    "raw_dd[\"Resource_Name\"] = [i.replace(\" \", \"\") for i in raw_dd[\"Resource_Name\"]]\n",
+    "raw_dd[\"pycap_resource_name\"] = [\n",
+    "    \":\".join((rn, hcw)) for rn, hcw in zip(raw_dd[\"Resource_Name\"], raw_dd[\"HCW\"])\n",
+    "]\n",
     "\n",
-    "raw_depl['Resource_Name'] = [i.replace(\" \",\"\")for i in raw_depl['Resource_Name']]\n",
-    "raw_depl['pycap_resource_name'] = [\":\".join((rn,hcw)) for rn,hcw in zip(raw_depl['Resource_Name'], raw_depl['HCW'])]"
+    "raw_depl[\"Resource_Name\"] = [i.replace(\" \", \"\") for i in raw_depl[\"Resource_Name\"]]\n",
+    "raw_depl[\"pycap_resource_name\"] = [\n",
+    "    \":\".join((rn, hcw)) for rn, hcw in zip(raw_depl[\"Resource_Name\"], raw_depl[\"HCW\"])\n",
+    "]"
    ]
   },
   {
@@ -147,22 +150,23 @@
    "execution_count": 5,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.071347Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.071347Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.074434Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.074434Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.278115Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.278034Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.280253Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.280015Z"
     }
    },
    "outputs": [],
    "source": [
     "project_dict = dict()\n",
-    "project_dict['project_properties'] = {'name':pycap_run_name,\n",
-    "                                     'T':float(raw_global['Transmissivity_ft2d'][0]),\n",
-    "                                     'S':float(raw_global['Storage_Coeff'][0]),\n",
-    "                                      'default_dd_days':float(raw_global['Default_dd_days'][0]),\n",
-    "                                      'default_depletion_years':float(raw_global['Default_depletion_years'].values[0]),\n",
-    "                                      'default_pumping_days':float(raw_global['Default_pumping_days'].values[0])\n",
-    "                                     }"
+    "project_dict[\"project_properties\"] = {\n",
+    "    \"name\": pycap_run_name,\n",
+    "    \"T\": float(raw_global[\"Transmissivity_ft2d\"][0]),\n",
+    "    \"S\": float(raw_global[\"Storage_Coeff\"][0]),\n",
+    "    \"default_dd_days\": float(raw_global[\"Default_dd_days\"][0]),\n",
+    "    \"default_depletion_years\": float(raw_global[\"Default_depletion_years\"].values[0]),\n",
+    "    \"default_pumping_days\": float(raw_global[\"Default_pumping_days\"].values[0]),\n",
+    "}"
    ]
   },
   {
@@ -177,10 +181,10 @@
    "execution_count": 6,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.076439Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.076439Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.086338Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.086338Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.281435Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.281355Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.290234Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.289984Z"
     }
    },
    "outputs": [
@@ -386,27 +390,27 @@
    "execution_count": 7,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.108454Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.108454Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.112864Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.112864Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.311513Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.311371Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.313792Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.313573Z"
     }
    },
    "outputs": [],
    "source": [
     "stream_dict = {\n",
     "    i: {\n",
-    "        'HCW': hcw,\n",
-    "        'stream_apportionment': {\n",
-    "            'name':pycap_resource_name,\n",
-    "            'apportionment': float(frac_intercept)\n",
-    "        }\n",
+    "        \"HCW\": hcw,\n",
+    "        \"stream_apportionment\": {\n",
+    "            \"name\": pycap_resource_name,\n",
+    "            \"apportionment\": float(frac_intercept),\n",
+    "        },\n",
     "    }\n",
-    "    for i,hcw,pycap_resource_name,frac_intercept in zip(\n",
+    "    for i, hcw, pycap_resource_name, frac_intercept in zip(\n",
     "        range(len(raw_depl)),\n",
-    "        raw_depl['HCW'],\n",
-    "        raw_depl['pycap_resource_name'],\n",
-    "        raw_depl['Fraction_Intercept']\n",
+    "        raw_depl[\"HCW\"],\n",
+    "        raw_depl[\"pycap_resource_name\"],\n",
+    "        raw_depl[\"Fraction_Intercept\"],\n",
     "    )\n",
     "}"
    ]
@@ -416,34 +420,33 @@
    "execution_count": 8,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.114883Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.113880Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.117785Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.117785Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.314976Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.314880Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.317263Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.317044Z"
     }
    },
    "outputs": [],
    "source": [
     "well_dict = {\n",
     "    i: {\n",
-    "        'name': hcw,\n",
-    "        'status': well_stat.lower(),\n",
+    "        \"name\": hcw,\n",
+    "        \"status\": well_stat.lower(),\n",
     "        \"loc\": {\n",
     "            \"x\": float(well_long),\n",
     "            \"y\": float(well_lat),\n",
     "        },\n",
     "        \"Q\": float(Q_gpm),\n",
-    "        \"pumping_days\": int(pump_days)\n",
+    "        \"pumping_days\": int(pump_days),\n",
     "    }\n",
-    "    for i,hcw,well_stat,well_long,well_lat,Q_gpm,pump_days in zip(\n",
-    "    range(len(raw_hcw)),\n",
-    "    raw_hcw['HCW'],\n",
-    "    raw_hcw['Well_Status'],\n",
-    "    raw_hcw['Well_Long'],\n",
-    "    raw_hcw['Well_Lat'],\n",
-    "        \n",
-    "    raw_hcw['Q_gpm'],\n",
-    "    raw_hcw['Pumping_Days']\n",
+    "    for i, hcw, well_stat, well_long, well_lat, Q_gpm, pump_days in zip(\n",
+    "        range(len(raw_hcw)),\n",
+    "        raw_hcw[\"HCW\"],\n",
+    "        raw_hcw[\"Well_Status\"],\n",
+    "        raw_hcw[\"Well_Long\"],\n",
+    "        raw_hcw[\"Well_Lat\"],\n",
+    "        raw_hcw[\"Q_gpm\"],\n",
+    "        raw_hcw[\"Pumping_Days\"],\n",
     "    )\n",
     "}"
    ]
@@ -453,16 +456,16 @@
    "execution_count": 9,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.118795Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.118795Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.121937Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.121937Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.318959Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.318812Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.321154Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.320910Z"
     }
    },
    "outputs": [],
    "source": [
-    "stream_dict_df = pd.DataFrame.from_dict(stream_dict,orient='index')\n",
-    "stream_dict_df = stream_dict_df.rename('stream_apportionment{}'.format)"
+    "stream_dict_df = pd.DataFrame.from_dict(stream_dict, orient=\"index\")\n",
+    "stream_dict_df = stream_dict_df.rename(\"stream_apportionment{}\".format)"
    ]
   },
   {
@@ -470,16 +473,16 @@
    "execution_count": 10,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.122951Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.122951Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.125551Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.125551Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.322412Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.322317Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.324228Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.323953Z"
     }
    },
    "outputs": [],
    "source": [
     "# rekey the well_dict dictionary using the names\n",
-    "well_dict = {i['name']:i for _,i in well_dict.items()}           "
+    "well_dict = {i[\"name\"]: i for _, i in well_dict.items()}"
    ]
   },
   {
@@ -487,26 +490,36 @@
    "execution_count": 11,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.129090Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.129090Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.202658Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.202658Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.325485Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.325347Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.380091Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.379837Z"
     }
    },
    "outputs": [],
    "source": [
-    "if len(raw_depl['HCW'])>0:    \n",
+    "if len(raw_depl[\"HCW\"]) > 0:\n",
     "    # bring in the stream apportionment values\n",
     "    for j in well_dict:\n",
-    "        well_dict[j].update(stream_dict_df.loc[stream_dict_df['HCW']==j]['stream_apportionment'])\n",
+    "        well_dict[j].update(\n",
+    "            stream_dict_df.loc[stream_dict_df[\"HCW\"] == j][\"stream_apportionment\"]\n",
+    "        )\n",
     "\n",
     "# bring in the stream and drawdown response information\n",
     "for j in well_dict:\n",
-    "    well_dict[j].update({'stream_response':(list(raw_depl.loc[raw_depl['HCW']==j]['pycap_resource_name']))})\n",
-    "    well_dict[j].update({'dd_response': (list(raw_dd.loc[raw_dd['HCW']==j]['Resource_Name']))})\n",
+    "    well_dict[j].update(\n",
+    "        {\n",
+    "            \"stream_response\": (\n",
+    "                list(raw_depl.loc[raw_depl[\"HCW\"] == j][\"pycap_resource_name\"])\n",
+    "            )\n",
+    "        }\n",
+    "    )\n",
+    "    well_dict[j].update(\n",
+    "        {\"dd_response\": (list(raw_dd.loc[raw_dd[\"HCW\"] == j][\"Resource_Name\"]))}\n",
+    "    )\n",
     "\n",
     "# rename the keys again\n",
-    "well_dict = {f\"well_{k}\":v for k,v in well_dict.items()}\n"
+    "well_dict = {f\"well_{k}\": v for k, v in well_dict.items()}"
    ]
   },
   {
@@ -521,10 +534,10 @@
    "execution_count": 12,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.204664Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.204664Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.207371Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.207371Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.381430Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.381312Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.383755Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.383513Z"
     }
    },
    "outputs": [],
@@ -535,13 +548,13 @@
     "        \"loc\": {\n",
     "            \"x\": float(res_long),\n",
     "            \"y\": float(res_lat),\n",
-    "        }\n",
+    "        },\n",
     "    }\n",
-    "    for i,pycap_resource_name,res_long,res_lat in zip(\n",
+    "    for i, pycap_resource_name, res_long, res_lat in zip(\n",
     "        range(len(raw_depl)),\n",
-    "        raw_depl['pycap_resource_name'],\n",
-    "        raw_depl['Resource_Long'],\n",
-    "        raw_depl['Resource_Lat']\n",
+    "        raw_depl[\"pycap_resource_name\"],\n",
+    "        raw_depl[\"Resource_Long\"],\n",
+    "        raw_depl[\"Resource_Lat\"],\n",
     "    )\n",
     "}"
    ]
@@ -558,15 +571,15 @@
    "execution_count": 13,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.211379Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.211379Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.215417Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.215417Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.385108Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.385013Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.387752Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.387528Z"
     }
    },
    "outputs": [],
    "source": [
-    "raw_dd_unique = raw_dd.drop_duplicates(subset=['Resource_Name']).reset_index()\n",
+    "raw_dd_unique = raw_dd.drop_duplicates(subset=[\"Resource_Name\"]).reset_index()\n",
     "\n",
     "ddresp_dict = {\n",
     "    f\"dd_response{i}\": {\n",
@@ -574,13 +587,13 @@
     "        \"loc\": {\n",
     "            \"x\": float(res_long),\n",
     "            \"y\": float(res_lat),\n",
-    "        }\n",
+    "        },\n",
     "    }\n",
-    "    for i, ResName, res_long,res_lat in zip(\n",
+    "    for i, ResName, res_long, res_lat in zip(\n",
     "        range(len(raw_dd_unique)),\n",
-    "        raw_dd_unique['Resource_Name'],\n",
-    "        raw_dd_unique['Resource_Long'],\n",
-    "        raw_dd_unique['Resource_Lat']        \n",
+    "        raw_dd_unique[\"Resource_Name\"],\n",
+    "        raw_dd_unique[\"Resource_Long\"],\n",
+    "        raw_dd_unique[\"Resource_Lat\"],\n",
     "    )\n",
     "}"
    ]
@@ -597,23 +610,19 @@
    "execution_count": 14,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.217426Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.216427Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.346849Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.346849Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.388873Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.388792Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.492512Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.492188Z"
     }
    },
    "outputs": [],
    "source": [
-    "combdict={**project_dict, \n",
-    "          **well_dict, \n",
-    "          **ddresp_dict, \n",
-    "          **streamresp_dict\n",
-    "    }\n",
-    "yml_name = (pycap_run_name+'.yml')\n",
+    "combdict = {**project_dict, **well_dict, **ddresp_dict, **streamresp_dict}\n",
+    "yml_name = pycap_run_name + \".yml\"\n",
     "\n",
-    "with open(yml_name,'w') as file:\n",
-    "    documents = yaml.dump(combdict, file, default_flow_style = False, sort_keys= False)"
+    "with open(yml_name, \"w\") as file:\n",
+    "    documents = yaml.dump(combdict, file, default_flow_style=False, sort_keys=False)"
    ]
   },
   {
@@ -635,17 +644,17 @@
    "execution_count": 15,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.348858Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.348858Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.672299Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.672299Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.494097Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.493981Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.828233Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.827887Z"
     }
    },
    "outputs": [],
    "source": [
     "import sys\n",
-    "sys.path.insert(1, '../../')\n",
-    "import pycap.analysis_project as ap\n",
+    "\n",
+    "sys.path.insert(1, \"../../\")\n",
     "from pycap.analysis_project import Project"
    ]
   },
@@ -661,16 +670,16 @@
    "execution_count": 16,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.674325Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.674325Z",
-     "iopub.status.idle": "2025-05-20T19:45:02.677398Z",
-     "shell.execute_reply": "2025-05-20T19:45:02.677398Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.829936Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.829780Z",
+     "iopub.status.idle": "2025-05-27T20:24:08.831711Z",
+     "shell.execute_reply": "2025-05-27T20:24:08.831450Z"
     }
    },
    "outputs": [],
    "source": [
-    "datapath = Path('')\n",
-    "yml_file = ('TestExample.yml')"
+    "datapath = Path(\"\")\n",
+    "yml_file = \"TestExample.yml\""
    ]
   },
   {
@@ -685,10 +694,10 @@
    "execution_count": 17,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:02.678870Z",
-     "iopub.status.busy": "2025-05-20T19:45:02.678870Z",
-     "iopub.status.idle": "2025-05-20T19:45:18.465154Z",
-     "shell.execute_reply": "2025-05-20T19:45:18.463818Z"
+     "iopub.execute_input": "2025-05-27T20:24:08.832924Z",
+     "iopub.status.busy": "2025-05-27T20:24:08.832843Z",
+     "iopub.status.idle": "2025-05-27T20:24:10.804324Z",
+     "shell.execute_reply": "2025-05-27T20:24:10.804009Z"
     }
    },
    "outputs": [
@@ -1123,7 +1132,7 @@
     }
    ],
    "source": [
-    "ap = Project(datapath/yml_file)\n",
+    "ap = Project(datapath / yml_file)\n",
     "ap.report_responses()\n",
     "ap.write_responses_csv()"
    ]
@@ -1142,10 +1151,10 @@
    "execution_count": 18,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:18.470451Z",
-     "iopub.status.busy": "2025-05-20T19:45:18.470451Z",
-     "iopub.status.idle": "2025-05-20T19:45:18.484039Z",
-     "shell.execute_reply": "2025-05-20T19:45:18.484039Z"
+     "iopub.execute_input": "2025-05-27T20:24:10.805735Z",
+     "iopub.status.busy": "2025-05-27T20:24:10.805648Z",
+     "iopub.status.idle": "2025-05-27T20:24:10.811485Z",
+     "shell.execute_reply": "2025-05-27T20:24:10.811261Z"
     }
    },
    "outputs": [
@@ -1247,7 +1256,9 @@
    ],
    "source": [
     "# first the summary, base depletion\n",
-    "depl = pd.read_csv('output/TestExample.table_report.base_stream_depletion.csv',index_col=0)\n",
+    "depl = pd.read_csv(\n",
+    "    \"output/TestExample.table_report.base_stream_depletion.csv\", index_col=0\n",
+    ")\n",
     "depl"
    ]
   },
@@ -1263,10 +1274,10 @@
    "execution_count": 19,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:18.487048Z",
-     "iopub.status.busy": "2025-05-20T19:45:18.487048Z",
-     "iopub.status.idle": "2025-05-20T19:45:18.592862Z",
-     "shell.execute_reply": "2025-05-20T19:45:18.591852Z"
+     "iopub.execute_input": "2025-05-27T20:24:10.812721Z",
+     "iopub.status.busy": "2025-05-27T20:24:10.812638Z",
+     "iopub.status.idle": "2025-05-27T20:24:10.830614Z",
+     "shell.execute_reply": "2025-05-27T20:24:10.830388Z"
     }
    },
    "outputs": [
@@ -1724,7 +1735,7 @@
     }
    ],
    "source": [
-    "tab_report = pd.read_csv('output/TestExample.table_report.csv', index_col=0)\n",
+    "tab_report = pd.read_csv(\"output/TestExample.table_report.csv\", index_col=0)\n",
     "tab_report"
    ]
   },
@@ -1740,10 +1751,10 @@
    "execution_count": 20,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-05-20T19:45:18.599227Z",
-     "iopub.status.busy": "2025-05-20T19:45:18.598225Z",
-     "iopub.status.idle": "2025-05-20T19:45:21.738694Z",
-     "shell.execute_reply": "2025-05-20T19:45:21.737659Z"
+     "iopub.execute_input": "2025-05-27T20:24:10.831858Z",
+     "iopub.status.busy": "2025-05-27T20:24:10.831785Z",
+     "iopub.status.idle": "2025-05-27T20:24:11.352811Z",
+     "shell.execute_reply": "2025-05-27T20:24:11.352509Z"
     }
    },
    "outputs": [
@@ -1769,7 +1780,7 @@
     }
    ],
    "source": [
-    "all_time_series = pd.read_csv('output/TestExample.table_report.all_ts.csv', index_col=0)\n",
+    "all_time_series = pd.read_csv(\"output/TestExample.table_report.all_ts.csv\", index_col=0)\n",
     "all_time_series.plot(legend=None)"
    ]
   },
@@ -1778,14 +1789,12 @@
    "execution_count": null,
    "metadata": {},
    "outputs": [],
-   "source": [
-    "\n"
-   ]
+   "source": []
   }
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
+   "display_name": "pycap",
    "language": "python",
    "name": "python3"
   },
