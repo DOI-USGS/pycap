@@ -32,6 +32,14 @@ The documentation for these functions specifies exactly which parameters are req
 
 A note on units. For most functions, the concept is for units to be self-similar. In other words, a consistent length unit and time unit is assumed, and all properties, geometry, and times must be self consistent. An exception to this is the `walton_depletion` stream-depletion function. This special case assumes specific units for inputs. 
 
+A schematic diagram shows the various parameters as they are defined for use in this software.  
+
+.. image:: figures/schematic.png
+  :width: 700
+  :alt: Schematic figure
+
+Most of the parameters shown are depicted with the variable names as called for in the functions of the software. An important additional explanation is for the x and y coordinates that are required to identify the location at which to calculate drawdown for solutions that consider streambed conductance for drawdown calculations. The x origin (x=0) for such coordinates is at the stream in the direction perpendicular from the stream to the pumping well.  The y origin (y=0) is at the streamwise location of the pumping well perpendicular to the screen. 
+
 .. _well_object:
 Well Object
 -----------
