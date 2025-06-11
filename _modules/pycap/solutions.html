@@ -99,6 +99,30 @@
 <span class="kn">import</span> <span class="nn">scipy.special</span> <span class="k">as</span> <span class="nn">sps</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gammaln</span>
 
+<span class="kn">from</span> <span class="nn">pycap.pycap_exceptions</span> <span class="kn">import</span> <span class="n">PycapException</span>
+
+
+<span class="k">def</span> <span class="nf">_time_dist_error</span><span class="p">(</span><span class="n">funcname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function for trying to call both time and distance</span>
+<span class="sd">    as arrays in a function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="n">PycapException</span><span class="p">(</span>
+        <span class="s2">&quot;cannot have both time and distance as arrays</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;in the </span><span class="si">{</span><span class="n">funcname</span><span class="si">}</span><span class="s2"> method.  Need to externally loop</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;over one of the arrays and pass the other&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_make_arrays</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;private function to force values to</span>
+<span class="sd">    arrays from lists or scalars</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+
 <span class="c1"># suppress divide by zero errors</span>
 <span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 
@@ -131,11 +155,12 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">var_dict</span><span class="p">[</span><span class="n">fxn_name</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonevars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The function: </span><span class="si">{</span><span class="n">fxn_name</span><span class="si">}</span><span class="s2"> requires the following&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;additional arguments which were missing&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in the function call:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nonevars</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="n">PycapException</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The function: </span><span class="si">{</span><span class="n">fxn_name</span><span class="si">}</span><span class="s2"> requires the following</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;additional arguments which were missing</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;in the function call:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nonevars</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="p">)</span>
 
 
 <span class="c1"># define drawdown methods here</span>
@@ -168,31 +193,31 @@
 <span class="sd">    drawdown: float or array of floats</span>
 <span class="sd">        drawdown values at input parameter times/distances [L]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">isarray</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">values</span>
 
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">isarray</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;theis_drawdown&quot;</span><span class="p">)</span>
 
     <span class="c1"># construct the well function argument</span>
     <span class="c1"># is dist is zero, then function does not exist</span>
     <span class="c1"># trap for dist==0 and set to small value</span>
-    <span class="k">if</span> <span class="n">isarray</span><span class="p">:</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dist</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">dist</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="mf">0.001</span>
 
-    <span class="c1"># compute u and then the Theis solution</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">dist</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
-
-    <span class="c1"># calculate and return</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">exp1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span></div>
+    <span class="c1"># sort out geometry of solution</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ddn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">dist</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
+            <span class="n">ddn</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">exp1</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">dist</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">ddn</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">):</span>
+        <span class="n">ddn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">u</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">ddn</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">exp1</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ddn</span></div>
 
 
 <div class="viewcode-block" id="hunt_99_drawdown"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt_99_drawdown">[docs]</a><span class="k">def</span> <span class="nf">hunt_99_drawdown</span><span class="p">(</span>
@@ -251,37 +276,24 @@
 
     <span class="c1"># turn lists into np.array so they get handled correctly,</span>
     <span class="c1"># check if time or space is an array</span>
-    <span class="n">timescalar</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">PycapException</span><span class="p">(</span>
+            <span class="s2">&quot;hunt_99_drawdown can only accept a single distance argument&quot;</span>
+        <span class="p">)</span>
+
     <span class="n">spacescalar</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">timescalar</span> <span class="o">=</span> <span class="kc">False</span>
-
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">spacescalar</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># compute a single x, y point at a given time</span>
-    <span class="k">if</span> <span class="n">timescalar</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-            <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
-        <span class="p">)</span>
-        <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
-            <span class="n">_ddwn2</span><span class="p">,</span>
-            <span class="mf">0.0</span><span class="p">,</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
-            <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
-            <span class="o">-</span> <span class="n">strmintegral</span>
-        <span class="p">)</span>
-
-    <span class="c1"># compute a vector of times for a given point</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">timescalar</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
-        <span class="n">drawdowns</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">time</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
+        <span class="c1"># handle zero time</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
                 <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
             <span class="p">)</span>
@@ -289,15 +301,37 @@
                 <span class="n">_ddwn2</span><span class="p">,</span>
                 <span class="mf">0.0</span><span class="p">,</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
+                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
             <span class="p">)</span>
-            <span class="n">drawdowns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
-                <span class="o">*</span> <span class="p">(</span>
-                    <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
-                    <span class="o">-</span> <span class="n">strmintegral</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                <span class="o">-</span> <span class="n">strmintegral</span>
+            <span class="p">)</span>
+
+    <span class="c1"># compute a vector of times for a given point</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
+        <span class="n">drawdowns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">time</span><span class="p">:</span>
+            <span class="c1"># special case for zero time</span>
+            <span class="k">if</span> <span class="n">tm</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">drawdowns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+                    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
                 <span class="p">)</span>
-            <span class="p">)</span>
+                <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
+                    <span class="n">_ddwn2</span><span class="p">,</span>
+                    <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">drawdowns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
+                    <span class="o">*</span> <span class="p">(</span>
+                        <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                        <span class="o">-</span> <span class="n">strmintegral</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">drawdowns</span>
 
     <span class="c1"># if meshgrid is passed, return an np.array with dimensions</span>
@@ -305,41 +339,43 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">spacescalar</span><span class="p">:</span>
         <span class="n">numrow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">numcol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">timescalar</span><span class="p">:</span>
-            <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">time</span><span class="p">])</span>
         <span class="n">drawdowns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">),</span> <span class="n">numrow</span><span class="p">,</span> <span class="n">numcol</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">time_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numrow</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numcol</span><span class="p">):</span>
-                    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-                        <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
-                    <span class="p">)</span>
-                    <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
-                        <span class="n">_ddwn2</span><span class="p">,</span>
-                        <span class="mf">0.0</span><span class="p">,</span>
-                        <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                        <span class="n">args</span><span class="o">=</span><span class="p">(</span>
-                            <span class="n">dist</span><span class="p">,</span>
-                            <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
-                            <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
-                            <span class="n">T</span><span class="p">,</span>
-                            <span class="n">streambed_conductance</span><span class="p">,</span>
-                            <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">],</span>
-                            <span class="n">S</span><span class="p">,</span>
-                        <span class="p">),</span>
-                    <span class="p">)</span>
-                    <span class="n">drawdowns</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
-                        <span class="n">_ddwn1</span><span class="p">(</span>
-                            <span class="n">dist</span><span class="p">,</span>
-                            <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
-                            <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
-                            <span class="n">T</span><span class="p">,</span>
-                            <span class="n">streambed_conductance</span><span class="p">,</span>
-                            <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">],</span>
-                            <span class="n">S</span><span class="p">,</span>
+                    <span class="c1"># special case for zero time</span>
+                    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">drawdowns</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+                            <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
                         <span class="p">)</span>
-                        <span class="o">-</span> <span class="n">strmintegral</span>
-                    <span class="p">)</span>
+                        <span class="p">[</span><span class="n">strmintegral</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
+                            <span class="n">_ddwn2</span><span class="p">,</span>
+                            <span class="mf">0.0</span><span class="p">,</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+                            <span class="n">args</span><span class="o">=</span><span class="p">(</span>
+                                <span class="n">dist</span><span class="p">,</span>
+                                <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
+                                <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
+                                <span class="n">T</span><span class="p">,</span>
+                                <span class="n">streambed_conductance</span><span class="p">,</span>
+                                <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">],</span>
+                                <span class="n">S</span><span class="p">,</span>
+                            <span class="p">),</span>
+                        <span class="p">)</span>
+                        <span class="n">drawdowns</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
+                            <span class="n">_ddwn1</span><span class="p">(</span>
+                                <span class="n">dist</span><span class="p">,</span>
+                                <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
+                                <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
+                                <span class="n">T</span><span class="p">,</span>
+                                <span class="n">streambed_conductance</span><span class="p">,</span>
+                                <span class="n">time</span><span class="p">[</span><span class="n">time_idx</span><span class="p">],</span>
+                                <span class="n">S</span><span class="p">,</span>
+                            <span class="p">)</span>
+                            <span class="o">-</span> <span class="n">strmintegral</span>
+                        <span class="p">)</span>
         <span class="k">return</span> <span class="n">drawdowns</span></div>
 
 
@@ -474,6 +510,12 @@
 <span class="sd">        stream width (b in paper) [L]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">PycapException</span><span class="p">(</span>
+            <span class="s2">&quot;ward_lough_drawdown can only accept a single distance argument&quot;</span>
+        <span class="p">)</span>
     <span class="n">_check_nones</span><span class="p">(</span>
         <span class="nb">locals</span><span class="p">(),</span>
         <span class="p">{</span>
@@ -515,31 +557,36 @@
 
     <span class="c1"># Inverse Fourier transform</span>
     <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1</span><span class="p">(</span>
-                <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
-            <span class="p">)</span>
-            <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">NSteh1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="n">jj</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1</span><span class="p">(</span>
-                    <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">jj</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+        <span class="c1"># special case for zero time</span>
+        <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1</span><span class="p">(</span>
+                    <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
                 <span class="p">)</span>
-            <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">OverflowError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overflow error in s1 calculation at index </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Assign NaN if there&#39;s an overflow</span>
+                <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">NSteh1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="n">jj</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1</span><span class="p">(</span>
+                        <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">jj</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">OverflowError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overflow error in s1 calculation at index </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">s1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Assign NaN if there&#39;s an overflow</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh2</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if2</span><span class="p">(</span>
-                <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
-            <span class="p">)</span>
-            <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">NSteh2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="n">jj</span><span class="p">,</span> <span class="n">NSteh2</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if2</span><span class="p">(</span>
-                    <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">jj</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh2</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if2</span><span class="p">(</span>
+                    <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
                 <span class="p">)</span>
-            <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">OverflowError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overflow error in s2 calculation at index </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Assign NaN if there&#39;s an overflow</span>
+                <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">NSteh2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="n">jj</span><span class="p">,</span> <span class="n">NSteh2</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if2</span><span class="p">(</span>
+                        <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">jj</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">OverflowError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overflow error in s2 calculation at index </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">s2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># Assign NaN if there&#39;s an overflow</span>
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">s1</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">T2</span><span class="p">,</span> <span class="n">s2</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">T2</span><span class="p">)))</span>  <span class="c1"># re-dimensionalize</span></div>
 
@@ -578,18 +625,31 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cannot have both time and distance as arrays&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in the hunt_99_depletion method.  Need to externally loop&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;over one of the arrays and pass the other&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;theis_drawdown&quot;</span><span class="p">)</span>
 
-    <span class="n">z</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># handle zero time condition for list-like times</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># handle zero time condition for list-like times</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">z</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">)</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">depl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">depl</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">depl</span></div>
 
 
 <div class="viewcode-block" id="sdf"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.sdf">[docs]</a><span class="k">def</span> <span class="nf">sdf</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -657,24 +717,41 @@
 <span class="sd">        depletion values at at input parameter times/distances</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">values</span>
-    <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="c1"># avoid divide by zero for time==0</span>
-        <span class="c1"># time = time.values</span>
+    <span class="c1"># turn lists into np.array so they get handled correctly</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;walton_depletion&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># avoid divide by zero for time==0</span>
+            <span class="c1"># time = time.values</span>
+            <span class="n">G</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">0.535</span> <span class="o">*</span> <span class="n">time</span> <span class="o">*</span> <span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
         <span class="n">G</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mf">0.535</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">T</span> <span class="o">/</span> <span class="n">S</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">G</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">I</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.0705230784</span> <span class="o">*</span> <span class="n">G</span> <span class="o">+</span> <span class="mf">0.0422820123</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">9.2705272e-03</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">J</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">I</span> <span class="o">+</span> <span class="mf">1.52014e-04</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.76567e-04</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mf">4.30638e-05</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span>
-    <span class="p">)</span> <span class="o">**</span> <span class="mi">16</span>
-    <span class="n">ret_vals</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">J</span><span class="p">)</span>
-    <span class="n">ret_vals</span><span class="p">[</span><span class="n">time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">return</span> <span class="n">ret_vals</span></div>
+        <span class="n">I</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">+</span> <span class="mf">0.0705230784</span> <span class="o">*</span> <span class="n">G</span>
+            <span class="o">+</span> <span class="mf">0.0422820123</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">9.2705272e-03</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">I</span>
+            <span class="o">+</span> <span class="mf">1.52014e-04</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">2.76567e-04</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">4.30638e-05</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">**</span> <span class="mi">16</span>
+        <span class="n">depl</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">J</span><span class="p">)</span>
+        <span class="c1"># handle zero time condition</span>
+        <span class="n">depl</span><span class="p">[</span><span class="n">time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">depl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">depl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">depl</span></div>
 
 
 <div class="viewcode-block" id="hunt_99_depletion"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt_99_depletion">[docs]</a><span class="k">def</span> <span class="nf">hunt_99_depletion</span><span class="p">(</span>
@@ -716,33 +793,40 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_nones</span><span class="p">(</span><span class="nb">locals</span><span class="p">(),</span> <span class="p">{</span><span class="s2">&quot;hunt_99_depletion&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;streambed_conductance&quot;</span><span class="p">]})</span>
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cannot have both time and distance as arrays&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in the hunt_99_depletion method.  Need to externally loop&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;over one of the arrays and pass the other&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;hunt_99_depletion&quot;</span><span class="p">)</span>
 
-    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">dist</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">))</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span> <span class="o">*</span> <span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
-    <span class="c1"># Qs/Q = erfc(a) - exp(b+c)*erfc(sqrt(b) + a)</span>
-    <span class="c1"># in order to calculate exp(x)erfc(y)</span>
-    <span class="c1"># as values get big. Use numpy special erfcx(),</span>
-    <span class="c1"># scaled complementary error function, which returns</span>
-    <span class="c1"># exp(y**2)erfc(y)</span>
-    <span class="c1"># then compute exp(x)/exp(y**2) * erfcx(y)</span>
-    <span class="c1"># which may be computed as exp(x - y**2) * erfcx(y)</span>
-    <span class="c1"># This approach gives a product that goes to zero</span>
-    <span class="c1"># as the exp() term gets big and erfc() goes to zero</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfcx</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">depl</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">depl</span></div>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">dist</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">))</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span> <span class="o">*</span> <span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfcx</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">depl</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">depl</span> <span class="o">*</span> <span class="n">Q</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">depl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q</span>
+
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">dist</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]))</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">streambed_conductance</span> <span class="o">*</span> <span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfcx</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">depl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">depl</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span>
+            <span class="n">t1</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">t2</span><span class="p">[</span><span class="n">time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">depl</span> <span class="o">*</span> <span class="n">Q</span></div>
 
 
 <div class="viewcode-block" id="hunt_03_depletion"><a class="viewcode-back" href="../../api/pycap.solutions.html#pycap.solutions.hunt_03_depletion">[docs]</a><span class="k">def</span> <span class="nf">hunt_03_depletion</span><span class="p">(</span>
@@ -821,16 +905,11 @@
         <span class="p">},</span>
     <span class="p">)</span>
     <span class="c1"># turn lists into np.array so they get handled correctly</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cannot have both time and distance as arrays&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;in the hunt_03_depletion method.  Need to externally loop&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;over one of the arrays and pass the other&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
-
+    <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;hunt_03_depletion&quot;</span><span class="p">)</span>
+        
     <span class="c1"># make dimensionless group used in equations</span>
     <span class="n">dtime</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
@@ -849,17 +928,27 @@
     <span class="c1"># because of storage in the semiconfining aquifer</span>
     <span class="n">correction</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="n">dtime</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-            <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
-        <span class="p">)</span>
-        <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
-            <span class="n">_integrand</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dlam</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span>
-        <span class="p">)</span>
-        <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+        <span class="c1"># correcting for zero time</span>
+        <span class="k">if</span> <span class="n">dt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+                <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">dl</span> <span class="o">=</span> <span class="n">dlam</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dl</span> <span class="o">=</span> <span class="n">dlam</span>
+            <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
+                <span class="n">_integrand</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span>
+            <span class="p">)</span>
+            <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl</span><span class="o">*</span> <span class="n">y</span><span class="p">)</span>
 
     <span class="c1"># terms for depletion, similar to Hunt (1999) but repeated</span>
     <span class="c1"># here so it matches the 2003 paper.</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span><span class="p">))</span>
+    <span class="c1"># note correcting for zero time</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]))</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">dlam</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">dtime</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dlam</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
 
@@ -867,10 +956,15 @@
     <span class="c1"># for erf(b)*erfc(c) term</span>
     <span class="n">t1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfcx</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
     <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">depl</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
+    <span class="c1"># note correcting for zero time</span>
+    <span class="n">depl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span>
+    <span class="n">depl</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
 
     <span class="c1"># corrected depletion for storage of upper semiconfining unit</span>
-    <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="n">depl</span> <span class="o">-</span> <span class="n">correction</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">depl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="n">depl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">correction</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Q</span> <span class="o">*</span> <span class="p">(</span><span class="n">depl</span> <span class="o">-</span> <span class="n">correction</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">_F</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">dlam</span><span class="p">,</span> <span class="n">dtime</span><span class="p">):</span>
@@ -1146,16 +1240,25 @@
     <span class="p">)</span>
 
     <span class="c1"># Inverse Fourier transform</span>
-    <span class="n">DeltaQ</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1_dQ</span><span class="p">(</span>
-        <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span>
-    <span class="p">)</span>
-    <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">NSteh1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">DeltaQ</span> <span class="o">+=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="n">jj</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1_dQ</span><span class="p">(</span>
-            <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">jj</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">DeltaQ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">DeltaQ</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1_dQ</span><span class="p">(</span>
+            <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
         <span class="p">)</span>
-    <span class="n">DeltaQ</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">lambd</span> <span class="o">*</span> <span class="n">DeltaQ</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span>
+        <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">NSteh1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">DeltaQ</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">_StehfestCoeff</span><span class="p">(</span><span class="n">jj</span><span class="p">,</span> <span class="n">NSteh1</span><span class="p">)</span> <span class="o">*</span> <span class="n">_if1_dQ</span><span class="p">(</span>
+                <span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambd</span><span class="p">,</span> <span class="n">jj</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="n">DeltaQ</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">lambd</span> <span class="o">*</span> <span class="n">DeltaQ</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">DeltaQ</span> <span class="o">*</span> <span class="n">Q</span>  <span class="c1"># convert back to CFS from CFD</span></div>
+        <span class="k">return</span> <span class="n">DeltaQ</span> <span class="o">*</span> <span class="n">Q</span>  <span class="c1"># redimentionalize</span></div>
 
 
 <span class="k">def</span> <span class="nf">_if1_dQ</span><span class="p">(</span><span class="n">T1</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
@@ -1362,7 +1465,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on Jun 02, 2025.
+      <span class="lastupdated">Last updated on Jun 11, 2025.
       </span></p>
   </div>
 
