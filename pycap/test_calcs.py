@@ -544,6 +544,40 @@ def test_run_yml_example():
     ap.report_responses()
     ap.write_responses_csv()
 
+def test_hunt_99_depletion_results_multiple_times():
+    """Test of hunt_99_depletion() function in the
+    well.py module.  Compares computed stream depletion
+    to results from Jenkins (1968) Table 1 and the
+    strmdepl08 appendix for dist=1000 and multiple times
+    """
+    dist = [1000]
+    Q = 1
+    time = [0, 365 * 5]  # paper evaluates at 5 years in days
+    K = 0.001  # ft/sec
+    D = 100  # thickness in feet
+    T = K * D * pycap.SEC2DAY  # converting to ft/day
+    S = 0.2
+    rlambda = (
+        10000.0  # large lambda value should return Glover and Balmer solution
+    )
+    # see test_glover for these values.
+    Qs = pycap.hunt_99_depletion(
+        T, S, time, dist, Q, streambed_conductance=rlambda
+    )
+    assert not np.atleast_1d(np.isnan(Qs)).any()
+    assert np.allclose(Qs, [0, 0.9365], atol=1e-3)
+
+    # check some values with varying time, using t/sdf, q/Q table
+    # from Jenkins (1968) - Table 1
+    dist = 1000.0
+    sdf = dist**2 * S / T
+    time = [sdf * 1.0, sdf * 2.0, sdf * 6.0]
+    obs = [0.480, 0.617, 0.773]
+    Qs = pycap.hunt_99_depletion(
+        T, S, time, dist, Q, streambed_conductance=rlambda
+    )
+    assert not any(np.isnan(Qs))
+    assert np.allclose(Qs, obs, atol=5e-3)
 
 def test_hunt_99_depletion_results():
     """Test of hunt_99_depletion() function in the
