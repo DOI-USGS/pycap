@@ -390,21 +390,24 @@ def test_walton_depletion(walton_results):
     """
     res = walton_results["walton_res"]
     pars = walton_results["params"]
-
+    # prepend a zero time to be sure that logic is tested
+    cols = res.columns
+    res = pd.DataFrame(np.insert(res.values, 0, values=[0]*len(res.columns), axis=0))
+    res.columns = cols
     dep = {}
     rch = {}
     for idx in [0, 1]:
         dep[idx] = pycap.walton_depletion(
             pars["T_gpd_ft"][idx],
             pars["S"][idx],
-            res.t_well,
+            [0]+res.t_well,
             pars["dist"][idx],
             pars["Q"][idx],
         )
         rch[idx] = pycap.walton_depletion(
             pars["T_gpd_ft"][idx],
             pars["S"][idx],
-            res.t_image,
+            [0]+res.t_image,
             pars["dist"][idx],
             pars["Q"][idx],
         )
