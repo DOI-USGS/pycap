@@ -310,12 +310,10 @@
 
     <span class="c1"># compute a vector of times for a given point</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">spacescalar</span><span class="p">:</span>
-        <span class="n">drawdowns</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">tm</span> <span class="ow">in</span> <span class="n">time</span><span class="p">:</span>
+        <span class="n">drawdowns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tm</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
             <span class="c1"># special case for zero time</span>
-            <span class="k">if</span> <span class="n">tm</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">drawdowns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
                     <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
                 <span class="p">)</span>
@@ -325,12 +323,9 @@
                     <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
                     <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
                 <span class="p">)</span>
-                <span class="n">drawdowns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span>
-                    <span class="o">*</span> <span class="p">(</span>
-                        <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
-                        <span class="o">-</span> <span class="n">strmintegral</span>
-                    <span class="p">)</span>
+                <span class="n">drawdowns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
+                    <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                    <span class="o">-</span> <span class="n">strmintegral</span>
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">drawdowns</span>
 
@@ -909,7 +904,7 @@
     <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;hunt_03_depletion&quot;</span><span class="p">)</span>
-        
+
     <span class="c1"># make dimensionless group used in equations</span>
     <span class="n">dtime</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
@@ -942,7 +937,7 @@
             <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
                 <span class="n">_integrand</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span>
             <span class="p">)</span>
-            <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl</span><span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
 
     <span class="c1"># terms for depletion, similar to Hunt (1999) but repeated</span>
     <span class="c1"># here so it matches the 2003 paper.</span>
@@ -958,7 +953,9 @@
     <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="c1"># note correcting for zero time</span>
     <span class="n">depl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span>
-    <span class="n">depl</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
+    <span class="n">depl</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="n">t1</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">t2</span><span class="p">[</span><span class="n">dtime</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span>
 
     <span class="c1"># corrected depletion for storage of upper semiconfining unit</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">depl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -1465,7 +1462,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on Jun 11, 2025.
+      <span class="lastupdated">Last updated on Jun 16, 2025.
       </span></p>
   </div>
 
