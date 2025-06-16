@@ -218,12 +218,10 @@ def hunt_99_drawdown(
 
     # compute a vector of times for a given point
     if len(time) > 1 and spacescalar:
-        drawdowns = []
-        for tm in time:
+        drawdowns = np.zeros_like(time)
+        for i, tm in enumerate(time):
             # special case for zero time
-            if tm == 0:
-                drawdowns.append(0)
-            else:
+            if tm != 0:
                 warnings.filterwarnings(
                     "ignore", category=integrate.IntegrationWarning
                 )
@@ -233,12 +231,9 @@ def hunt_99_drawdown(
                     np.inf,
                     args=(dist, x, y, T, streambed_conductance, tm, S),
                 )
-                drawdowns.append(
-                    (Q / (4.0 * np.pi * T))
-                    * (
-                        _ddwn1(dist, x, y, T, streambed_conductance, tm, S)
-                        - strmintegral
-                    )
+                drawdowns[i] = (Q / (4.0 * np.pi * T)) * (
+                    _ddwn1(dist, x, y, T, streambed_conductance, tm, S)
+                    - strmintegral
                 )
         return drawdowns
 
@@ -817,7 +812,7 @@ def hunt_03_depletion(
     dist = _make_arrays(dist)
     if len(dist) > 1 and len(time) > 1:
         _time_dist_error("hunt_03_depletion")
-        
+
     # make dimensionless group used in equations
     dtime = (T * time) / (S * np.power(dist, 2))
 
@@ -850,7 +845,7 @@ def hunt_03_depletion(
             [y, err] = integrate.quad(
                 _integrand, 0.0, 1.0, args=(dl, dt, epsilon, dK), limit=500
             )
-            correction.append(dl* y)
+            correction.append(dl * y)
 
     # terms for depletion, similar to Hunt (1999) but repeated
     # here so it matches the 2003 paper.
@@ -866,7 +861,9 @@ def hunt_03_depletion(
     t2 = np.exp(b - c**2)
     # note correcting for zero time
     depl = np.zeros_like(dtime)
-    depl[dtime != 0] = sps.erfc(a[dtime != 0]) - (t1 * t2)
+    depl[dtime != 0] = sps.erfc(a[dtime != 0]) - (
+        t1[dtime != 0] * t2[dtime != 0]
+    )
 
     # corrected depletion for storage of upper semiconfining unit
     if len(depl) == 1:

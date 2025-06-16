@@ -390,21 +390,26 @@ def test_walton_depletion(walton_results):
     """
     res = walton_results["walton_res"]
     pars = walton_results["params"]
-
+    # prepend a zero time to be sure that logic is tested
+    cols = res.columns
+    res = pd.DataFrame(
+        np.insert(res.values, 0, values=[0] * len(res.columns), axis=0)
+    )
+    res.columns = cols
     dep = {}
     rch = {}
     for idx in [0, 1]:
         dep[idx] = pycap.walton_depletion(
             pars["T_gpd_ft"][idx],
             pars["S"][idx],
-            res.t_well,
+            [0] + res.t_well,
             pars["dist"][idx],
             pars["Q"][idx],
         )
         rch[idx] = pycap.walton_depletion(
             pars["T_gpd_ft"][idx],
             pars["S"][idx],
-            res.t_image,
+            [0] + res.t_image,
             pars["dist"][idx],
             pars["Q"][idx],
         )
@@ -542,6 +547,42 @@ def test_run_yml_example():
     ap.write_responses_csv()
 
 
+def test_hunt_99_depletion_results_multiple_times():
+    """Test of hunt_99_depletion() function in the
+    well.py module.  Compares computed stream depletion
+    to results from Jenkins (1968) Table 1 and the
+    strmdepl08 appendix for dist=1000 and multiple times
+    """
+    dist = [1000]
+    Q = 1
+    time = [0, 365 * 5]  # paper evaluates at 5 years in days
+    K = 0.001  # ft/sec
+    D = 100  # thickness in feet
+    T = K * D * pycap.SEC2DAY  # converting to ft/day
+    S = 0.2
+    rlambda = (
+        10000.0  # large lambda value should return Glover and Balmer solution
+    )
+    # see test_glover for these values.
+    Qs = pycap.hunt_99_depletion(
+        T, S, time, dist, Q, streambed_conductance=rlambda
+    )
+    assert not np.atleast_1d(np.isnan(Qs)).any()
+    assert np.allclose(Qs, [0, 0.9365], atol=1e-3)
+
+    # check some values with varying time, using t/sdf, q/Q table
+    # from Jenkins (1968) - Table 1
+    dist = 1000.0
+    sdf = dist**2 * S / T
+    time = [sdf * 1.0, sdf * 2.0, sdf * 6.0]
+    obs = [0.480, 0.617, 0.773]
+    Qs = pycap.hunt_99_depletion(
+        T, S, time, dist, Q, streambed_conductance=rlambda
+    )
+    assert not any(np.isnan(Qs))
+    assert np.allclose(Qs, obs, atol=5e-3)
+
+
 def test_hunt_99_depletion_results():
     """Test of hunt_99_depletion() function in the
     well.py module.  Compares computedstream depletion
@@ -615,7 +656,7 @@ def test_hunt_03_depletion_results(hunt_03_results):
     sigma = 0.1
     width = 5
 
-    time = hunt_03_results["time"]
+    time = np.array([0.0] + hunt_03_results["time"])
     rlambda = Kprime * (width / Bdouble)
 
     Qs = pycap.hunt_03_depletion(
@@ -634,7 +675,9 @@ def test_hunt_03_depletion_results(hunt_03_results):
     ratios = Qs / Qw
 
     tol = 0.002  # relative tolerance = 0.2 percent
-    np.testing.assert_allclose(ratios, hunt_03_results["checkvals"], rtol=tol)
+    res = np.array([0.0] + hunt_03_results["checkvals"])
+    res
+    np.testing.assert_allclose(ratios, res, rtol=tol)
 
 
 @pytest.mark.xfail
@@ -781,7 +824,7 @@ def test_hunt_99_drawdown():
     dist = 200.0
     T = 1000.0
     S = 0.1
-    time = 28.0
+    time = [0.0, 28.0]
 
     # test if stream conductance is zero
     rlambda = 0
@@ -792,7 +835,7 @@ def test_hunt_99_drawdown():
         T, S, time, dist, Q, streambed_conductance=rlambda, x=x, y=y
     )
     no_stream = pycap.theis_drawdown(T, S, time, (dist - x), Q)
-    assert ddwn == no_stream
+    assert np.allclose(ddwn, no_stream)
 
 
 def test_transient_dd():
