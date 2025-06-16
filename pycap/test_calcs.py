@@ -820,7 +820,7 @@ def test_hunt_99_drawdown():
     dist = 200.0
     T = 1000.0
     S = 0.1
-    time = 28.0
+    time = [0.0,28.0]
 
     # test if stream conductance is zero
     rlambda = 0
@@ -831,7 +831,7 @@ def test_hunt_99_drawdown():
         T, S, time, dist, Q, streambed_conductance=rlambda, x=x, y=y
     )
     no_stream = pycap.theis_drawdown(T, S, time, (dist - x), Q)
-    assert ddwn == no_stream
+    assert np.allclose(ddwn,no_stream)
 
 
 def test_transient_dd():

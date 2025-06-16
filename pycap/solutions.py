@@ -218,12 +218,10 @@ def hunt_99_drawdown(
 
     # compute a vector of times for a given point
     if len(time) > 1 and spacescalar:
-        drawdowns = []
-        for tm in time:
+        drawdowns = np.zeros_like(time)
+        for i,tm in enumerate(time):
             # special case for zero time
-            if tm == 0:
-                drawdowns.append(0)
-            else:
+            if tm != 0:
                 warnings.filterwarnings(
                     "ignore", category=integrate.IntegrationWarning
                 )
@@ -233,7 +231,7 @@ def hunt_99_drawdown(
                     np.inf,
                     args=(dist, x, y, T, streambed_conductance, tm, S),
                 )
-                drawdowns.append(
+                drawdowns[i] = (
                     (Q / (4.0 * np.pi * T))
                     * (
                         _ddwn1(dist, x, y, T, streambed_conductance, tm, S)
