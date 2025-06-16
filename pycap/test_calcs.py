@@ -615,7 +615,7 @@ def test_hunt_03_depletion_results(hunt_03_results):
     sigma = 0.1
     width = 5
 
-    time = hunt_03_results["time"]
+    time = np.array([0.0] + hunt_03_results["time"])
     rlambda = Kprime * (width / Bdouble)
 
     Qs = pycap.hunt_03_depletion(
@@ -634,7 +634,9 @@ def test_hunt_03_depletion_results(hunt_03_results):
     ratios = Qs / Qw
 
     tol = 0.002  # relative tolerance = 0.2 percent
-    np.testing.assert_allclose(ratios, hunt_03_results["checkvals"], rtol=tol)
+    res = np.array([0.0]+hunt_03_results["checkvals"])
+    res 
+    np.testing.assert_allclose(ratios, res, rtol=tol)
 
 
 @pytest.mark.xfail
