@@ -866,7 +866,7 @@ def hunt_03_depletion(
     t2 = np.exp(b - c**2)
     # note correcting for zero time
     depl = np.zeros_like(dtime)
-    depl[dtime != 0] = sps.erfc(a[dtime != 0]) - (t1 * t2)
+    depl[dtime != 0] = sps.erfc(a[dtime != 0]) - (t1[dtime != 0] * t2[dtime != 0])
 
     # corrected depletion for storage of upper semiconfining unit
     if len(depl) == 1:
