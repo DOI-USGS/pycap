@@ -219,7 +219,7 @@ def hunt_99_drawdown(
     # compute a vector of times for a given point
     if len(time) > 1 and spacescalar:
         drawdowns = np.zeros_like(time)
-        for i,tm in enumerate(time):
+        for i, tm in enumerate(time):
             # special case for zero time
             if tm != 0:
                 warnings.filterwarnings(
@@ -231,12 +231,9 @@ def hunt_99_drawdown(
                     np.inf,
                     args=(dist, x, y, T, streambed_conductance, tm, S),
                 )
-                drawdowns[i] = (
-                    (Q / (4.0 * np.pi * T))
-                    * (
-                        _ddwn1(dist, x, y, T, streambed_conductance, tm, S)
-                        - strmintegral
-                    )
+                drawdowns[i] = (Q / (4.0 * np.pi * T)) * (
+                    _ddwn1(dist, x, y, T, streambed_conductance, tm, S)
+                    - strmintegral
                 )
         return drawdowns
 
@@ -864,7 +861,9 @@ def hunt_03_depletion(
     t2 = np.exp(b - c**2)
     # note correcting for zero time
     depl = np.zeros_like(dtime)
-    depl[dtime != 0] = sps.erfc(a[dtime != 0]) - (t1[dtime != 0] * t2[dtime != 0])
+    depl[dtime != 0] = sps.erfc(a[dtime != 0]) - (
+        t1[dtime != 0] * t2[dtime != 0]
+    )
 
     # corrected depletion for storage of upper semiconfining unit
     if len(depl) == 1:

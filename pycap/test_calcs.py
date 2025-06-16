@@ -392,7 +392,9 @@ def test_walton_depletion(walton_results):
     pars = walton_results["params"]
     # prepend a zero time to be sure that logic is tested
     cols = res.columns
-    res = pd.DataFrame(np.insert(res.values, 0, values=[0]*len(res.columns), axis=0))
+    res = pd.DataFrame(
+        np.insert(res.values, 0, values=[0] * len(res.columns), axis=0)
+    )
     res.columns = cols
     dep = {}
     rch = {}
@@ -400,14 +402,14 @@ def test_walton_depletion(walton_results):
         dep[idx] = pycap.walton_depletion(
             pars["T_gpd_ft"][idx],
             pars["S"][idx],
-            [0]+res.t_well,
+            [0] + res.t_well,
             pars["dist"][idx],
             pars["Q"][idx],
         )
         rch[idx] = pycap.walton_depletion(
             pars["T_gpd_ft"][idx],
             pars["S"][idx],
-            [0]+res.t_image,
+            [0] + res.t_image,
             pars["dist"][idx],
             pars["Q"][idx],
         )
@@ -544,6 +546,7 @@ def test_run_yml_example():
     ap.report_responses()
     ap.write_responses_csv()
 
+
 def test_hunt_99_depletion_results_multiple_times():
     """Test of hunt_99_depletion() function in the
     well.py module.  Compares computed stream depletion
@@ -578,6 +581,7 @@ def test_hunt_99_depletion_results_multiple_times():
     )
     assert not any(np.isnan(Qs))
     assert np.allclose(Qs, obs, atol=5e-3)
+
 
 def test_hunt_99_depletion_results():
     """Test of hunt_99_depletion() function in the
@@ -671,8 +675,8 @@ def test_hunt_03_depletion_results(hunt_03_results):
     ratios = Qs / Qw
 
     tol = 0.002  # relative tolerance = 0.2 percent
-    res = np.array([0.0]+hunt_03_results["checkvals"])
-    res 
+    res = np.array([0.0] + hunt_03_results["checkvals"])
+    res
     np.testing.assert_allclose(ratios, res, rtol=tol)
 
 
@@ -820,7 +824,7 @@ def test_hunt_99_drawdown():
     dist = 200.0
     T = 1000.0
     S = 0.1
-    time = [0.0,28.0]
+    time = [0.0, 28.0]
 
     # test if stream conductance is zero
     rlambda = 0
@@ -831,7 +835,7 @@ def test_hunt_99_drawdown():
         T, S, time, dist, Q, streambed_conductance=rlambda, x=x, y=y
     )
     no_stream = pycap.theis_drawdown(T, S, time, (dist - x), Q)
-    assert np.allclose(ddwn,no_stream)
+    assert np.allclose(ddwn, no_stream)
 
 
 def test_transient_dd():
