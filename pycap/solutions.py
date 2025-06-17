@@ -917,15 +917,21 @@ def _F(alpha, dlam, dtime):
         sys.exit()
     return F
 
-def _fgt(n,ab, abterm):
+
+def _fgt(n, ab, abterm):
+    """function for splitting up _G below"""
     return np.exp(
-        np.log(sps.binom(2 * n, n)) +
-        np.log(sps.gammainc(2 * n + 1, ab)) +
-        (2 * n) * np.log(abterm)
-        )
+        np.log(sps.binom(2 * n, n))
+        + np.log(sps.gammainc(2 * n + 1, ab))
+        + (2 * n) * np.log(abterm)
+    )
+
 
 def _flt(n, ab, abterm):
-    return sps.binom(2 * n, n) * sps.gammainc(2 * n + 1, ab) * abterm ** (2 * n)
+    """function for splitting up _G below"""
+    return (
+        sps.binom(2 * n, n) * sps.gammainc(2 * n + 1, ab) * abterm ** (2 * n)
+    )
 
 
 def _G(alpha, epsilon, dK, dtime):
@@ -951,11 +957,11 @@ def _G(alpha, epsilon, dK, dtime):
     # this avoids divide by zero error in terms that have divide by (a+b)
     if dK < 1.0e-10:
         return 0.0
-    alpha2=alpha**2
+    alpha2 = alpha**2
     dKdtime = dK * dtime
     a = epsilon * dKdtime * (1.0 - alpha2)
     b = dKdtime * alpha2
-    ab = a+b
+    ab = a + b
     atb = a * b
     sqrt_atb = np.sqrt(atb)
     if ab < 80.0:
@@ -964,11 +970,11 @@ def _G(alpha, epsilon, dK, dtime):
         term1 = 0.0
     abterm = sqrt_atb / ab
     n = np.arange(60, dtype=np.float64)
-    
-    addterm =np.where(n<=8, _flt(n, ab, abterm), _fgt(n, ab, abterm))
+
+    addterm = np.where(n <= 8, _flt(n, ab, abterm), _fgt(n, ab, abterm))
 
     sum = np.sum(addterm)
-    
+
     eqn52 = 0.5 * (1.0 - term1 + ((b - a) / ab) * sum)
     if eqn52 < 0:
         eqn52 = 0.0
@@ -979,7 +985,6 @@ def _G(alpha, epsilon, dK, dtime):
         print("equation 52 is nan")
         sys.exit()
     return eqn52
-
 
 
 def _integrand(alpha, dlam, dtime, epsilon, dK):
