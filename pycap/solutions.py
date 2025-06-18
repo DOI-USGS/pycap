@@ -918,6 +918,22 @@ def _F(alpha, dlam, dtime):
     return F
 
 
+def _fgt(n, ab, abterm):
+    """function for splitting up _G below"""
+    return np.exp(
+        np.log(sps.binom(2 * n, n))
+        + np.log(sps.gammainc(2 * n + 1, ab))
+        + (2 * n) * np.log(abterm)
+    )
+
+
+def _flt(n, ab, abterm):
+    """function for splitting up _G below"""
+    return (
+        sps.binom(2 * n, n) * sps.gammainc(2 * n + 1, ab) * abterm ** (2 * n)
+    )
+
+
 def _G(alpha, epsilon, dK, dtime):
     """G function from paper in equation (46) in Hunt (2003)
 
@@ -941,34 +957,25 @@ def _G(alpha, epsilon, dK, dtime):
     # this avoids divide by zero error in terms that have divide by (a+b)
     if dK < 1.0e-10:
         return 0.0
-
-    a = epsilon * dK * dtime * (1.0 - alpha**2)
-    b = dK * dtime * alpha**2
-
-    if (a + b) < 80.0:
-        term1 = np.exp(-(a + b)) * sps.i0(2.0 * np.sqrt(a * b))
+    alpha2 = alpha**2
+    dKdtime = dK * dtime
+    a = epsilon * dKdtime * (1.0 - alpha2)
+    b = dKdtime * alpha2
+    ab = a + b
+    atb = a * b
+    sqrt_atb = np.sqrt(atb)
+    if ab < 80.0:
+        term1 = np.exp(-ab) * sps.i0(2.0 * sqrt_atb)
     else:
         term1 = 0.0
-    abterm = np.sqrt(a * b) / (a + b)
+    abterm = sqrt_atb / ab
+    n = np.arange(60, dtype=np.float64)
 
-    sum = 0
-    for n in range(0, 101):
-        if n <= 8:
-            addterm = (
-                sps.binom(2 * n, n)
-                * sps.gammainc(2 * n + 1, a + b)
-                * abterm ** (2 * n)
-            )
-        else:
-            bi_term = np.log(sps.binom(2 * n, n))
-            inc_gamma = np.log(sps.gammainc(2 * n + 1, a + b))
-            logab = (2 * n) * np.log(abterm)
-            addterm = np.exp(bi_term + inc_gamma + logab)
-        sum = sum + addterm
-        if addterm < 1.0e-08:
-            break
+    addterm = np.where(n <= 8, _flt(n, ab, abterm), _fgt(n, ab, abterm))
 
-    eqn52 = 0.5 * (1.0 - term1 + ((b - a) / (a + b)) * sum)
+    sum = np.sum(addterm)
+
+    eqn52 = 0.5 * (1.0 - term1 + ((b - a) / ab) * sum)
     if eqn52 < 0:
         eqn52 = 0.0
     if eqn52 > 1.0:
