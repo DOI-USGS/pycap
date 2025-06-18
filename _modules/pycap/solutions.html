@@ -1010,6 +1010,22 @@
     <span class="k">return</span> <span class="n">F</span>
 
 
+<span class="k">def</span> <span class="nf">_fgt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;function for splitting up _G below&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">gammainc</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ab</span><span class="p">))</span>
+        <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">abterm</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_flt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;function for splitting up _G below&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">sps</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">gammainc</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="n">abterm</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
 <span class="k">def</span> <span class="nf">_G</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">,</span> <span class="n">dtime</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;G function from paper in equation (46) in Hunt (2003)</span>
 
@@ -1033,34 +1049,25 @@
     <span class="c1"># this avoids divide by zero error in terms that have divide by (a+b)</span>
     <span class="k">if</span> <span class="n">dK</span> <span class="o">&lt;</span> <span class="mf">1.0e-10</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">0.0</span>
-
-    <span class="n">a</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">dK</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">dK</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">80.0</span><span class="p">:</span>
-        <span class="n">term1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">))</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">dKdtime</span> <span class="o">=</span> <span class="n">dK</span> <span class="o">*</span> <span class="n">dtime</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">dKdtime</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">dKdtime</span> <span class="o">*</span> <span class="n">alpha2</span>
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">atb</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    <span class="n">sqrt_atb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">atb</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ab</span> <span class="o">&lt;</span> <span class="mf">80.0</span><span class="p">:</span>
+        <span class="n">term1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sqrt_atb</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">abterm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">abterm</span> <span class="o">=</span> <span class="n">sqrt_atb</span> <span class="o">/</span> <span class="n">ab</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
-    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="n">addterm</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">sps</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-                <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">gammainc</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-                <span class="o">*</span> <span class="n">abterm</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">bi_term</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
-            <span class="n">inc_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sps</span><span class="o">.</span><span class="n">gammainc</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>
-            <span class="n">logab</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">abterm</span><span class="p">)</span>
-            <span class="n">addterm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">bi_term</span> <span class="o">+</span> <span class="n">inc_gamma</span> <span class="o">+</span> <span class="n">logab</span><span class="p">)</span>
-        <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">addterm</span>
-        <span class="k">if</span> <span class="n">addterm</span> <span class="o">&lt;</span> <span class="mf">1.0e-08</span><span class="p">:</span>
-            <span class="k">break</span>
+    <span class="n">addterm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">,</span> <span class="n">_flt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">),</span> <span class="n">_fgt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">))</span>
 
-    <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">term1</span> <span class="o">+</span> <span class="p">((</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">)</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">addterm</span><span class="p">)</span>
+
+    <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">term1</span> <span class="o">+</span> <span class="p">((</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">eqn52</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">if</span> <span class="n">eqn52</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
@@ -1462,7 +1469,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on Jun 16, 2025.
+      <span class="lastupdated">Last updated on Jun 18, 2025.
       </span></p>
   </div>
 
