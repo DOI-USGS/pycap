@@ -23,6 +23,14 @@ Metadata Links
 
 [Disclaimer](DISCLAIMER.md)
 
-For USGS Use:
-Placeholder DOI: https://doi.org/10.5066/P13XHZ9J
-IPDS record: IP-179398 
+Authors:          Michael N. Fienen, Richard A. Erickson
+Point of contact: Michael N. Fienen (mnfienen@usgs.gov)
+Repository Type:  Formal Python package
+Year of Origin:   2024 (original publication)
+Year of Version:  2024
+Version:          1.0.0 
+Digital Object Identifier (DOI): https://doi.org/10.5066/P13XHZ9J
+
+Suggested Citation
+------------------
+Fienen, M.N., Pruitt, A.H., and Reeves, H.W. (2025). Python Decision Support System Tool for estimating High Capacity Well Responses: pycap-dss. version 1.0. USGS Software Release doi: 10.5066/P13XHZ9J

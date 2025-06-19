@@ -3,8 +3,8 @@
     "name": "pycap-dss",
     "organization": "U.S. Geological Survey and Wisconsin Department of Natural Resources",
     "description": "analytical solutions for streamflow depletion calculations with wells",
-    "version": "0.1",
-    "status": "Beta",
+    "version": "1.0",
+    "status": "Release",
 
     "permissions": {
       "usageType": "openSource",
@@ -41,7 +41,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2025-05-20"
+      "metadataLastUpdated": "2025-06-19"
     }
   }
 ]

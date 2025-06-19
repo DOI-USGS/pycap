@@ -1,6 +1,5 @@
 import sys
 import warnings
-
 import numpy as np
 import pandas as pd
 import scipy.integrate as integrate
@@ -842,7 +841,7 @@ def hunt_03_depletion(
                 dl = dlam[0]
             else:
                 dl = dlam
-            [y, err] = integrate.quad(
+            y, err = integrate.quad(
                 _integrand, 0.0, 1.0, args=(dl, dt, epsilon, dK), limit=500
             )
             correction.append(dl * y)
@@ -917,20 +916,21 @@ def _F(alpha, dlam, dtime):
         sys.exit()
     return F
 
-
 def _fgt(n, ab, abterm):
     """function for splitting up _G below"""
+    n2 = n*2
     return np.exp(
-        np.log(sps.binom(2 * n, n))
-        + np.log(sps.gammainc(2 * n + 1, ab))
-        + (2 * n) * np.log(abterm)
+        np.log(sps.binom(n2, n))
+        + np.log(sps.gammainc(n2 + 1, ab))
+        + (n2) * np.log(abterm)
     )
 
 
 def _flt(n, ab, abterm):
     """function for splitting up _G below"""
+    n2 = n*2
     return (
-        sps.binom(2 * n, n) * sps.gammainc(2 * n + 1, ab) * abterm ** (2 * n)
+        sps.binom(n2, n) * sps.gammainc(n2 + 1, ab) * abterm ** (n2)
     )
 
 
