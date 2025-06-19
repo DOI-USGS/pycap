@@ -23,13 +23,13 @@ Metadata Links
 
 [Disclaimer](DISCLAIMER.md)
 
-Authors:          Michael N. Fienen, Richard A. Erickson
-Point of contact: Michael N. Fienen (mnfienen@usgs.gov)
-Repository Type:  Formal Python package
-Year of Origin:   2024 (original publication)
-Year of Version:  2024
-Version:          1.0.0 
-Digital Object Identifier (DOI): https://doi.org/10.5066/P13XHZ9J
+Authors:          Michael N. Fienen, Aaron H. Pruitt, Howard W. Reeves
+Point of contact: Michael N. Fienen (mnfienen@usgs.gov)  
+Repository Type:  Formal Python package  
+Year of Origin:   2024 (original publication)  
+Year of Version:  2025  
+Version:          1.0.0   
+Digital Object Identifier (DOI): https://doi.org/10.5066/P13XHZ9J  
 
 Suggested Citation
 ------------------
