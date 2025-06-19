@@ -1,6 +1,8 @@
 pycap-dss
 =========
 
+For current development version please go to: https://github.com/DOI-USGS/pycap-dss  
+
 Python Decision Support System Tool for estimating High Capacity Well Responses
 -------------------------------------------------------------------------------
 
