@@ -197,7 +197,9 @@ v.8, no. 1, pgs 12-19. <a class="reference external" href="https://doi.org/10.10
 </dd>
 <dt><strong>time: float, optionally np.array or list</strong></dt><dd><p>time at which to calculate results [T]</p>
 </dd>
-<dt><strong>dist: float, optionally np.array or list</strong></dt><dd><p>distance at which to calculate results in [L]</p>
+<dt><strong>dist: float,</strong></dt><dd><p>distance at which to calculate results in [L]
+Note, because of computation demand, only a single value
+for distance can be computed in a call</p>
 </dd>
 <dt><strong>Q: float</strong></dt><dd><p>pumping rate (+ is extraction) [L**3/T]</p>
 </dd>
@@ -577,7 +579,7 @@ Defaults to 2.</p>
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on Jun 19, 2025.
+      <span class="lastupdated">Last updated on Jun 23, 2025.
       </span></p>
   </div>
 

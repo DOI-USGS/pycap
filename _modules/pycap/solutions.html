@@ -300,10 +300,10 @@
                 <span class="n">_ddwn2</span><span class="p">,</span>
                 <span class="mf">0.0</span><span class="p">,</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
+                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
-                <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">)</span>
                 <span class="o">-</span> <span class="n">strmintegral</span>
             <span class="p">)</span>
 
@@ -320,10 +320,10 @@
                     <span class="n">_ddwn2</span><span class="p">,</span>
                     <span class="mf">0.0</span><span class="p">,</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
-                    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
+                    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span>
                 <span class="p">)</span>
                 <span class="n">drawdowns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
-                    <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+                    <span class="n">_ddwn1</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">streambed_conductance</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
                     <span class="o">-</span> <span class="n">strmintegral</span>
                 <span class="p">)</span>
         <span class="k">return</span> <span class="n">drawdowns</span>
@@ -349,7 +349,7 @@
                             <span class="mf">0.0</span><span class="p">,</span>
                             <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
                             <span class="n">args</span><span class="o">=</span><span class="p">(</span>
-                                <span class="n">dist</span><span class="p">,</span>
+                                <span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                 <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                                 <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                                 <span class="n">T</span><span class="p">,</span>
@@ -360,7 +360,7 @@
                         <span class="p">)</span>
                         <span class="n">drawdowns</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">T</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
                             <span class="n">_ddwn1</span><span class="p">(</span>
-                                <span class="n">dist</span><span class="p">,</span>
+                                <span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                 <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                                 <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
                                 <span class="n">T</span><span class="p">,</span>
@@ -379,24 +379,13 @@
 <span class="sd">    Used in computing Hunt, 1999 estimate of drawdown.  Equation 30 from</span>
 <span class="sd">    the paper.  Variables described in hunt_99_drawdown function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">values</span>
-
-    <span class="n">isarray</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="n">isarray</span> <span class="o">=</span> <span class="kc">True</span>
-
     <span class="c1"># construct the well function argument</span>
     <span class="c1"># if (l-x) is zero, then function does not exist</span>
     <span class="c1"># trap for (l-x)==0 and set to small value</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">-</span> <span class="n">x</span>
-    <span class="k">if</span> <span class="n">isarray</span><span class="p">:</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dist</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">dist</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="mf">0.001</span>
+    
+    <span class="k">if</span> <span class="n">dist</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="mf">0.001</span>
 
     <span class="n">u1</span> <span class="o">=</span> <span class="p">((</span><span class="n">dist</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">time</span> <span class="o">/</span> <span class="n">S</span><span class="p">)</span>
 
@@ -535,7 +524,7 @@
         <span class="n">S2</span><span class="p">,</span>
         <span class="n">width</span><span class="p">,</span>
         <span class="n">Q</span><span class="p">,</span>
-        <span class="n">dist</span><span class="p">,</span>
+        <span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
         <span class="n">streambed_thick</span><span class="p">,</span>
         <span class="n">streambed_K</span><span class="p">,</span>
         <span class="n">aquitard_thick</span><span class="p">,</span>
@@ -622,7 +611,7 @@
     <span class="n">time</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">_make_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;theis_drawdown&quot;</span><span class="p">)</span>
+        <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;glover_depletion&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -856,8 +845,10 @@
 <span class="sd">        storage [unitless]</span>
 <span class="sd">    time: float, optionally np.array or list</span>
 <span class="sd">        time at which to calculate results [T]</span>
-<span class="sd">    dist: float, optionally np.array or list</span>
+<span class="sd">    dist: float, </span>
 <span class="sd">        distance at which to calculate results in [L]</span>
+<span class="sd">        Note, because of computation demand, only a single value</span>
+<span class="sd">        for distance can be computed in a call</span>
 <span class="sd">    Q: float</span>
 <span class="sd">        pumping rate (+ is extraction) [L**3/T]</span>
 <span class="sd">    **kwargs: included to all depletion methods for extra values required in some calls</span>
@@ -904,6 +895,15 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">_time_dist_error</span><span class="p">(</span><span class="s2">&quot;hunt_03_depletion&quot;</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PycapException</span><span class="p">(</span>
+        <span class="s2">&quot;cannot have distance as an array</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;in the hunt_03_depletion method.  Need to externally loop</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;over distance&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
     <span class="c1"># make dimensionless group used in equations</span>
     <span class="n">dtime</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
@@ -929,14 +929,11 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
                 <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">integrate</span><span class="o">.</span><span class="n">IntegrationWarning</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">dl</span> <span class="o">=</span> <span class="n">dlam</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">dl</span> <span class="o">=</span> <span class="n">dlam</span>
-            <span class="n">y</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span>
-                <span class="n">_integrand</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span>
+            <span class="c1"># note that err from fixed_quad gets returned as None</span>
+            <span class="n">y</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">fixed_quad</span><span class="p">(</span>
+                <span class="n">_integrand</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dlam</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">dK</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span>
             <span class="p">)</span>
-            <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">correction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
 
     <span class="c1"># terms for depletion, similar to Hunt (1999) but repeated</span>
     <span class="c1"># here so it matches the 2003 paper.</span>
@@ -981,31 +978,36 @@
     <span class="n">z</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">dlam</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span>
         <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">3.0</span><span class="p">:</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">dlam</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">dtime</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dlam</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span>
-        <span class="n">t1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfcx</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-        <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="c1"># equation 47 in paper</span>
-        <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
-            <span class="n">alpha</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">dlam</span>
-        <span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">t2</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
-        <span class="n">sumterm</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="mi">1</span>
-            <span class="o">-</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
-            <span class="o">+</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">4</span><span class="p">))</span>
-            <span class="o">-</span> <span class="p">(</span><span class="mf">105.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">6</span><span class="p">))</span>
-        <span class="p">)</span>
-        <span class="n">F</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">sumterm</span><span class="p">)</span>  <span class="c1"># equation 53 in paper</span>
 
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;alpha </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">, dtime </span><span class="si">{</span><span class="n">dtime</span><span class="si">}</span><span class="s2">, dlam </span><span class="si">{</span><span class="n">dlam</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">_f1</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dlam</span><span class="p">,</span> <span class="n">dtime</span><span class="p">,</span> <span class="n">alpha</span><span class="p">),</span> <span class="n">_f2</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dlam</span><span class="p">,</span> <span class="n">dtime</span><span class="p">,</span> <span class="n">alpha</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">F</span>
+
+<span class="k">def</span> <span class="nf">_f1</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dlam</span><span class="p">,</span> <span class="n">dtime</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;function for splitting up _F above&quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">dlam</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">dtime</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dlam</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">erfcx</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># equation 47 in paper</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dtime</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span>
+        <span class="n">alpha</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">dlam</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">t2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">F</span>
+
+<span class="k">def</span> <span class="nf">_f2</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dlam</span><span class="p">,</span> <span class="n">dtime</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;function for splitting up _F above&quot;&quot;&quot;</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">dlam</span> <span class="o">*</span> <span class="n">dtime</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">sumterm</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">1</span>
+        <span class="o">-</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="o">+</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">4</span><span class="p">))</span>
+        <span class="o">-</span> <span class="p">(</span><span class="mf">105.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">6</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">sumterm</span><span class="p">)</span>  <span class="c1"># equation 53 in paper</span>
     <span class="k">return</span> <span class="n">F</span>
 
 <span class="k">def</span> <span class="nf">_fgt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">):</span>
@@ -1056,26 +1058,19 @@
     <span class="n">ab</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
     <span class="n">atb</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
     <span class="n">sqrt_atb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">atb</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ab</span> <span class="o">&lt;</span> <span class="mf">80.0</span><span class="p">:</span>
-        <span class="n">term1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sqrt_atb</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ab</span><span class="o">&lt;</span><span class="mi">80</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="n">sps</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sqrt_atb</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
     <span class="n">abterm</span> <span class="o">=</span> <span class="n">sqrt_atb</span> <span class="o">/</span> <span class="n">ab</span>
+
     <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">):</span>
+        <span class="n">sum1</span> <span class="o">=</span> <span class="n">sum1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">,</span> <span class="n">_flt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">),</span> <span class="n">_fgt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">))</span>
 
-    <span class="n">addterm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">,</span> <span class="n">_flt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">),</span> <span class="n">_fgt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">abterm</span><span class="p">))</span>
-
-    <span class="nb">sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">addterm</span><span class="p">)</span>
-
-    <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">term1</span> <span class="o">+</span> <span class="p">((</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">eqn52</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">if</span> <span class="n">eqn52</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
-        <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">1.0</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">eqn52</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;equation 52 is nan&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+    <span class="n">eqn52</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">term1</span> <span class="o">+</span> <span class="p">((</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">ab</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum1</span><span class="p">)</span>
+    
+    <span class="n">eqn52</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">eqn52</span><span class="o">&lt;</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">eqn52</span><span class="p">)</span>
+    <span class="n">eqn52</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">eqn52</span><span class="o">&gt;</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">eqn52</span><span class="p">)</span>
+  
     <span class="k">return</span> <span class="n">eqn52</span>
 
 
@@ -1469,7 +1464,7 @@
 
   <div role="contentinfo">
     <p>
-      <span class="lastupdated">Last updated on Jun 19, 2025.
+      <span class="lastupdated">Last updated on Jun 23, 2025.
       </span></p>
   </div>
 
