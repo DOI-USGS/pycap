@@ -7,6 +7,7 @@ import pytest
 import pycap
 from pycap.utilities import Q2ts, create_timeseries_template
 
+
 # homepath = Path(getcwd())
 # datapath = homepath / 'tests' / 'data'
 datapath = Path("pycap/tests/data")

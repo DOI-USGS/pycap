@@ -208,10 +208,10 @@ def hunt_99_drawdown(
                 _ddwn2,
                 0.0,
                 np.inf,
-                args=(dist, x, y, T, streambed_conductance, time, S),
+                args=(dist[0], x, y, T, streambed_conductance, time[0], S),
             )
             return (Q / (4.0 * np.pi * T)) * (
-                _ddwn1(dist, x, y, T, streambed_conductance, time, S)
+                _ddwn1(dist[0], x, y, T, streambed_conductance, time[0], S)
                 - strmintegral
             )
 
@@ -228,10 +228,10 @@ def hunt_99_drawdown(
                     _ddwn2,
                     0.0,
                     np.inf,
-                    args=(dist, x, y, T, streambed_conductance, tm, S),
+                    args=(dist[0], x, y, T, streambed_conductance, tm, S),
                 )
                 drawdowns[i] = (Q / (4.0 * np.pi * T)) * (
-                    _ddwn1(dist, x, y, T, streambed_conductance, tm, S)
+                    _ddwn1(dist[0], x, y, T, streambed_conductance, tm, S)
                     - strmintegral
                 )
         return drawdowns
@@ -257,7 +257,7 @@ def hunt_99_drawdown(
                             0.0,
                             np.inf,
                             args=(
-                                dist,
+                                dist[0],
                                 x[i, j],
                                 y[i, j],
                                 T,
@@ -268,7 +268,7 @@ def hunt_99_drawdown(
                         )
                         drawdowns[time_idx, i, j] = (Q / (4.0 * np.pi * T)) * (
                             _ddwn1(
-                                dist,
+                                dist[0],
                                 x[i, j],
                                 y[i, j],
                                 T,
@@ -287,24 +287,13 @@ def _ddwn1(dist, x, y, T, streambed, time, S):
     Used in computing Hunt, 1999 estimate of drawdown.  Equation 30 from
     the paper.  Variables described in hunt_99_drawdown function.
     """
-    if isinstance(dist, list):
-        dist = np.array(dist)
-    if isinstance(dist, pd.Series):
-        dist = dist.values
-
-    isarray = False
-    if isinstance(dist, np.ndarray):
-        isarray = True
-
     # construct the well function argument
     # if (l-x) is zero, then function does not exist
     # trap for (l-x)==0 and set to small value
     dist = dist - x
-    if isarray:
-        dist = np.where(dist == 0, 0.001, dist)
-    else:
-        if dist == 0.0:
-            dist = 0.001
+    
+    if dist == 0.0:
+        dist = 0.001
 
     u1 = ((dist) ** 2 + y**2) / (4.0 * T * time / S)
 
@@ -443,7 +432,7 @@ def ward_lough_drawdown(
         S2,
         width,
         Q,
-        dist,
+        dist[0],
         streambed_thick,
         streambed_K,
         aquitard_thick,
@@ -530,7 +519,7 @@ def glover_depletion(T, S, time, dist, Q, **kwargs):
     time = _make_arrays(time)
     dist = _make_arrays(dist)
     if len(dist) > 1 and len(time) > 1:
-        _time_dist_error("theis_drawdown")
+        _time_dist_error("glover_depletion")
 
     if len(time) == 1 and len(dist) == 1:
         if time == 0:
@@ -764,8 +753,10 @@ def hunt_03_depletion(
         storage [unitless]
     time: float, optionally np.array or list
         time at which to calculate results [T]
-    dist: float, optionally np.array or list
+    dist: float, 
         distance at which to calculate results in [L]
+        Note, because of computation demand, only a single value
+        for distance can be computed in a call
     Q: float
         pumping rate (+ is extraction) [L**3/T]
     **kwargs: included to all depletion methods for extra values required in some calls
@@ -812,6 +803,15 @@ def hunt_03_depletion(
     if len(dist) > 1 and len(time) > 1:
         _time_dist_error("hunt_03_depletion")
 
+    if len(dist) > 1:
+        raise PycapException(
+        "cannot have distance as an array\n"
+        + f"in the hunt_03_depletion method.  Need to externally loop\n"
+        + "over distance"
+    )
+
+    dist = dist[0]
+    
     # make dimensionless group used in equations
     dtime = (T * time) / (S * np.power(dist, 2))
 
@@ -837,14 +837,11 @@ def hunt_03_depletion(
             warnings.filterwarnings(
                 "ignore", category=integrate.IntegrationWarning
             )
-            if len(dist) == 1:
-                dl = dlam[0]
-            else:
-                dl = dlam
-            y, err = integrate.quad(
-                _integrand, 0.0, 1.0, args=(dl, dt, epsilon, dK), limit=500
+            # note that err from fixed_quad gets returned as None
+            y, err = integrate.fixed_quad(
+                _integrand, 0.0, 1.0, args=(dlam, dt, epsilon, dK), n=100
             )
-            correction.append(dl * y)
+            correction.append(dlam * y)
 
     # terms for depletion, similar to Hunt (1999) but repeated
     # here so it matches the 2003 paper.
@@ -889,31 +886,36 @@ def _F(alpha, dlam, dtime):
     z = alpha * dlam * np.sqrt(dtime) / 2.0 + 1.0 / (
         2.0 * alpha * np.sqrt(dtime)
     )
-    if np.abs(z) < 3.0:
-        a = dlam / 2.0 + (dtime * np.power(alpha, 2) * np.power(dlam, 2) / 4.0)
-        t1 = sps.erfcx(z)
-        t2 = np.exp(a - z**2)
-        b = -1.0 / (4 * dtime * alpha**2)
-        # equation 47 in paper
-        F = np.exp(b) * np.sqrt(dtime / np.pi) - (
-            alpha * dtime * dlam
-        ) / 2.0 * (t1 * t2)
-    else:
-        t1 = np.exp(-(1.0 / (4.0 * dtime * alpha**2))) / (
-            2.0 * alpha * z * np.sqrt(np.pi)
-        )
-        t2 = 2.0 / (dlam * (1.0 + (1.0 / (dlam * dtime * alpha**2)) ** 2))
-        sumterm = (
-            1
-            - (3.0 / (2 * z**2))
-            + (15.0 / (4.0 * z**4))
-            - (105.0 / (8 * z**6))
-        )
-        F = t1 * (1.0 + t2 * sumterm)  # equation 53 in paper
 
-    if np.isnan(F):
-        print(f"alpha {alpha}, dtime {dtime}, dlam {dlam}")
-        sys.exit()
+    F = np.where(np.abs(z)<3.0, _f1(z, dlam, dtime, alpha), _f2(z, dlam, dtime, alpha))
+
+    return F
+
+def _f1(z, dlam, dtime, alpha):
+    """function for splitting up _F above"""
+    a = dlam / 2.0 + (dtime * np.power(alpha, 2) * np.power(dlam, 2) / 4.0)
+    t1 = sps.erfcx(z)
+    t2 = np.exp(a - z**2)
+    b = -1.0 / (4 * dtime * alpha**2)
+    # equation 47 in paper
+    F = np.exp(b) * np.sqrt(dtime / np.pi) - (
+        alpha * dtime * dlam
+    ) / 2.0 * (t1 * t2)
+    return F
+
+def _f2(z, dlam, dtime, alpha):
+    """function for splitting up _F above"""
+    t1 = np.exp(-(1.0 / (4.0 * dtime * alpha**2))) / (
+        2.0 * alpha * z * np.sqrt(np.pi)
+    )
+    t2 = 2.0 / (dlam * (1.0 + (1.0 / (dlam * dtime * alpha**2)) ** 2))
+    sumterm = (
+        1
+        - (3.0 / (2 * z**2))
+        + (15.0 / (4.0 * z**4))
+        - (105.0 / (8 * z**6))
+    )
+    F = t1 * (1.0 + t2 * sumterm)  # equation 53 in paper
     return F
 
 def _fgt(n, ab, abterm):
@@ -964,26 +966,19 @@ def _G(alpha, epsilon, dK, dtime):
     ab = a + b
     atb = a * b
     sqrt_atb = np.sqrt(atb)
-    if ab < 80.0:
-        term1 = np.exp(-ab) * sps.i0(2.0 * sqrt_atb)
-    else:
-        term1 = 0.0
+    term1 = np.where(ab<80, np.exp(-ab) * sps.i0(2.0 * sqrt_atb), 0.0)
     abterm = sqrt_atb / ab
+
     n = np.arange(60, dtype=np.float64)
+    sum1 = 0.
+    for n in np.arange(60, dtype=np.float64):
+        sum1 = sum1 + np.where(n <= 8, _flt(n, ab, abterm), _fgt(n, ab, abterm))
 
-    addterm = np.where(n <= 8, _flt(n, ab, abterm), _fgt(n, ab, abterm))
-
-    sum = np.sum(addterm)
-
-    eqn52 = 0.5 * (1.0 - term1 + ((b - a) / ab) * sum)
-    if eqn52 < 0:
-        eqn52 = 0.0
-    if eqn52 > 1.0:
-        eqn52 = 1.0
-
-    if np.isnan(eqn52):
-        print("equation 52 is nan")
-        sys.exit()
+    eqn52 = 0.5 * (1.0 - term1 + ((b - a) / ab) * sum1)
+    
+    eqn52 = np.where(eqn52< 0., 0., eqn52)
+    eqn52 = np.where(eqn52> 1., 1., eqn52)
+  
     return eqn52
 
 
