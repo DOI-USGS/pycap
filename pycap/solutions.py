@@ -162,7 +162,7 @@ def hunt_99_drawdown(
     Q : float
         pumping rate (+ is extraction) [L**3/T]
     streambed_conductance: float
-        streambed conductance [ft/d] (lambda in the paper)
+        streambed conductance [L/T] (lambda in the paper)
     x: float, optionally ndarray
         x locations at which to report calculated drawdown.
     y: float, optionally ndarray
